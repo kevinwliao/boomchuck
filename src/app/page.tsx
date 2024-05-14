@@ -1,4 +1,4 @@
-import BoomChuck from "@/components/ui/boomChuck";
+import BoomChuck from "@/components/boomChuck";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 
 export default function Page({

@@ -32,7 +32,7 @@ export function BeatRect(props: beatRectProps) {
 
   return (
     <div
-      className={`font-lg rounded-lg border border-slate-200 bg-stone-300 p-2 font-mono text-xl font-bold ${props.active ? "ring-2 ring-amber-200" : ""}`}
+      className={`font-lg rounded-lg border border-slate-200 bg-amber-400 p-2 font-mono text-xl font-bold ${props.active ? "ring-2 ring-amber-200" : ""}`}
       ref={setNodeRef}
       style={style}
       {...attributes}

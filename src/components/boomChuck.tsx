@@ -1,21 +1,14 @@
 "use client";
-import Volume from "@/components/ui/volume";
-import { RootSelection } from "@/app/rootSelection";
+import Volume from "@/components/volume";
 import PlayPause from "@/app/playPause";
-import { QualitySelection } from "@/app/qualitySelection";
 import React from "react";
-import {
-  XCircleIcon,
-  DocumentDuplicateIcon,
-  PencilSquareIcon,
-} from "@heroicons/react/20/solid";
 import * as Tone from "tone";
 import { Button } from "@/components/ui/button";
-import Bpm from "@/components/ui/bpm";
-import Editor from "./editor";
-import { v4 as uuidv4 } from "uuid";
+import Bpm from "@/components/bpm";
+import Editor from "./ui/editor";
 import { Chord, Beat } from "@/lib/types";
 import { BigSpikeHammer as initBeatsArr } from "@/lib/songs";
+import ChordInput from "./chordInput";
 
 const RootOptions = [
   "G",
@@ -34,6 +27,8 @@ const RootOptions = [
 
 const QualityOptions = ["M", "m", "7"];
 
+const PatternArr = ["boom1", "chuck", "boom2", "chuck"];
+
 function chordToNotesArr(chord: Chord) {
   const rootFormed = chord.root + "4";
   const quality = chord.quality;
@@ -50,22 +45,36 @@ export default function BoomChuck() {
   const [beatsArr, setBeatsArr] = React.useState<Beat[]>(initBeatsArr);
   const [started, setStarted] = React.useState(false);
   const [bpm, setBpm] = React.useState(100);
+  const [volume, setVolume] = React.useState(0.8);
   const [idCounter, setIdCounter] = React.useState(1000);
-
   const [activeIndex, setActiveIndex] = React.useState(-1);
 
   const synthRef = React.useRef<Tone.PolySynth | null>(null);
   const seqRef = React.useRef<Tone.Sequence | null>(null);
 
+  // from ytbsequencer
+  const handleStartClick = async () => {
+    if (Tone.getTransport().state === "started") {
+      Tone.getTransport().pause();
+      setStarted(false);
+    } else {
+      await Tone.start();
+      Tone.getTransport().start();
+      setStarted(true);
+    }
+  };
+
   React.useEffect(() => {
     Tone.getTransport().bpm.value = bpm * 2;
+    console.log("effect run");
 
-    synthRef.current = new Tone.PolySynth().toDestination();
+    synthRef.current = new Tone.PolySynth({ volume: volume }).toDestination();
     seqRef.current = new Tone.Sequence(
-      (time, beat) => {
-        setActiveIndex(
-          (prevActiveIndex) => (prevActiveIndex + 1) % beatsArr.length,
-        );
+      (time, index) => {
+        // may need to remove beatsArr as a dependency? so we can update the "chord" inside the object instead of updating the "beat" itself
+        // maybe this is not an issue. do we want the track to be able to change dynamically during playback? probably not XD
+        const beat = beatsArr[index];
+
         synthRef.current?.triggerAttackRelease(
           beat.chord.root + "2",
           0.1,
@@ -93,22 +102,32 @@ export default function BoomChuck() {
             Tone.Time("4n").toSeconds() +
             Tone.Time("4n").toSeconds(),
         );
+        setActiveIndex((prevActiveIndex) => {
+          if (prevActiveIndex + 1 < beatsArr.length) {
+            return prevActiveIndex + 1;
+          } else {
+            return 0;
+          }
+        });
+        setActiveIndex(index);
       },
-      [...beatsArr],
+      [...beatsArr.map((beat, i) => i)],
       "1n",
     );
-    if (started) {
-      seqRef.current.start();
-      Tone.getTransport().start();
-    } else {
-      setActiveIndex(-1);
-    }
+    seqRef.current.start(0);
+    // if (started) {
+    //   seqRef.current.start();
+    //   Tone.getTransport().start();
+    // } else {
+    //   setActiveIndex(-1);
+    // }
 
     return () => {
       seqRef.current?.dispose();
       Tone.getTransport().stop();
+      console.log("effect cleaned");
     };
-  }, [started, beatsArr]);
+  }, [beatsArr]);
 
   const updateBeatsArr = (index: number, chord: Chord) => {
     const newBeatsArr = beatsArr.map((beat, i) => {
@@ -124,23 +143,46 @@ export default function BoomChuck() {
 
   return (
     <>
-      <div className="flex justify-center gap-12">
-        <Bpm bpm={bpm} onChange={(e) => setBpm(+e.target.value)}></Bpm>
+      <div className="m-auto grid w-80 grid-cols-3 justify-items-center sm:w-96">
+        <Bpm
+          bpm={bpm}
+          onChange={(e) => {
+            const value = parseInt(e.target.value);
+            setBpm(value);
+            Tone.getTransport().bpm.rampTo(value * 2, 0.01);
+          }}
+          // onValueChange for slider, onChange for number input
+          onValueChange={([value]) => {
+            setBpm(value);
+            Tone.getTransport().bpm.rampTo(value * 2, 0.01);
+          }}
+          //disabled={started}
+        ></Bpm>
+
         <PlayPause
           className="size-20 cursor-pointer fill-stone-500 transition hover:fill-stone-700"
-          onClick={() => {
-            Tone.start();
-            setStarted((prevStarted) => !prevStarted);
-          }}
+          // onClick={() => {
+          //   Tone.start();
+          //   setStarted((prevStarted) => !prevStarted);
+          // }}
+          onClick={handleStartClick}
           started={started}
         ></PlayPause>
-        <Volume></Volume>
+        <Volume
+          volume={volume}
+          onValueChange={([value]) => {
+            setVolume(value);
+            if (synthRef.current)
+              // ramp to prevent noisy artifacts
+              synthRef.current.volume.linearRampTo(
+                // formula for mapping linear scale to decibels
+                Math.log10(value) * 20,
+                0.01,
+              );
+          }}
+        ></Volume>
       </div>
-      <div className="m-auto my-4 flex max-w-fit flex-wrap gap-4 rounded-xl border border-slate-200 bg-stone-100 p-4">
-        <RootSelection></RootSelection>
-        <QualitySelection></QualitySelection>
-        <Button variant="outline">Add Chord</Button>
-      </div>
+      <ChordInput setBeatsArr={setBeatsArr}></ChordInput>
       <div className="m-auto w-max pb-4 text-sm font-medium">
         <div className="flex gap-3">
           {RootOptions.map((root, i) => {
@@ -168,52 +210,6 @@ export default function BoomChuck() {
           </Button>
         </div>
       </div>
-      {/* <div className="m-auto grid w-full grid-cols-4 gap-2 sm:w-10/12 lg:w-8/12 lg:grid-cols-8">
-        {beatsArr.map((beat, index) => {
-          return (
-            <div
-              key={beat.id}
-              className={`group relative box-border flex flex-shrink flex-grow  basis-20 select-none flex-row items-center justify-center rounded-lg border border-slate-200 p-2 odd:bg-white even:bg-stone-300 ${
-                index === activeIndex ? "ring-2 ring-amber-200" : ""
-              }`}
-            >
-              <div className="">
-                <div
-                  id=""
-                  className="invisible opacity-0 transition duration-500 group-hover:visible group-hover:opacity-100"
-                >
-                  <button
-                    className="absolute -right-1 -top-1"
-                    onClick={() => {
-                      setBeatsArr(beatsArr.filter((b) => b !== beat));
-                    }}
-                  >
-                    <XCircleIcon className="size-4 fill-red-500"></XCircleIcon>
-                  </button>
-                  <button
-                    className="absolute -bottom-1 -right-1"
-                    onClick={() => {
-                      const newBeatsArr = [
-                        ...beatsArr.slice(0, index),
-                        { ...beat },
-                        ...beatsArr.slice(index),
-                      ];
-                      setBeatsArr(newBeatsArr);
-                    }}
-                  >
-                    <DocumentDuplicateIcon className="size-4 text-green-500"></DocumentDuplicateIcon>
-                  </button>
-                </div>
-                <div className="font-mono text-xl  font-semibold tracking-tight">
-                  <span>{beat.chord.root}</span>
-                  <span>{beat.chord.quality}</span>
-                  <span>{beat.id}</span>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div> */}
       <Editor
         beatsArr={beatsArr}
         setBeatsArr={setBeatsArr}

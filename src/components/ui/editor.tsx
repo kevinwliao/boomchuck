@@ -16,7 +16,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { BeatRect } from "./beatRect";
+import { BeatRect } from "../beatRect";
 import { Chord, Beat } from "@/lib/types";
 
 // const initBeatsArrDnd: Beat[] = [

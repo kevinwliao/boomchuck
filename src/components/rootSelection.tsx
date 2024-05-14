@@ -17,42 +17,55 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const qualityOptions = ["M", "m", "7"] as const;
+const rootOptions = [
+  "G",
+  "Ab",
+  "A",
+  "Bb",
+  "B",
+  "C",
+  "Db",
+  "D",
+  "Eb",
+  "E",
+  "F",
+  "F#",
+] as const;
 
-export function QualitySelection() {
+export function RootSelection() {
   const [open, setOpen] = React.useState(false);
   const [selectedStatus, setSelectedStatus] = React.useState<
-    (typeof qualityOptions)[number] | null
+    (typeof rootOptions)[number] | null
   >(null);
 
   return (
     <div className="flex items-center space-x-4">
-      <p className="text-muted-foreground text-sm">Quality</p>
+      <p className="text-muted-foreground text-sm">Root:</p>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" className="w-[150px] justify-start">
-            {selectedStatus ? <>{selectedStatus}</> : <>+ Select quality</>}
+            {selectedStatus ? <>{selectedStatus}</> : <>+ Select root</>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0" side="right" align="start">
           <Command>
-            <CommandInput placeholder="Change quality..." />
+            <CommandInput placeholder="Change root..." />
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
-                {qualityOptions.map((quality) => (
+                {rootOptions.map((root) => (
                   <CommandItem
-                    key={quality}
-                    value={quality}
+                    key={root}
+                    value={root}
                     onSelect={(value) => {
                       setSelectedStatus(
-                        qualityOptions.find((priority) => priority === value) ||
+                        rootOptions.find((priority) => priority === value) ||
                           null,
                       );
                       setOpen(false);
                     }}
                   >
-                    {quality}
+                    {root}
                   </CommandItem>
                 ))}
               </CommandGroup>
