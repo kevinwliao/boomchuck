@@ -2,6 +2,7 @@ import React, { DragEventHandler, useState } from "react";
 import {
   DndContext,
   closestCenter,
+  DragOverlay,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -16,29 +17,9 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { BeatRect } from "../beatRect";
+import { BeatRect } from "./beatRect";
 import { Chord, Beat } from "@/lib/types";
-
-// const initBeatsArrDnd: Beat[] = [
-//   { id: 1, chord: { root: "G", quality: "M" } },
-//   { id: 2, chord: { root: "G", quality: "M" } },
-//   { id: 3, chord: { root: "G", quality: "M" } },
-//   { id: 4, chord: { root: "E", quality: "m" } },
-//   { id: 5, chord: { root: "C", quality: "M" } },
-//   { id: 7, chord: { root: "C", quality: "M" } },
-//   { id: 8, chord: { root: "E", quality: "m" } },
-//   { id: 9, chord: { root: "E", quality: "m" } },
-//   { id: 10, chord: { root: "G", quality: "M" } },
-//   { id: 11, chord: { root: "G", quality: "M" } },
-//   { id: 12, chord: { root: "G", quality: "M" } },
-//   { id: 13, chord: { root: "E", quality: "m" } },
-//   { id: 14, chord: { root: "C", quality: "M" } },
-//   { id: 15, chord: { root: "C", quality: "M" } },
-//   { id: 16, chord: { root: "E", quality: "m" } },
-//   { id: 17, chord: { root: "E", quality: "m" } },
-//   { id: 18, chord: { root: "D", quality: "M" } },
-//   { id: 19, chord: { root: "D", quality: "M" } },
-// ];
+import { Item } from "@radix-ui/react-navigation-menu";
 
 export default function Editor({
   beatsArr,
@@ -49,8 +30,7 @@ export default function Editor({
   setBeatsArr: React.Dispatch<React.SetStateAction<Beat[]>>;
   activeIndex: number;
 }) {
-  //const [beatsArr, setBeatsArr] = useState(initBeatsArrDnd);
-
+  const [activeId, setActiveId] = useState(null);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -68,6 +48,7 @@ export default function Editor({
         <SortableContext items={beatsArr}>
           {beatsArr.map((beat, index) => (
             <BeatRect
+              setBeatsArr={setBeatsArr}
               key={beat.id}
               id={beat.id}
               beat={beat}

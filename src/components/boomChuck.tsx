@@ -1,56 +1,24 @@
 "use client";
 import Volume from "@/components/volume";
-import PlayPause from "@/app/playPause";
-import React from "react";
+import PlayPause from "@/components/playPause";
+import { useEffect, useRef, useState } from "react";
 import * as Tone from "tone";
-import { Button } from "@/components/ui/button";
 import Bpm from "@/components/bpm";
-import Editor from "./ui/editor";
+import Editor from "./editor";
 import { Chord, Beat } from "@/lib/types";
 import { BigSpikeHammer as initBeatsArr } from "@/lib/songs";
 import ChordInput from "./chordInput";
-
-const RootOptions = [
-  "G",
-  "Ab",
-  "A",
-  "Bb",
-  "B",
-  "C",
-  "Db",
-  "D",
-  "Eb",
-  "E",
-  "F",
-  "F#",
-] as const;
-
-const QualityOptions = ["M", "m", "7"];
-
-const PatternArr = ["boom1", "chuck", "boom2", "chuck"];
-
-function chordToNotesArr(chord: Chord) {
-  const rootFormed = chord.root + "4";
-  const quality = chord.quality;
-  return [
-    Tone.Frequency(rootFormed).toFrequency(),
-    Tone.Frequency(rootFormed)
-      .transpose(quality === "M" ? 4 : 3)
-      .toFrequency(),
-    Tone.Frequency(rootFormed).transpose(7).toFrequency(),
-  ];
-}
+import { chordToNotesArr } from "@/lib/utils";
 
 export default function BoomChuck() {
-  const [beatsArr, setBeatsArr] = React.useState<Beat[]>(initBeatsArr);
-  const [started, setStarted] = React.useState(false);
-  const [bpm, setBpm] = React.useState(100);
-  const [volume, setVolume] = React.useState(0.8);
-  const [idCounter, setIdCounter] = React.useState(1000);
-  const [activeIndex, setActiveIndex] = React.useState(-1);
+  const [beatsArr, setBeatsArr] = useState<Beat[]>(initBeatsArr);
+  const [started, setStarted] = useState(false);
+  const [bpm, setBpm] = useState(100);
+  const [volume, setVolume] = useState(0.8);
+  const [activeIndex, setActiveIndex] = useState(-1);
 
-  const synthRef = React.useRef<Tone.PolySynth | null>(null);
-  const seqRef = React.useRef<Tone.Sequence | null>(null);
+  const synthRef = useRef<Tone.PolySynth | null>(null);
+  const seqRef = useRef<Tone.Sequence | null>(null);
 
   // from ytbsequencer
   const handleStartClick = async () => {
@@ -64,9 +32,8 @@ export default function BoomChuck() {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     Tone.getTransport().bpm.value = bpm * 2;
-    console.log("effect run");
 
     synthRef.current = new Tone.PolySynth({ volume: volume }).toDestination();
     seqRef.current = new Tone.Sequence(
@@ -125,21 +92,8 @@ export default function BoomChuck() {
     return () => {
       seqRef.current?.dispose();
       Tone.getTransport().stop();
-      console.log("effect cleaned");
     };
   }, [beatsArr]);
-
-  const updateBeatsArr = (index: number, chord: Chord) => {
-    const newBeatsArr = beatsArr.map((beat, i) => {
-      if (i === index) {
-        const newBeat = { ...beat, chord: chord };
-        return newBeat;
-      } else {
-        return beat;
-      }
-    });
-    setBeatsArr(newBeatsArr);
-  };
 
   return (
     <>
@@ -158,7 +112,6 @@ export default function BoomChuck() {
           }}
           //disabled={started}
         ></Bpm>
-
         <PlayPause
           className="size-20 cursor-pointer fill-stone-500 transition hover:fill-stone-700"
           // onClick={() => {
@@ -173,7 +126,6 @@ export default function BoomChuck() {
           onValueChange={([value]) => {
             setVolume(value);
             if (synthRef.current)
-              // ramp to prevent noisy artifacts
               synthRef.current.volume.linearRampTo(
                 // formula for mapping linear scale to decibels
                 Math.log10(value) * 20,
@@ -183,33 +135,6 @@ export default function BoomChuck() {
         ></Volume>
       </div>
       <ChordInput setBeatsArr={setBeatsArr}></ChordInput>
-      <div className="m-auto w-max pb-4 text-sm font-medium">
-        <div className="flex gap-3">
-          {RootOptions.map((root, i) => {
-            return (
-              <button
-                key={i}
-                onClick={() => {
-                  setStarted(false);
-                  setBeatsArr([
-                    ...beatsArr,
-                    {
-                      id: idCounter,
-                      chord: { root: root, quality: "M" },
-                    },
-                  ]);
-                  setIdCounter((prevIdCounter) => prevIdCounter + 1);
-                }}
-              >
-                {root}
-              </button>
-            );
-          })}
-          <Button variant="outline" onClick={() => setBeatsArr([])}>
-            Clear All
-          </Button>
-        </div>
-      </div>
       <Editor
         beatsArr={beatsArr}
         setBeatsArr={setBeatsArr}

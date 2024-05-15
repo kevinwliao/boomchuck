@@ -20,3 +20,8 @@ export const BigSpikeHammer: Song = [
   { id: 18, chord: { root: "D", quality: "M" } },
   { id: 19, chord: { root: "D", quality: "M" } },
 ];
+
+export const CrippleCreek: Song = [
+  { id: 1, chord: { root: "G", quality: "M" } },
+  { id: 2, chord: { root: "G", quality: "M" } },
+];

@@ -21,7 +21,7 @@ export type Chord = {
 };
 
 export type Beat = {
-  id: number;
+  id: number | string;
   chord: Chord;
 };
 
