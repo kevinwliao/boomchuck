@@ -12,6 +12,7 @@ type beatRectProps = {
   id: number | string;
   key: number | string;
   active: boolean;
+  started: boolean;
   setBeatsArr: React.Dispatch<React.SetStateAction<Beat[]>>;
 };
 
@@ -33,19 +34,21 @@ export function BeatRect(props: beatRectProps) {
 
   return (
     <div
-      className={`font-lg group relative rounded-lg border border-slate-200 bg-amber-400 py-8 font-mono text-xl font-bold ${props.active ? "ring-2 ring-amber-200" : ""}`}
+      className={`font-lg group relative select-none rounded-lg border border-slate-200 bg-amber-400 py-4 font-sans text-xl font-bold dark:border-none dark:bg-amber-900 md:py-6 md:text-3xl ${props.active ? "ring-2 ring-amber-200" : ""}`}
       ref={setNodeRef}
       style={style}
     >
-      <div className="absolute right-1 top-1 flex items-center text-amber-600">
+      <div
+        className={`${props.started ? "hidden" : ""} absolute right-1 top-1 flex items-center text-amber-600`}
+      >
         <button
           onClick={closeHandler}
-          className="invisible rounded-sm py-1 hover:bg-amber-800/10 active:bg-red-600/10 active:text-red-600 group-hover:visible"
+          className="invisible rounded-sm py-1 hover:bg-amber-800/10 focus:visible active:bg-red-600/10 active:text-red-600 group-hover:visible"
         >
           <XIcon className="size-4"></XIcon>
         </button>
         <button
-          className="rounded-sm py-1 hover:bg-amber-800/10 group-hover:visible"
+          className="rounded-sm py-1 hover:bg-amber-800/10"
           {...attributes}
           {...listeners}
         >

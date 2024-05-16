@@ -3,6 +3,7 @@
 import * as React from "react";
 import { MusicalNoteIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
+import { ModeToggle } from "@/components/modeToggle";
 
 import { cn } from "@/lib/utils";
 import {
@@ -57,40 +58,22 @@ const components: { title: string; href: string; description: string }[] = [
 export default function Header() {
   return (
     <header className="p-1">
-      <NavigationMenu className="w-full">
+      <NavigationMenu className="">
         <NavigationMenuList className="">
-          <div className="w">
-            <NavigationMenuItem>
-              <Link href="/" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  <MusicalNoteIcon className="size-4"></MusicalNoteIcon>
-                  BoomChuck
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          </div>
-          <div className="float-right flex">
-            {/* <NavigationMenuItem>
-              <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                  {components.map((component) => (
-                    <ListItem
-                      key={component.title}
-                      title={component.title}
-                      href={component.href}
-                    >
-                      {component.description}
-                    </ListItem>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem> */}
-
-            <NavigationMenuItem>
-              <SongSelection></SongSelection>
-            </NavigationMenuItem>
-          </div>
+          <NavigationMenuItem>
+            <Link href="/" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <MusicalNoteIcon className="size-4"></MusicalNoteIcon>
+                BoomChuck
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <SongSelection></SongSelection>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <ModeToggle></ModeToggle>
+          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
     </header>

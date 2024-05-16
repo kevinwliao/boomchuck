@@ -9,7 +9,7 @@ export default function Page({
   };
 }) {
   return (
-    <main className="px-8 py-8">
+    <main className="px-8 py-8 dark:bg-stone-950">
       <h2 className="scroll-m-20 pb-2 text-center text-4xl font-extrabold tracking-tight lg:text-5xl">
         BoomChuck
       </h2>

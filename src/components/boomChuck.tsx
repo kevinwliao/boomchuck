@@ -8,7 +8,7 @@ import Editor from "./editor";
 import { Chord, Beat } from "@/lib/types";
 import { BigSpikeHammer as initBeatsArr } from "@/lib/songs";
 import ChordInput from "./chordInput";
-import { chordToNotesArr } from "@/lib/utils";
+import { chordToNotesArr } from "@/lib/musicutils";
 
 export default function BoomChuck() {
   const [beatsArr, setBeatsArr] = useState<Beat[]>(initBeatsArr);
@@ -110,10 +110,9 @@ export default function BoomChuck() {
             setBpm(value);
             Tone.getTransport().bpm.rampTo(value * 2, 0.01);
           }}
-          //disabled={started}
         ></Bpm>
         <PlayPause
-          className="size-20 cursor-pointer fill-stone-500 transition hover:fill-stone-700"
+          className="size-14 cursor-pointer fill-stone-500 transition hover:fill-stone-700 md:size-20"
           // onClick={() => {
           //   Tone.start();
           //   setStarted((prevStarted) => !prevStarted);
@@ -139,6 +138,7 @@ export default function BoomChuck() {
         beatsArr={beatsArr}
         setBeatsArr={setBeatsArr}
         activeIndex={activeIndex}
+        started={started}
       ></Editor>
     </>
   );

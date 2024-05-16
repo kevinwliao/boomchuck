@@ -24,10 +24,12 @@ import { Item } from "@radix-ui/react-navigation-menu";
 export default function Editor({
   beatsArr,
   setBeatsArr,
+  started,
   activeIndex,
 }: {
   beatsArr: Beat[];
   setBeatsArr: React.Dispatch<React.SetStateAction<Beat[]>>;
+  started: boolean;
   activeIndex: number;
 }) {
   const [activeId, setActiveId] = useState(null);
@@ -48,6 +50,7 @@ export default function Editor({
         <SortableContext items={beatsArr}>
           {beatsArr.map((beat, index) => (
             <BeatRect
+              started={started}
               setBeatsArr={setBeatsArr}
               key={beat.id}
               id={beat.id}

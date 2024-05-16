@@ -84,7 +84,7 @@ export default function ChordInput({
 
   return (
     <>
-      <div className="m-auto mb-2 mt-2 flex max-w-fit flex-wrap gap-4 rounded-xl border border-slate-200 bg-stone-50 p-4">
+      <div className="m-auto mb-2 mt-2 flex max-w-fit flex-wrap gap-4 rounded-xl border border-slate-200 bg-stone-50 p-4 dark:border-none dark:bg-inherit">
         <div className="flex items-center space-x-4">
           <p className="text-muted-foreground text-sm">Root:</p>
           <Popover open={open} onOpenChange={setOpen}>
@@ -150,7 +150,7 @@ export default function ChordInput({
           Clear All
         </Button>
       </div>
-      <div className="m-auto mb-2 mt-2 flex max-w-fit flex-wrap gap-4 rounded-xl border border-slate-200 bg-stone-50 p-4">
+      <div className="m-auto mb-2 mt-2 flex max-w-fit flex-wrap gap-4 rounded-xl border border-slate-200 bg-stone-50 p-4  dark:border-none dark:bg-inherit">
         {palette.map((chord) => (
           <Button
             variant="default"

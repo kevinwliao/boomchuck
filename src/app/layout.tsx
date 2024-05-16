@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Bricolage_Grotesque } from "next/font/google";
+import { ThemeProvider } from "@/components/themeProvider";
 
 import Header from "./header";
 import "./globals.css";
@@ -20,9 +21,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={dmsans.className}>
-        <Header></Header>
-        {children}
+      <body className={`${dmsans.className}`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header></Header>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
