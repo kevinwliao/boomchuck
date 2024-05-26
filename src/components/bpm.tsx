@@ -15,7 +15,7 @@ export default function Bpm({
 }) {
   return (
     <div className="flex items-center gap-4">
-      <div className="text-md text-stone-400">BPM</div>
+      <div className="text-md text-muted-foreground">BPM</div>
       <Input
         className="h-max w-max text-2xl"
         type="number"
@@ -25,6 +25,7 @@ export default function Bpm({
         max="200"
         value={bpm}
         onChange={onChange}
+        disabled={disabled}
       ></Input>
     </div>
 

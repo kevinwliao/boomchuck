@@ -21,6 +21,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Beat } from "@/lib/types";
 import { Chord } from "@/lib/types";
+import { Trash2 } from "lucide-react";
 
 const qualityOptions = ["M", "m", "7"] as const;
 const rootOptions = [
@@ -42,7 +43,7 @@ const initialPalette = [
   { root: "G", quality: "M" },
   { root: "C", quality: "M" },
   { root: "D", quality: "M" },
-];
+] as Chord[];
 
 export default function ChordInput({
   setBeatsArr,
@@ -74,7 +75,14 @@ export default function ChordInput({
   };
 
   const addChordToPalette = () => {
-    if (chordSelected) {
+    const chordFoundInPalette = palette.find(
+      (chord) =>
+        chord.quality === selectedQuality && chord.root === selectedRoot,
+    );
+
+    if (chordFoundInPalette) {
+    }
+    if (chordSelected && !chordFoundInPalette) {
       setPalette([
         ...palette,
         { root: selectedRoot, quality: selectedQuality },
@@ -84,9 +92,9 @@ export default function ChordInput({
 
   return (
     <>
-      <div className="m-auto mb-2 mt-2 flex max-w-fit flex-wrap gap-4 rounded-xl border border-slate-200 bg-stone-50 p-4 dark:border-none dark:bg-inherit">
+      <div className="m-auto mb-2 mt-2 flex max-w-max flex-wrap justify-center gap-4 rounded-md border p-4 sm:w-10/12">
         <div className="flex items-center space-x-4">
-          <p className="text-muted-foreground text-sm">Root:</p>
+          <p className="text-sm text-muted-foreground">Root:</p>
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button variant="outline" className="w-[150px] justify-start">
@@ -142,17 +150,18 @@ export default function ChordInput({
           Add Chord
         </Button>
         <Button
-          variant={"default"}
+          variant={"destructive"}
           onClick={() => {
             setBeatsArr([]);
           }}
         >
-          Clear All
+          Clear
         </Button>
       </div>
-      <div className="m-auto mb-2 mt-2 flex max-w-fit flex-wrap gap-4 rounded-xl border border-slate-200 bg-stone-50 p-4  dark:border-none dark:bg-inherit">
-        {palette.map((chord) => (
+      <div className="group relative m-auto mb-2 mt-2 flex max-w-fit flex-wrap gap-4 rounded-md border p-4 ">
+        {palette.map((chord, index) => (
           <Button
+            key={index}
             variant="default"
             className="size-10 rounded-full"
             onClick={() => {
@@ -169,6 +178,7 @@ export default function ChordInput({
             {chord.quality}
           </Button>
         ))}
+        {/* <Trash2 className="invisible absolute right-3 top-3 size-4 text-destructive group-hover:visible"></Trash2> */}
       </div>
     </>
   );

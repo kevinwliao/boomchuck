@@ -4,6 +4,7 @@ import { Bricolage_Grotesque } from "next/font/google";
 import { ThemeProvider } from "@/components/themeProvider";
 
 import Header from "./header";
+import Footer from "./footer";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html suppressHydrationWarning lang="en">
       <body className={`${dmsans.className}`}>
         <ThemeProvider
           attribute="class"
@@ -30,6 +31,7 @@ export default function RootLayout({
         >
           <Header></Header>
           {children}
+          <Footer></Footer>
         </ThemeProvider>
       </body>
     </html>

@@ -9,6 +9,7 @@ import {
   useSensors,
   DragEndEvent,
   UniqueIdentifier,
+  DragStartEvent,
 } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -17,9 +18,14 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import {
+  restrictToFirstScrollableAncestor,
+  restrictToHorizontalAxis,
+  restrictToParentElement,
+  restrictToWindowEdges,
+} from "@dnd-kit/modifiers";
 import { BeatRect } from "./beatRect";
 import { Chord, Beat } from "@/lib/types";
-import { Item } from "@radix-ui/react-navigation-menu";
 
 export default function Editor({
   beatsArr,
@@ -32,7 +38,7 @@ export default function Editor({
   started: boolean;
   activeIndex: number;
 }) {
-  const [activeId, setActiveId] = useState(null);
+  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -45,8 +51,9 @@ export default function Editor({
       sensors={sensors}
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
+      modifiers={[restrictToParentElement]}
     >
-      <div className="m-auto grid w-full grid-cols-4 gap-2 sm:w-10/12 lg:w-8/12 lg:grid-cols-8">
+      <div className="m-auto grid w-full grid-cols-4 gap-2  p-4 sm:w-10/12 lg:w-8/12 lg:grid-cols-8">
         <SortableContext items={beatsArr}>
           {beatsArr.map((beat, index) => (
             <BeatRect
@@ -65,6 +72,12 @@ export default function Editor({
 
   function getBeatPos(id: UniqueIdentifier) {
     return beatsArr.findIndex((beat) => beat.id === id);
+  }
+
+  function handleDragStart(event: DragStartEvent) {
+    const { active } = event;
+
+    setActiveId(active.id);
   }
 
   function handleDragEnd(event: DragEndEvent) {

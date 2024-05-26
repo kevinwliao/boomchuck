@@ -33,6 +33,11 @@
     --ring: 0 0% 3.9%;
 
     --radius: 0.5rem;
+
+    --beats: 0 0% 100%;
+
+    /*my own stuff */
+    --boomchuck: 41, 100%, 56%;
   }
 
   .dark {
@@ -63,6 +68,9 @@
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
+
+    /* my own stuff */
+    --boomchuck: 25, 70%, 24%;
   }
 }
 

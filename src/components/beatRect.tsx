@@ -2,8 +2,6 @@ import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Beat, Chord } from "@/lib/types";
-import { Item } from "@/components/item";
-import { XMarkIcon } from "@heroicons/react/20/solid";
 import { GripVerticalIcon } from "lucide-react";
 import { XIcon } from "lucide-react";
 
@@ -34,7 +32,7 @@ export function BeatRect(props: beatRectProps) {
 
   return (
     <div
-      className={`font-lg group relative select-none rounded-lg border border-slate-200 bg-amber-400 py-4 font-sans text-xl font-bold dark:border-none dark:bg-amber-900 md:py-6 md:text-3xl ${props.active ? "ring-2 ring-amber-200" : ""}`}
+      className={`font-lg group relative select-none rounded-lg border bg-boomchuck py-4 font-sans text-xl font-semibold md:py-6 md:text-3xl ${props.active ? "ring-4 ring-amber-800/80 dark:ring-amber-200/80" : ""}`}
       ref={setNodeRef}
       style={style}
     >
@@ -43,12 +41,12 @@ export function BeatRect(props: beatRectProps) {
       >
         <button
           onClick={closeHandler}
-          className="invisible rounded-sm py-1 hover:bg-amber-800/10 focus:visible active:bg-red-600/10 active:text-red-600 group-hover:visible"
+          className="invisible rounded-sm py-1 hover:bg-amber-700/20 focus:visible active:bg-red-600/10 active:text-red-600 group-hover:visible dark:hover:bg-amber-500/20"
         >
           <XIcon className="size-4"></XIcon>
         </button>
         <button
-          className="rounded-sm py-1 hover:bg-amber-800/10"
+          className="rounded-sm py-1 hover:bg-amber-700/20 dark:hover:bg-amber-500/20"
           {...attributes}
           {...listeners}
         >

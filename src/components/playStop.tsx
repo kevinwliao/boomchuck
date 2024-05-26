@@ -1,14 +1,14 @@
-import { PlayCircleIcon, PauseCircleIcon } from "@heroicons/react/24/solid";
+import { PlayCircleIcon, StopCircleIcon } from "@heroicons/react/24/solid";
 
-type playPauseProps = React.ComponentPropsWithoutRef<"svg"> & {
+type playStopProps = React.ComponentPropsWithoutRef<"svg"> & {
   started: boolean;
 };
 
-export default function PlayPause({
+export default function PlayStop({
   className,
   onClick,
   started,
-}: playPauseProps) {
+}: playStopProps) {
   return (
     <>
       {!started ? (
@@ -17,10 +17,10 @@ export default function PlayPause({
           onClick={onClick}
         ></PlayCircleIcon>
       ) : (
-        <PauseCircleIcon
+        <StopCircleIcon
           className={className}
           onClick={onClick}
-        ></PauseCircleIcon>
+        ></StopCircleIcon>
       )}
     </>
   );

@@ -21,8 +21,12 @@ export type Chord = {
 };
 
 export type Beat = {
+  // fix this later?
   id: number | string;
   chord: Chord;
 };
 
-export type Song = Beat[];
+export type Song = {
+  name: string;
+  beatsArr: Beat[];
+};

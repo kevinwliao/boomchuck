@@ -44,7 +44,7 @@ export function SongSelection() {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const selectedStatus = searchParams.get("song")?.toString();
+  const selectedStatus = searchParams.get("song")?.toString() || songOptions[0];
 
   function handleSearch(term: (typeof songOptions)[number]) {
     const params = new URLSearchParams(searchParams);
@@ -64,7 +64,7 @@ export function SongSelection() {
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="w-[200px] justify-between truncate"
           >
             {selectedStatus ? selectedStatus : "Load song..."}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
