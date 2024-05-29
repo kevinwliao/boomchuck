@@ -1,37 +1,11 @@
-import { Chord } from "./types";
 import * as Tone from "tone";
+import { useState, useEffect, useRef } from "react";
 
-export function chordToNotesArr(chord: Chord) {
-  const rootFormed = chord.root + "4";
-  const quality = chord.quality;
-  const rootTone = Tone.Frequency(rootFormed);
+const url = (note: string) => {
+  return `/bass/${note}.wav`;
+};
 
-  switch (quality) {
-    case "M":
-      return [
-        rootTone.toFrequency(),
-        rootTone.transpose(4).toFrequency(),
-        rootTone.transpose(7).toFrequency(),
-      ];
-    case "m":
-      return [
-        rootTone.toFrequency(),
-        rootTone.transpose(3).toFrequency(),
-        rootTone.transpose(7).toFrequency(),
-      ];
-    case "7":
-      return [
-        rootTone.toFrequency(),
-        rootTone.transpose(4).toFrequency(),
-        rootTone.transpose(7).toFrequency(),
-        rootTone.transpose(10).toFrequency(),
-      ];
-    default:
-      return [];
-  }
-}
-
-export const guitarMapping = {
+const guitarMapping = {
   F4: "/guitar-acoustic/F4.wav",
   "F#2": "/guitar-acoustic/Fs2.wav",
   "F#3": "/guitar-acoustic/Fs3.wav",
@@ -70,3 +44,24 @@ export const guitarMapping = {
   F2: "/guitar-acoustic/F2.wav",
   F3: "/guitar-acoustic/F3.wav",
 };
+
+export default function Sampler() {
+  const [isLoaded, setLoaded] = useState(false);
+  const samplerRef = useRef<Tone.Sampler | null>(null);
+
+  useEffect(() => {
+    samplerRef.current = new Tone.Sampler(guitarMapping, {
+      onload: () => setLoaded(true),
+    }).toDestination();
+  });
+
+  const handleClick = () => samplerRef.current?.triggerAttack("F2");
+
+  return (
+    <div>
+      <button disabled={!isLoaded} onClick={handleClick}>
+        start
+      </button>
+    </div>
+  );
+}

@@ -11,12 +11,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Info } from "lucide-react";
+import * as React from "react";
 
-export default function AboutDialog() {
+export const AboutDialog = React.forwardRef<HTMLElement>((props, ref) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost">
+        <Button variant="ghost" className="w-full justify-start">
           {/* <Info className="size-[1.2rem]"></Info> */}
           About
         </Button>
@@ -42,4 +43,4 @@ export default function AboutDialog() {
       </DialogContent>
     </Dialog>
   );
-}
+});

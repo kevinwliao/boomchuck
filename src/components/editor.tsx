@@ -48,6 +48,7 @@ export default function Editor({
 
   return (
     <DndContext
+      id={"id"}
       sensors={sensors}
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}

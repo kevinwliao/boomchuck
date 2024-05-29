@@ -14,14 +14,14 @@ export default function Bpm({
   disabled?: boolean;
 }) {
   return (
-    <div className="flex items-center gap-4">
-      <div className="text-md text-muted-foreground">BPM</div>
+    <div className="flex w-full items-center justify-start gap-1 sm:gap-2">
+      <div className="shrink text-xs text-muted-foreground sm:text-sm">BPM</div>
       <Input
-        className="h-max w-max text-2xl"
+        className="h-max w-max shrink text-lg sm:text-2xl"
         type="number"
         id="bpm"
         name="bpm"
-        min="80"
+        min="0"
         max="200"
         value={bpm}
         onChange={onChange}

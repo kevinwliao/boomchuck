@@ -32,7 +32,7 @@ export function BeatRect(props: beatRectProps) {
 
   return (
     <div
-      className={`font-lg group relative select-none rounded-lg border bg-boomchuck py-4 font-sans text-xl font-semibold md:py-6 md:text-3xl ${props.active ? "ring-4 ring-amber-800/80 dark:ring-amber-200/80" : ""}`}
+      className={`font-lg group relative box-border select-none rounded-lg  border bg-boomchuck py-4 font-sans text-xl font-semibold md:py-6 md:text-3xl ${props.active ? "ring-4 ring-amber-800/80 dark:ring-amber-200/80" : ""}`}
       ref={setNodeRef}
       style={style}
     >

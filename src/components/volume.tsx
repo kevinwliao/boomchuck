@@ -21,7 +21,7 @@ export default function Volume({
   }
 
   return (
-    <div className="flex w-32 items-center gap-2">
+    <div className="flex w-full items-center gap-2">
       {currentVolumeIcon}
       <Slider
         value={[volume]}

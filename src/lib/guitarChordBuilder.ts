@@ -57,10 +57,30 @@ export function guitarChordToMidiArr(chord: guitarChordRoots) {
 // idk
 export function chordToNotesArr(chord: Chord) {
   const chordString = chord.root + chord.quality;
-  const newArr = chordChart[chordString].map((value, i) => {
+  let newArr = chordChart[chordString].map((value, i) => {
     if (value !== null) {
       return Tone.Frequency(value + standardTuning[i], "midi").toNote();
+    } else {
+      return null;
     }
   });
+  newArr = newArr.filter((value) => value !== null);
   return newArr;
+}
+
+export function strumChord(
+  instrument: Tone.Sampler,
+  chord: Tone.FrequencyUnit[],
+  time: any,
+) {
+  for (let i = 0; i < chord.length; i++) {
+    instrument.triggerAttackRelease(
+      chord[i],
+      0.2,
+      // strumming humanizing algorithm
+      Tone.Time(time).toSeconds() + 0.004 * (7 - i),
+      // humanize volume
+      Math.random() * 0.2 + 0.4,
+    );
+  }
 }

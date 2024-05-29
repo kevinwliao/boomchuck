@@ -17,56 +17,50 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { songsNames as songOptions } from "@/lib/songs";
 
-const songOptions = [
-  "Big Spike Hammer",
-  "Cripple Creek",
-  "Cumberland Gap",
-  "Old Home Place",
-  "Rocky Top",
-  "Blue Ridge Cabin Home",
-  "Blue Night",
-  "Mountain Dew",
-  "Lonesome Road Blues",
-  "Worried Man Blues",
-  "Molly and Tenbrooks",
-];
+type SongSelectionProps = { mobile: boolean };
 
-export function SongSelection() {
-  const [open, setOpen] = React.useState(false);
+export const SongSelection = React.forwardRef<HTMLElement, SongSelectionProps>(
+  ({ mobile, ...props }, ref) => {
+    const [open, setOpen] = React.useState(false);
 
-  // managing "state" in URL instead of useState
-  // const [selectedStatus, setSelectedStatus] = React.useState<
-  //   (typeof songOptions)[number] | null
-  // >(null);
+    // managing "state" in URL instead of useState
+    // const [selectedStatus, setSelectedStatus] = React.useState<
+    //   (typeof songOptions)[number] | null
+    // >(null);
 
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();
 
-  const selectedStatus = searchParams.get("song")?.toString() || songOptions[0];
+    const selectedStatus =
+      songOptions.find(
+        (songName) => songName === searchParams.get("song")?.toString(),
+      ) || null;
 
-  function handleSearch(term: (typeof songOptions)[number]) {
-    const params = new URLSearchParams(searchParams);
-    if (term) {
-      params.set("song", term);
-    } else {
-      params.delete("song");
+    function handleSearch(term: (typeof songOptions)[number]) {
+      const params = new URLSearchParams(searchParams);
+      if (term) {
+        params.set("song", term);
+      } else {
+        params.delete("song");
+      }
+      replace(`${pathname}?${params.toString()}`);
     }
-    replace(`${pathname}?${params.toString()}`);
-  }
 
-  return (
-    <div className="flex items-center space-x-4">
+    return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
-            variant="outline"
+            variant={mobile ? "ghost" : "outline"}
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between truncate"
+            className="w-[200px] justify-between"
           >
-            {selectedStatus ? selectedStatus : "Load song..."}
+            <span className="truncate">
+              {selectedStatus ? selectedStatus : "Load song..."}
+            </span>
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -79,7 +73,8 @@ export function SongSelection() {
                 {songOptions.map((song) => (
                   <CommandItem
                     key={song}
-                    defaultValue={selectedStatus}
+                    // getting around types
+                    defaultValue={selectedStatus ? selectedStatus : undefined}
                     // no longer need value attribute since we are not using state
                     // value={song}
                     onSelect={(value) => {
@@ -104,6 +99,6 @@ export function SongSelection() {
           </Command>
         </PopoverContent>
       </Popover>
-    </div>
-  );
-}
+    );
+  },
+);
