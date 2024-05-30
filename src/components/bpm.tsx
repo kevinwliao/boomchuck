@@ -11,10 +11,12 @@ export default function Bpm({
   disabled?: boolean;
 }) {
   return (
-    <div className="flex max-w-full items-center justify-start gap-1 sm:gap-2">
-      <div className="shrink text-xs text-muted-foreground sm:text-sm">BPM</div>
+    <div className="flex w-full max-w-full items-center justify-center gap-0 sm:gap-2">
+      <span className=" hidden text-xs text-muted-foreground sm:text-sm md:inline">
+        BPM
+      </span>
       <Input
-        className=" h-max w-max max-w-full shrink text-2xl"
+        className="h-max w-max max-w-full shrink text-2xl"
         type="number"
         id="bpm"
         name="bpm"

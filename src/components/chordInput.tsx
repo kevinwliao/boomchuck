@@ -95,11 +95,11 @@ export default function ChordInput({
           <p className="text-sm text-muted-foreground">Root:</p>
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
-              <Button variant="outline" className="w-[150px] justify-start">
+              <Button variant="outline" className="w-[100px] justify-start">
                 {selectedRoot ? <>{selectedRoot}</> : <>+ Select root</>}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="p-0" side="right" align="start">
+            <PopoverContent className="w-max p-0" side="bottom" align="start">
               <Command>
                 <CommandInput placeholder="Change root..." />
                 <CommandList>

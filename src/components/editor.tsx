@@ -54,7 +54,7 @@ export default function Editor({
       onDragEnd={handleDragEnd}
       modifiers={[restrictToParentElement]}
     >
-      <div className="m-auto grid w-full grid-cols-4 gap-2 sm:w-10/12 lg:w-8/12 lg:grid-cols-8">
+      <div className="m-auto grid w-full grid-cols-4 gap-2 py-2 sm:w-10/12 sm:p-4 lg:w-8/12 lg:grid-cols-8">
         <SortableContext items={beatsArr}>
           {beatsArr.map((beat, index) => (
             <BeatRect
