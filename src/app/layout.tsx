@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning lang="en">
-      <body className={`${dmsans.className}`}>
+      <body className={`${dmsans.className} min-w-fit`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

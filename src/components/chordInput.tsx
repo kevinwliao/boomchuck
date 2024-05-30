@@ -1,6 +1,4 @@
 "use client";
-import { RootSelection } from "./rootSelection";
-import { QualitySelection } from "./qualitySelection";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -178,7 +176,7 @@ export default function ChordInput({
             {chord.quality}
           </Button>
         ))}
-        {/* <Trash2 className="invisible absolute right-3 top-3 size-4 text-destructive group-hover:visible"></Trash2> */}
+        <Trash2 className="invisible absolute right-3 top-3 size-4 text-destructive group-hover:visible"></Trash2>
       </div>
     </>
   );

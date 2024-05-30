@@ -6,9 +6,7 @@ import * as Tone from "tone";
 import Bpm from "@/components/bpm";
 import Editor from "./editor";
 import EditorSkeleton from "./editorSkeleton";
-import { Button } from "./ui/button";
 import { Chord, Beat, Song } from "@/lib/types";
-import { RockyTop as initSong } from "@/lib/songs";
 import ChordInput from "./chordInput";
 import { chordToNotesArr } from "@/lib/guitarChordBuilder";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
@@ -219,16 +217,14 @@ export default function BoomChuck() {
 
   return (
     <div id="boomchuck">
-      <div className="m-auto grid w-80 max-w-full grid-cols-3 justify-items-center gap-0 sm:w-96 sm:gap-2 ">
+      <div className="m-auto grid w-72 max-w-full grid-cols-3 justify-items-center gap-0 sm:w-80 sm:gap-2 md:w-96 ">
         <Bpm
           bpm={bpm}
           onChange={(e) => {
+            if (e.target.value == "") {
+              e.target.value = "60";
+            }
             const value = parseInt(e.target.value);
-            setBpm(value);
-            Tone.getTransport().bpm.rampTo(value * 2, 0.01);
-          }}
-          // onValueChange for slider, onChange for number input
-          onValueChange={([value]) => {
             setBpm(value);
             Tone.getTransport().bpm.rampTo(value * 2, 0.01);
           }}

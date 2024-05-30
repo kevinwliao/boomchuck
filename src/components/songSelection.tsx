@@ -70,7 +70,7 @@ export const SongSelection = React.forwardRef<HTMLElement, SongSelectionProps>(
             <CommandEmpty>No song found.</CommandEmpty>
             <CommandList>
               <CommandGroup>
-                {songOptions.map((song) => (
+                {songOptions.sort().map((song) => (
                   <CommandItem
                     key={song}
                     // getting around types

@@ -1,7 +1,7 @@
 import Socials from "@/components/socials";
 export default function Footer() {
   return (
-    <footer className="border-t py-4">
+    <footer className="border-t p-4">
       <div className="flex items-center justify-center text-sm">
         <div className="text-muted-foreground">
           Built by{" "}

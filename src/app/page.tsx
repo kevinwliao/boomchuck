@@ -11,7 +11,7 @@ export default function Page({
   const validatedSearchParams = searchParamsSchema.safeParse(searchParams);
 
   return (
-    <main className=" p-4 dark:bg-stone-950 md:p-8">
+    <main className="min-w-fit p-4 dark:bg-stone-950 md:p-8">
       <h2 className="scroll-m-20 pb-2 text-center text-4xl font-extrabold tracking-tight lg:text-5xl">
         BoomChuck
       </h2>
