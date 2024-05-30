@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 const dmsans = Bricolage_Grotesque({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Boomchuck - Bluegrass Backup",
+  title: "BoomChuck - Bluegrass Backup",
   description: "Interactive website to create bluegrass backing tracks",
 };
 

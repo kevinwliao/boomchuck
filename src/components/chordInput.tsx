@@ -153,7 +153,7 @@ export default function ChordInput({
           Clear
         </Button>
       </div>
-      <div className="group relative m-auto mb-2 mt-2 flex max-w-fit flex-wrap gap-4 rounded-md border p-4 ">
+      <div className="group relative m-auto mb-2 mt-2 flex max-w-fit flex-wrap justify-center gap-4 rounded-md border p-4 ">
         {palette.map((chord, index) => (
           <Button
             key={index}

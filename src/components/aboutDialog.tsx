@@ -29,14 +29,13 @@ export const AboutDialog = React.forwardRef<HTMLElement>((props, ref) => {
         <div className="text-muted-foreground">
           <p className="leading-7 [&:not(:first-child)]:mt-2">
             Named after the "boom-chuck" of a bluegrass rhythm section,
-            BoomChuck is a free tool created to help bluegrass musicians
-            practice their playing with accompaniment.
+            BoomChuck is a free tool created to help musicians practice with
+            accompaniment.
           </p>
           <p className="leading-7 [&:not(:first-child)]:mt-2">
             Load a song, or build your own. You can enter chords with the chord
             builder, or add them to your palette for reuse. Drag and drop to
-            rearrange. Songs will be played in cut-time, so each block will
-            represent a measure.
+            rearrange.
           </p>
           <p className="leading-7 [&:not(:first-child)]:mt-2">Happy jamming!</p>
         </div>
