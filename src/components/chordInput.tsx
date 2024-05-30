@@ -19,7 +19,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Beat } from "@/lib/types";
 import { Chord } from "@/lib/types";
-import { Trash2 } from "lucide-react";
+import { Eraser } from "lucide-react";
 
 const qualityOptions = ["M", "m", "7"] as const;
 const rootOptions = [
@@ -77,9 +77,6 @@ export default function ChordInput({
       (chord) =>
         chord.quality === selectedQuality && chord.root === selectedRoot,
     );
-
-    if (chordFoundInPalette) {
-    }
     if (chordSelected && !chordFoundInPalette) {
       setPalette([
         ...palette,
@@ -161,6 +158,7 @@ export default function ChordInput({
           <Button
             key={index}
             variant="default"
+            size="icon"
             className="size-10 rounded-full"
             onClick={() => {
               setBeatsArr((prevBeatsArr) => [
@@ -176,7 +174,16 @@ export default function ChordInput({
             {chord.quality}
           </Button>
         ))}
-        <Trash2 className="invisible absolute right-3 top-3 size-4 text-destructive group-hover:visible"></Trash2>
+        <Button
+          variant="outline"
+          size="icon"
+          className="size-10 rounded-full"
+          onClick={() => {
+            setPalette((prevPalette) => prevPalette.slice(0, -1));
+          }}
+        >
+          <Eraser className="h-[1.2rem] w-[1.2rem]"></Eraser>
+        </Button>
       </div>
     </>
   );

@@ -57,12 +57,6 @@ export default function BoomChuck() {
     }
   };
 
-  useKeyboardShortcut({
-    key: " ",
-    onKeyPressed: handleStartClick,
-    started: started,
-  });
-
   // update state when searchparams change
   useEffect(() => {
     if (selectedSong) setBeatsArr(selectedSong.beatsArr);
@@ -118,89 +112,132 @@ export default function BoomChuck() {
     countInSeq.loop = false;
     countInSeq.start();
 
-    const bass = new Tone.Synth().connect(compressor);
-
     seqRef.current = new Tone.Sequence(
       (time, index) => {
-        const beat = beatsArr[index];
-        sampler.triggerAttackRelease(
-          beat.chord.root === "C"
-            ? beat.chord.root + "2"
-            : beat.chord.root + "2",
-          0.7,
-          Tone.Time(time).toSeconds(),
-          2,
-        );
-        guitarSampler.triggerAttackRelease(
-          beat.chord.root === "G"
-            ? beat.chord.root + "2"
-            : beat.chord.root + "3",
-          0.3,
-          Tone.Time(time).toSeconds(),
-          0.2,
-        );
-        strumChord(
-          guitarSampler,
-          chordToNotesArr(beat.chord),
-          Tone.Time(time).toSeconds() + Tone.Time("4n").toSeconds() - 0.02,
-        );
-        // guitarSampler.triggerAttackRelease(
-        //   chordToNotesArr(beat.chord),
-        //   0.3,
-        //   Tone.Time(time).toSeconds() + Tone.Time("4n").toSeconds(),
-        //   0.5,
+        const beatIndex = Math.floor(index / 4);
+        const beat = beatsArr[beatIndex];
+        const position = (index % 4) + 1;
+
+        switch (position) {
+          case 1:
+            sampler.triggerAttackRelease(
+              beat.chord.root === "C"
+                ? beat.chord.root + "2"
+                : beat.chord.root + "2",
+              0.7,
+              time,
+              2,
+            );
+            setActiveIndex((prevActiveIndex) => {
+              if (prevActiveIndex + 1 < beatsArr.length) {
+                return prevActiveIndex + 1;
+              } else {
+                return 0;
+              }
+            });
+            setActiveIndex(beatIndex);
+            break;
+          case 2:
+            strumChord(guitarSampler, chordToNotesArr(beat.chord), time);
+            break;
+          case 3:
+            sampler.triggerAttackRelease(
+              Tone.Frequency(
+                beat.chord.root === "C"
+                  ? beat.chord.root + "2"
+                  : beat.chord.root + "2",
+              )
+                .transpose(-5)
+                .toFrequency(),
+              0.7,
+              time,
+              2,
+            );
+            break;
+          case 4:
+            strumChord(guitarSampler, chordToNotesArr(beat.chord), time);
+            break;
+        }
+
+        // ///////////
+        // const beat = beatsArr[index];
+        // sampler.triggerAttackRelease(
+        //   beat.chord.root === "C"
+        //     ? beat.chord.root + "2"
+        //     : beat.chord.root + "2",
+        //   0.7,
+        //   Tone.Time(time).toSeconds(),
+        //   2,
         // );
-        sampler.triggerAttackRelease(
-          Tone.Frequency(
-            beat.chord.root === "C"
-              ? beat.chord.root + "2"
-              : beat.chord.root + "2",
-          )
-            .transpose(-5)
-            .toFrequency(),
-          0.7,
-          Tone.Time(time).toSeconds() +
-            Tone.Time("4n").toSeconds() +
-            Tone.Time("4n").toSeconds(),
-          2,
-        );
-        guitarSampler.triggerAttackRelease(
-          Tone.Frequency(beat.chord.root + "3")
-            .transpose(-5)
-            .toFrequency(),
-          0.3,
-          Tone.Time(time).toSeconds() +
-            Tone.Time("4n").toSeconds() +
-            Tone.Time("4n").toSeconds(),
-          0.1,
-        );
-        strumChord(
-          guitarSampler,
-          chordToNotesArr(beat.chord),
-          Tone.Time(time).toSeconds() + 3 * Tone.Time("4n").toSeconds() - 0.02,
-        );
         // guitarSampler.triggerAttackRelease(
+        //   beat.chord.root === "G"
+        //     ? beat.chord.root + "2"
+        //     : beat.chord.root + "3",
+        //   0.3,
+        //   Tone.Time(time).toSeconds(),
+        //   0.2,
+        // );
+        // strumChord(
+        //   guitarSampler,
         //   chordToNotesArr(beat.chord),
+        //   Tone.Time(time).toSeconds() + Tone.Time("4n").toSeconds() - 0.02,
+        // );
+        // // guitarSampler.triggerAttackRelease(
+        // //   chordToNotesArr(beat.chord),
+        // //   0.3,
+        // //   Tone.Time(time).toSeconds() + Tone.Time("4n").toSeconds(),
+        // //   0.5,
+        // // );
+        // sampler.triggerAttackRelease(
+        //   Tone.Frequency(
+        //     beat.chord.root === "C"
+        //       ? beat.chord.root + "2"
+        //       : beat.chord.root + "2",
+        //   )
+        //     .transpose(-5)
+        //     .toFrequency(),
+        //   0.7,
+        //   Tone.Time(time).toSeconds() +
+        //     Tone.Time("4n").toSeconds() +
+        //     Tone.Time("4n").toSeconds(),
+        //   2,
+        // );
+        // guitarSampler.triggerAttackRelease(
+        //   Tone.Frequency(beat.chord.root + "3")
+        //     .transpose(-5)
+        //     .toFrequency(),
         //   0.3,
         //   Tone.Time(time).toSeconds() +
         //     Tone.Time("4n").toSeconds() +
-        //     Tone.Time("4n").toSeconds() +
         //     Tone.Time("4n").toSeconds(),
-        //   0.5,
+        //   0.1,
         // );
-        setActiveIndex((prevActiveIndex) => {
-          if (prevActiveIndex + 1 < beatsArr.length) {
-            return prevActiveIndex + 1;
-          } else {
-            return 0;
-          }
-        });
-        setActiveIndex(index);
+        // strumChord(
+        //   guitarSampler,
+        //   chordToNotesArr(beat.chord),
+        //   Tone.Time(time).toSeconds() + 3 * Tone.Time("4n").toSeconds() - 0.02,
+        // );
+        // // guitarSampler.triggerAttackRelease(
+        // //   chordToNotesArr(beat.chord),
+        // //   0.3,
+        // //   Tone.Time(time).toSeconds() +
+        // //     Tone.Time("4n").toSeconds() +
+        // //     Tone.Time("4n").toSeconds() +
+        // //     Tone.Time("4n").toSeconds(),
+        // //   0.5,
+        // // );
+        // setActiveIndex((prevActiveIndex) => {
+        //   if (prevActiveIndex + 1 < beatsArr.length) {
+        //     return prevActiveIndex + 1;
+        //   } else {
+        //     return 0;
+        //   }
+        // });
+        // setActiveIndex(index);
       },
-      [...beatsArr.map((beat, i) => i)],
-      "1n",
+      Array.from(Array(beatsArr.length * 4).keys()),
+      "4n",
     );
-    seqRef.current.humanize = 0.0001;
     seqRef.current.start("+0:8:0");
     Tone.getTransport().loopStart = "+0:8:0";
     Tone.getTransport().loopEnd = seqRef.current.loopEnd;
@@ -228,7 +265,7 @@ export default function BoomChuck() {
             setBpm(value);
             Tone.getTransport().bpm.rampTo(value * 2, 0.01);
           }}
-          disabled={started}
+          disabled={false}
         ></Bpm>
         <PlayStop
           className="size-14 fill-primary transition hover:fill-primary/90 disabled:cursor-not-allowed disabled:opacity-50 md:size-20"
