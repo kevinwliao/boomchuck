@@ -13,7 +13,7 @@ export default function Footer() {
           >
             Kevin Liao
           </a>
-          . Send{" "}
+          {/* . Send{" "}
           <a
             className="font-medium underline underline-offset-4"
             href="https://github.com/"
@@ -21,6 +21,15 @@ export default function Footer() {
             rel="noopener noreferrer"
           >
             feedback
+          </a> */}
+          .{" "}
+          <a
+            className="font-medium underline underline-offset-4"
+            href="https://github.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Attributions
           </a>
           .
         </div>
