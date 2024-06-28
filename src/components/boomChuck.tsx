@@ -6,6 +6,7 @@ import * as Tone from "tone";
 import Bpm from "@/components/bpm";
 import Editor from "./editor";
 import EditorSkeleton from "./editorSkeleton";
+import EditorEmpty from "@/components/editorEmpty";
 import { Chord, Beat, Song } from "@/lib/types";
 import ChordInput from "./chordInput";
 import { chordToNotesArr } from "@/lib/guitarChordBuilder";
@@ -16,6 +17,7 @@ import Sampler from "./sampler";
 import { strumChord } from "@/lib/guitarChordBuilder";
 import { guitarMapping } from "@/lib/musicutils";
 import { useKeyboardShortcut } from "@/lib/useKeyboardShortcut";
+import { ArrowUp } from "lucide-react";
 
 const url = (note: string) => {
   return `/bass/${note}.wav`;
@@ -254,7 +256,7 @@ export default function BoomChuck() {
 
   return (
     <div id="boomchuck">
-      <div className="m-auto grid w-72 max-w-full grid-cols-3 justify-items-center gap-0  bg-background p-2 sm:w-80 sm:gap-2 md:w-96 ">
+      <div className="sticky top-4 m-auto grid w-72 max-w-full grid-cols-3 justify-items-center  gap-0 bg-background p-2 sm:w-80 sm:gap-2 md:w-96">
         <Bpm
           bpm={bpm}
           onChange={(e) => {
@@ -288,7 +290,7 @@ export default function BoomChuck() {
       </div>
       <ChordInput setBeatsArr={setBeatsArr}></ChordInput>
       {beatsArr.length === 0 ? (
-        <EditorSkeleton></EditorSkeleton>
+        <EditorEmpty></EditorEmpty>
       ) : (
         <Editor
           beatsArr={beatsArr}
