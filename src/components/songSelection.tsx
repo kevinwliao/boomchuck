@@ -102,5 +102,6 @@ const SongSelection = React.forwardRef<HTMLElement, SongSelectionProps>(
     );
   },
 );
+SongSelection.displayName = "SongSelection";
 
 export default SongSelection;

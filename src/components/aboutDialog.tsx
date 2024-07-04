@@ -38,4 +38,6 @@ const AboutDialog = React.forwardRef<HTMLElement>((props, ref) => {
     </Dialog>
   );
 });
+AboutDialog.displayName = "AboutDialog";
+
 export default AboutDialog;

@@ -50,5 +50,6 @@ const ModeToggle = React.forwardRef<HTMLElement, ModeToggleProps>(
     );
   },
 );
+ModeToggle.displayName = "ModeToggle";
 
 export default ModeToggle;
