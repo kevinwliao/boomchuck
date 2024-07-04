@@ -2,10 +2,15 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Info } from "lucide-react";
 import * as React from "react";
 
 export const AboutDialog = React.forwardRef<HTMLElement>((props, ref) => {
@@ -14,7 +19,7 @@ export const AboutDialog = React.forwardRef<HTMLElement>((props, ref) => {
       <DialogTrigger asChild>
         <Button variant="ghost" className="w-full justify-start">
           {/* <Info className="size-[1.2rem]"></Info> */}
-          About
+          Attributions
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

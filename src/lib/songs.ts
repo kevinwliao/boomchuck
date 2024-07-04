@@ -158,6 +158,52 @@ export const YourLoveIsLikeAFlower: Song = {
   ],
 };
 
+//////
+
+export const MountainDew: Song = {
+  name: "Mountain Dew",
+  beatsArr: [
+    { id: 1, chord: { root: "G", quality: "M" } },
+    { id: 2, chord: { root: "G", quality: "M" } },
+    { id: 3, chord: { root: "G", quality: "M" } },
+    { id: 4, chord: { root: "G", quality: "M" } },
+    { id: 5, chord: { root: "C", quality: "M" } },
+    { id: 6, chord: { root: "C", quality: "M" } },
+    { id: 7, chord: { root: "G", quality: "M" } },
+    { id: 8, chord: { root: "G", quality: "M" } },
+    { id: 9, chord: { root: "G", quality: "M" } },
+    { id: 10, chord: { root: "G", quality: "M" } },
+    { id: 11, chord: { root: "G", quality: "M" } },
+    { id: 12, chord: { root: "G", quality: "M" } },
+    { id: 13, chord: { root: "G", quality: "M" } },
+    { id: 14, chord: { root: "D", quality: "7" } },
+    { id: 15, chord: { root: "G", quality: "M" } },
+    { id: 16, chord: { root: "G", quality: "M" } },
+  ],
+};
+
+export const SittingOnTopOfTheWorld: Song = {
+  name: "Sitting on Top of the World",
+  beatsArr: [
+    { id: 1, chord: { root: "G", quality: "M" } },
+    { id: 2, chord: { root: "G", quality: "M" } },
+    { id: 3, chord: { root: "G", quality: "M" } },
+    { id: 4, chord: { root: "G", quality: "M" } },
+    { id: 5, chord: { root: "C", quality: "M" } },
+    { id: 6, chord: { root: "C", quality: "M" } },
+    { id: 7, chord: { root: "G", quality: "M" } },
+    { id: 8, chord: { root: "G", quality: "M" } },
+    { id: 9, chord: { root: "G", quality: "M" } },
+    { id: 10, chord: { root: "G", quality: "M" } },
+    { id: 11, chord: { root: "E", quality: "m" } },
+    { id: 12, chord: { root: "E", quality: "m" } },
+    { id: 13, chord: { root: "G", quality: "M" } },
+    { id: 14, chord: { root: "D", quality: "7" } },
+    { id: 15, chord: { root: "G", quality: "M" } },
+    { id: 16, chord: { root: "G", quality: "M" } },
+  ],
+};
+
 export const SongsArray: Song[] = [
   BigSpikeHammer,
   WorriedManBlues,
@@ -166,6 +212,8 @@ export const SongsArray: Song[] = [
   RockyTop,
   LongJourneyHome,
   YourLoveIsLikeAFlower,
+  MountainDew,
+  SittingOnTopOfTheWorld,
 ];
 
 export const songsNames = [
@@ -176,6 +224,8 @@ export const songsNames = [
   "Rocky Top",
   "Long Journey Home",
   "Your Love Is Like a Flower",
+  "Mountain Dew",
+  "Sitting on Top of the World",
 ];
 
 export const readOnlySongsNames = [
@@ -186,4 +236,6 @@ export const readOnlySongsNames = [
   "Rocky Top",
   "Long Journey Home",
   "Your Love Is Like a Flower",
+  "Mountain Dew",
+  "Sitting on Top of the World",
 ] as const;

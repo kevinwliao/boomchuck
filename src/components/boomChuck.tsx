@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import * as Tone from "tone";
 import Bpm from "@/components/bpm";
 import Editor from "./editor";
-import EditorSkeleton from "./editorSkeleton";
 import EditorEmpty from "@/components/editorEmpty";
 import { Chord, Beat, Song } from "@/lib/types";
 import ChordInput from "./chordInput";
@@ -13,11 +12,8 @@ import { chordToNotesArr } from "@/lib/guitarChordBuilder";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { SongsArray } from "@/lib/songs";
 import { searchParamsSchema } from "@/lib/actions";
-import Sampler from "./sampler";
 import { strumChord } from "@/lib/guitarChordBuilder";
 import { guitarMapping } from "@/lib/musicutils";
-import { useKeyboardShortcut } from "@/lib/useKeyboardShortcut";
-import { ArrowUp } from "lucide-react";
 
 const url = (note: string) => {
   return `/bass/${note}.wav`;
@@ -72,8 +68,7 @@ export default function BoomChuck() {
   useEffect(() => {
     // for performance
     Tone.setContext(new Tone.Context({ latencyHint: "playback" }));
-
-    // init tempo
+    // initialize tempo
     Tone.getTransport().bpm.value = bpm * 2;
 
     volumeRef.current = new Tone.Volume(volume).toDestination();
@@ -82,8 +77,7 @@ export default function BoomChuck() {
       compressor,
     );
 
-    // sampler testin
-    const sampler = new Tone.Sampler({
+    const bassSampler = new Tone.Sampler({
       G1: url("G1"),
       A1: url("A1"),
       B1: url("B1"),
@@ -102,11 +96,10 @@ export default function BoomChuck() {
       release: 0.7,
     }).connect(compressor);
 
-    // COUNT IN! 1, 2, 1, 2, 3, 4!
-    const clapSynth = new Tone.NoiseSynth().connect(compressor);
+    const countInSynth = new Tone.NoiseSynth().connect(compressor);
     const countInSeq = new Tone.Sequence(
-      (time, index) => {
-        clapSynth.triggerAttackRelease(0.1, time);
+      (time) => {
+        countInSynth.triggerAttackRelease(0.1, time);
       },
       [0, 1, 2, 3],
       "2n",
@@ -122,7 +115,7 @@ export default function BoomChuck() {
 
         switch (position) {
           case 1:
-            sampler.triggerAttackRelease(
+            bassSampler.triggerAttackRelease(
               beat.chord.root === "C"
                 ? beat.chord.root + "2"
                 : beat.chord.root + "2",
@@ -140,10 +133,11 @@ export default function BoomChuck() {
             setActiveIndex(beatIndex);
             break;
           case 2:
-            strumChord(guitarSampler, chordToNotesArr(beat.chord), time);
+            // offset for strumming delay
+            strumChord(guitarSampler, chordToNotesArr(beat.chord), time - 0.05);
             break;
           case 3:
-            sampler.triggerAttackRelease(
+            bassSampler.triggerAttackRelease(
               Tone.Frequency(
                 beat.chord.root === "C"
                   ? beat.chord.root + "2"
@@ -157,85 +151,10 @@ export default function BoomChuck() {
             );
             break;
           case 4:
-            strumChord(guitarSampler, chordToNotesArr(beat.chord), time);
+            // offset for strumming delay
+            strumChord(guitarSampler, chordToNotesArr(beat.chord), time - 0.05);
             break;
         }
-
-        // ///////////
-        // const beat = beatsArr[index];
-        // sampler.triggerAttackRelease(
-        //   beat.chord.root === "C"
-        //     ? beat.chord.root + "2"
-        //     : beat.chord.root + "2",
-        //   0.7,
-        //   Tone.Time(time).toSeconds(),
-        //   2,
-        // );
-        // guitarSampler.triggerAttackRelease(
-        //   beat.chord.root === "G"
-        //     ? beat.chord.root + "2"
-        //     : beat.chord.root + "3",
-        //   0.3,
-        //   Tone.Time(time).toSeconds(),
-        //   0.2,
-        // );
-        // strumChord(
-        //   guitarSampler,
-        //   chordToNotesArr(beat.chord),
-        //   Tone.Time(time).toSeconds() + Tone.Time("4n").toSeconds() - 0.02,
-        // );
-        // // guitarSampler.triggerAttackRelease(
-        // //   chordToNotesArr(beat.chord),
-        // //   0.3,
-        // //   Tone.Time(time).toSeconds() + Tone.Time("4n").toSeconds(),
-        // //   0.5,
-        // // );
-        // sampler.triggerAttackRelease(
-        //   Tone.Frequency(
-        //     beat.chord.root === "C"
-        //       ? beat.chord.root + "2"
-        //       : beat.chord.root + "2",
-        //   )
-        //     .transpose(-5)
-        //     .toFrequency(),
-        //   0.7,
-        //   Tone.Time(time).toSeconds() +
-        //     Tone.Time("4n").toSeconds() +
-        //     Tone.Time("4n").toSeconds(),
-        //   2,
-        // );
-        // guitarSampler.triggerAttackRelease(
-        //   Tone.Frequency(beat.chord.root + "3")
-        //     .transpose(-5)
-        //     .toFrequency(),
-        //   0.3,
-        //   Tone.Time(time).toSeconds() +
-        //     Tone.Time("4n").toSeconds() +
-        //     Tone.Time("4n").toSeconds(),
-        //   0.1,
-        // );
-        // strumChord(
-        //   guitarSampler,
-        //   chordToNotesArr(beat.chord),
-        //   Tone.Time(time).toSeconds() + 3 * Tone.Time("4n").toSeconds() - 0.02,
-        // );
-        // // guitarSampler.triggerAttackRelease(
-        // //   chordToNotesArr(beat.chord),
-        // //   0.3,
-        // //   Tone.Time(time).toSeconds() +
-        // //     Tone.Time("4n").toSeconds() +
-        // //     Tone.Time("4n").toSeconds() +
-        // //     Tone.Time("4n").toSeconds(),
-        // //   0.5,
-        // // );
-        // setActiveIndex((prevActiveIndex) => {
-        //   if (prevActiveIndex + 1 < beatsArr.length) {
-        //     return prevActiveIndex + 1;
-        //   } else {
-        //     return 0;
-        //   }
-        // });
-        // setActiveIndex(index);
       },
       Array.from(Array(beatsArr.length * 4).keys()),
       "4n",
@@ -246,9 +165,8 @@ export default function BoomChuck() {
     return () => {
       seqRef.current?.dispose();
       synthRef.current?.dispose();
-
       countInSeq.dispose();
-      clapSynth.dispose();
+      countInSynth.dispose();
       Tone.getTransport().stop();
       Tone.getContext().dispose();
     };

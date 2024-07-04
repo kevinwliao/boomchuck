@@ -32,7 +32,7 @@ export const SongSelection = React.forwardRef<HTMLElement, SongSelectionProps>(
 
     const searchParams = useSearchParams();
     const pathname = usePathname();
-    const { replace } = useRouter();
+    const { push } = useRouter();
 
     const selectedStatus =
       songOptions.find(
@@ -46,7 +46,7 @@ export const SongSelection = React.forwardRef<HTMLElement, SongSelectionProps>(
       } else {
         params.delete("song");
       }
-      replace(`${pathname}?${params.toString()}`);
+      push(`${pathname}?${params.toString()}`);
     }
 
     return (
@@ -64,7 +64,7 @@ export const SongSelection = React.forwardRef<HTMLElement, SongSelectionProps>(
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0">
+        <PopoverContent className="relative w-[200px] p-0">
           <Command>
             <CommandInput placeholder="Search song..." />
             <CommandEmpty>No song found.</CommandEmpty>
@@ -87,11 +87,11 @@ export const SongSelection = React.forwardRef<HTMLElement, SongSelectionProps>(
                   >
                     <Check
                       className={cn(
-                        "mr-2 h-4 w-4",
+                        "mr-2 h-4 w-4 shrink-0 grow-0",
                         selectedStatus === song ? "opacity-100" : "opacity-0",
                       )}
                     />
-                    {song}
+                    <div>{song}</div>
                   </CommandItem>
                 ))}
               </CommandGroup>
