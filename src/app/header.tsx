@@ -5,7 +5,7 @@ import { useState } from "react";
 import { MusicalNoteIcon } from "@heroicons/react/16/solid";
 import { Menu, MenuIcon } from "lucide-react";
 import Link from "next/link";
-import { ModeToggle } from "@/components/toggle";
+import ModeToggle from "@/components/toggle";
 import { cn } from "@/lib/utils";
 import {
   NavigationMenu,
@@ -26,9 +26,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { SongSelection } from "@/components/songSelection";
+import SongSelection from "@/components/songSelection";
 import Socials from "@/components/socials";
-import { AboutDialog } from "@/components/aboutDialog";
+import AboutDialog from "@/components/aboutDialog";
 
 export default function Header() {
   return (

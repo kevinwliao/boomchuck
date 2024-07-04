@@ -29,7 +29,7 @@ export function QualitySelection() {
 
   return (
     <div className="flex items-center space-x-4">
-      <p className="text-muted-foreground text-sm">Quality:</p>
+      <p className="text-sm text-muted-foreground">Quality:</p>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild className="hidden">
           <Button variant="outline" className="w-[150px] justify-start">
@@ -63,8 +63,8 @@ export function QualitySelection() {
         </PopoverContent>
       </Popover>
       <RadioGroup className="flex" defaultValue={qualityOptions[0]}>
-        {qualityOptions.map((quality) => (
-          <div className="flex items-center space-x-2">
+        {qualityOptions.map((quality, i) => (
+          <div key={i} className="flex items-center space-x-2">
             <RadioGroupItem value={quality} id={quality} />
             <Label htmlFor={quality}>{quality}</Label>
           </div>

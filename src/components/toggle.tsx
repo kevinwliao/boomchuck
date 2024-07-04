@@ -14,7 +14,7 @@ import {
 type ModeToggleProps = { mobile: boolean };
 
 // have to forwardRef for Radix purposes
-export const ModeToggle = React.forwardRef<HTMLElement, ModeToggleProps>(
+const ModeToggle = React.forwardRef<HTMLElement, ModeToggleProps>(
   ({ mobile }, ref) => {
     const { setTheme } = useTheme();
 
@@ -50,3 +50,5 @@ export const ModeToggle = React.forwardRef<HTMLElement, ModeToggleProps>(
     );
   },
 );
+
+export default ModeToggle;

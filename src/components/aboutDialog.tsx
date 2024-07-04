@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import * as React from "react";
 
-export const AboutDialog = React.forwardRef<HTMLElement>((props, ref) => {
+const AboutDialog = React.forwardRef<HTMLElement>((props, ref) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -23,9 +23,9 @@ export const AboutDialog = React.forwardRef<HTMLElement>((props, ref) => {
         </DialogHeader>
         <div className="text-muted-foreground">
           <p className="leading-7 [&:not(:first-child)]:mt-2">
-            Named after the "boom-chuck" of a bluegrass rhythm section,
-            BoomChuck is a free tool created to help musicians practice with
-            accompaniment.
+            Named after the &quot;boom-chuck&quot; of a bluegrass rhythm
+            section, BoomChuck is a free tool created to help musicians practice
+            with accompaniment.
           </p>
           <p className="leading-7 [&:not(:first-child)]:mt-2">
             Load a song, or build your own. You can enter chords with the chord
@@ -38,3 +38,4 @@ export const AboutDialog = React.forwardRef<HTMLElement>((props, ref) => {
     </Dialog>
   );
 });
+export default AboutDialog;

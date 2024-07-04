@@ -21,7 +21,7 @@ import { songsNames as songOptions } from "@/lib/songs";
 
 type SongSelectionProps = { mobile: boolean };
 
-export const SongSelection = React.forwardRef<HTMLElement, SongSelectionProps>(
+const SongSelection = React.forwardRef<HTMLElement, SongSelectionProps>(
   ({ mobile, ...props }, ref) => {
     const [open, setOpen] = React.useState(false);
 
@@ -102,3 +102,5 @@ export const SongSelection = React.forwardRef<HTMLElement, SongSelectionProps>(
     );
   },
 );
+
+export default SongSelection;
