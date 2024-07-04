@@ -48,7 +48,9 @@ export default function Header() {
               <AboutDialog></AboutDialog>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <SongSelection mobile={false}></SongSelection>
+              <React.Suspense>
+                <SongSelection mobile={false}></SongSelection>
+              </React.Suspense>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <ModeToggle mobile={false}></ModeToggle>
@@ -69,7 +71,9 @@ export default function Header() {
             </DropdownMenuItem>
             <DropdownMenuSeparator></DropdownMenuSeparator>
             <DropdownMenuItem asChild>
-              <SongSelection mobile={true}></SongSelection>
+              <React.Suspense>
+                <SongSelection mobile={true}></SongSelection>
+              </React.Suspense>{" "}
             </DropdownMenuItem>
             <DropdownMenuSeparator></DropdownMenuSeparator>
             <DropdownMenuItem asChild>
