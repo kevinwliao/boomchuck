@@ -41,9 +41,9 @@ const chordChart = {
   B7: [null, 2, 1, 2, 0, 2],
 };
 
-type guitarChordRoots = keyof typeof chordChart;
+type chordChartKeyType = keyof typeof chordChart;
 
-export function guitarChordToMidiArr(chord: guitarChordRoots) {
+export function guitarChordToMidiArr(chord: chordChartKeyType) {
   const newArr = chordChart[chord].map((value, i) => {
     if (value !== null) {
       return value + standardTuning[i];
@@ -56,21 +56,26 @@ export function guitarChordToMidiArr(chord: guitarChordRoots) {
 
 // idk
 export function chordToNotesArr(chord: Chord) {
-  const chordString = chord.root + chord.quality;
-  let newArr = chordChart[chordString].map((value, i) => {
+  const chordChartKey = chord.root + chord.quality;
+
+  const unfilteredArr: (Tone.Unit.Frequency | null)[] = chordChart[
+    chordChartKey as chordChartKeyType
+  ].map((value, i) => {
     if (value !== null) {
       return Tone.Frequency(value + standardTuning[i], "midi").toNote();
     } else {
       return null;
     }
   });
-  newArr = newArr.filter((value) => value !== null);
-  return newArr;
+  const filteredArr: Tone.Unit.Frequency[] = unfilteredArr.filter(
+    (value): value is Tone.Unit.Frequency => value !== null,
+  );
+  return filteredArr;
 }
 
 export function strumChord(
   instrument: Tone.Sampler,
-  chord: Tone.FrequencyUnit[],
+  chord: Tone.Unit.Frequency[],
   time: any,
 ) {
   for (let i = 0; i < chord.length; i++) {
