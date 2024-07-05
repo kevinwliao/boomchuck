@@ -174,7 +174,7 @@ export default function BoomChuck() {
 
   return (
     <div id="boomchuck">
-      <div className="sticky top-4 m-auto grid w-72 max-w-full grid-cols-3 justify-items-center  gap-0 bg-background p-2 sm:w-80 sm:gap-2 md:w-96">
+      <div className=" m-auto grid w-72 max-w-full grid-cols-3 justify-items-center  gap-0 bg-background p-2 sm:w-80 sm:gap-2 md:w-96">
         <Bpm
           bpm={bpm}
           onChange={(e) => {
