@@ -73,7 +73,7 @@ export default function Header() {
             <DropdownMenuItem asChild>
               <React.Suspense>
                 <SongSelection mobile={true}></SongSelection>
-              </React.Suspense>{" "}
+              </React.Suspense>
             </DropdownMenuItem>
             <DropdownMenuSeparator></DropdownMenuSeparator>
             <DropdownMenuItem asChild>
