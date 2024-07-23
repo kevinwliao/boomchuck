@@ -1,5 +1,5 @@
 import BoomChuck from "@/components/boomChuck";
-import { searchParamsSchema } from "@/lib/actions";
+import { searchParamsSchema } from "@/lib/schemas";
 
 export default function Page({
   searchParams,

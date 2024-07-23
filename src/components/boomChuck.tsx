@@ -11,7 +11,7 @@ import ChordInput from "./chordInput";
 import { chordToNotesArr } from "@/lib/guitarChordBuilder";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { SongsArray } from "@/lib/songs";
-import { searchParamsSchema } from "@/lib/actions";
+import { searchParamsSchema } from "@/lib/schemas";
 import { strumChord } from "@/lib/guitarChordBuilder";
 import { guitarMapping } from "@/lib/musicutils";
 
