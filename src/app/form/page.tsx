@@ -1,4 +1,4 @@
-import { ProfileForm } from "@/app/form/form";
+import FormDialog from "@/app/form/form";
 export default function Page() {
-  return <ProfileForm></ProfileForm>;
+  return <FormDialog></FormDialog>;
 }
