@@ -1,4 +1,4 @@
-import FormDialog from "@/app/form/form";
+import SaveSongDialog from "@/app/form/saveSongDialog";
 export default function Page() {
-  return <FormDialog></FormDialog>;
+  return <SaveSongDialog></SaveSongDialog>;
 }
