@@ -1,13 +1,15 @@
 import BoomChuck from "@/components/boomChuck";
 import { searchParamsSchema } from "@/lib/schemas";
+import { fetchSongs } from "@/lib/data";
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
   searchParams?: {
     song?: "string";
   };
 }) {
+  const songs = await fetchSongs();
   const validatedSearchParams = searchParamsSchema.safeParse(searchParams);
 
   return (

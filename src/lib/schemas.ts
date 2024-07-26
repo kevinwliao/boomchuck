@@ -28,7 +28,9 @@ export const chordSchema = z.object({
 export const measureSchema = z.object({
   chord: chordSchema,
   chord2: chordSchema.optional(),
+  id: z.string(),
 });
+
 export const songSchema = z.object({
   userId: z.string().default("no_user"),
   name: z.string().max(35),

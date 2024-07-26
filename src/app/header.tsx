@@ -32,7 +32,7 @@ import AboutDialog from "@/components/aboutDialog";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 overflow-hidden border-b bg-background p-1">
+    <header className="overflow-hidden border-b bg-background p-1">
       <div className="hidden sm:block">
         <NavigationMenu className="m-auto justify-between sm:justify-center">
           <NavigationMenuList className="">
