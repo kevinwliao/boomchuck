@@ -1,20 +1,6 @@
 import { sql } from "@vercel/postgres";
 import { unstable_noStore as noStore } from "next/cache";
-
-export type Chord = {
-  root: string;
-  quality: string;
-};
-
-export type Measure = {
-  chord: Chord;
-};
-
-export type Song = {
-  id: string;
-  name: string;
-  measures: Measure[];
-};
+import { Song } from "@/lib/schemas";
 
 export async function fetchSongs() {
   noStore();

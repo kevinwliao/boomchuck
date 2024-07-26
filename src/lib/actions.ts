@@ -31,60 +31,27 @@ export async function createSong(song: Song) {
   }
 }
 
-// export async function createSong2(formData?: FormData) {
-//   // const validatedFields = CreateSong.safeParse({
-//   //   name: formData.get("customerId"),
-//   //   chords: formData.get("amount"),
-//   // });
+export async function updateSong(song: Song, id: string) {
+  const { measures } = song;
 
-//   // if (!validatedFields.success) {
-//   //   return {
-//   //     errors: validatedFields.error.flatten().fieldErrors,
-//   //     message: "Missing Fields. Failed to Create Invoice.",
-//   //   };
-//   // }
+  try {
+    await sql`
+      INSERT INTO songs (measures)
+      VALUES (${JSON.stringify(measures)}::JSONB)
+      WHERE id = ${id}
+    `;
+  } catch (error) {
+    console.error(error);
+    return {
+      message: "Database Error: Failed to Create Song.",
+    };
+  }
+}
 
-//   // const { name, chords } = validatedFields.data;
-//   const name = "This is a name";
-//   const chords: Chord[] = [
-//     { root: "G", quality: "M" },
-//     { root: "G", quality: "M" },
-//     { root: "G", quality: "M" },
-//     { root: "E", quality: "m" },
-//     { root: "E", quality: "m" },
-//     { root: "D", quality: "7" },
-//     { root: "G", quality: "M" },
-//   ];
-//   const date = new Date().toISOString().split("T")[0];
-
-//   try {
-//     await sql`
-//       INSERT INTO songs (name, chords, date)
-//       VALUES (${name}, ${JSON.stringify(chords)}::JSONB, NOW())
-//     `;
-//   } catch (error) {
-//     console.error(error);
-//     return {
-//       message: "Database Error: Failed to Create Song.",
-//     };
-//   }
-
-//   revalidatePath("/data");
-//   redirect("/data");
-// }
-
-// export async function clearSubmitted() {
-//   try {
-//     await sql`
-//       DELETE FROM songs WHERE name = 'This is a name'
-//     `;
-//   } catch (error) {
-//     console.error(error);
-//     return {
-//       message: "Database Error: Failed to Create Song.",
-//     };
-//   }
-
-//   revalidatePath("/data");
-//   redirect("/data");
-// }
+export async function deleteSong(id: string) {
+  try {
+    await sql`DELETE FROM songs WHERE id = ${id}`;
+  } catch (error) {
+    return { message: "Database Error: Failed to Delete Song." };
+  }
+}
