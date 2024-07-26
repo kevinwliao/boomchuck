@@ -6,20 +6,16 @@ import { songSchema } from "@/lib/schemas";
 import { Song } from "@/lib/schemas";
 
 export async function createSong(song: Song) {
-  /* const validatedFields = songSchema.safeParse({
-    userId: song.userId,
-    name: song.name,
-    measures: song.measures,
-  });
+  // const validatedFields = songSchema.safeParse(song);
 
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: "Missing Fields",
-    };
-  }
+  // if (!validatedFields.success) {
+  //   return {
+  //     errors: validatedFields.error.flatten().fieldErrors,
+  //     message: "Missing Fields",
+  //   };
+  // }
 
-  const { userId, name, measures } = validatedFields.data; */
+  // const { userId, name, measures } = validatedFields.data;
   const { userId, name, measures } = song;
 
   try {
@@ -33,9 +29,6 @@ export async function createSong(song: Song) {
       message: "Database Error: Failed to Create Song.",
     };
   }
-
-  revalidatePath("/");
-  redirect("/");
 }
 
 // export async function createSong2(formData?: FormData) {

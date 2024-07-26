@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,19 +11,18 @@ import * as React from "react";
 import SongForm from "@/app/form/songForm";
 
 const SaveSongDialog = React.forwardRef<HTMLElement>((props, ref) => {
+  const [open, setOpen] = React.useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="w-full justify-start">
-          {/* <Info className="size-[1.2rem]"></Info> */}
-          About
-        </Button>
+        <Button variant="ghost">Save Song</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-2xl">About BoomChuck</DialogTitle>
+          <DialogTitle className="text-2xl">Save Song</DialogTitle>
         </DialogHeader>
-        <SongForm></SongForm>
+        <SongForm openHandler={setOpen}></SongForm>
       </DialogContent>
     </Dialog>
   );

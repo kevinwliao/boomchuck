@@ -18,24 +18,37 @@ import {
 import { Input } from "@/components/ui/input";
 import { songSchema } from "@/lib/schemas";
 import { Song } from "@/lib/schemas";
+import { CircleCheckBig, LoaderCircle } from "lucide-react";
 
-const formSchema = songSchema.omit({ measures: true, userId: true });
+const formSchema = songSchema.omit({
+  measures: true,
+  userId: true,
+  tempo: true,
+});
 
-export default function SongForm() {
-  // 1. Define your form.
+const testUserId = "test_user_id";
+
+export default function SongForm({
+  openHandler,
+}: {
+  openHandler: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
     },
   });
+  const {
+    formState: { isSubmitting, isSubmitted },
+  } = form;
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     const newSong: Song = {
-      userId: "no_id",
+      userId: testUserId,
       name: values.name,
       measures: [
         { chord: { root: "G", quality: "M" } },
@@ -44,7 +57,9 @@ export default function SongForm() {
         { chord: { root: "G", quality: "M" } },
       ],
     };
-    createSong(newSong);
+    await createSong(newSong);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    openHandler(false);
   }
 
   return (
@@ -64,7 +79,9 @@ export default function SongForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Create Song</Button>
+        <Button disabled={isSubmitting} type="submit">
+          Save Song
+        </Button>
       </form>
     </Form>
   );
