@@ -18,7 +18,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { songSchema } from "@/lib/schemas";
 import { Song } from "@/lib/schemas";
-import { CircleCheckBig, LoaderCircle } from "lucide-react";
 
 const formSchema = songSchema.omit({
   measures: true,
@@ -58,7 +57,6 @@ export default function SongForm({
       ],
     };
     await createSong(newSong);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     openHandler(false);
   }
 

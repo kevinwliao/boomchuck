@@ -29,6 +29,8 @@ export async function createSong(song: Song) {
       message: "Database Error: Failed to Create Song.",
     };
   }
+  revalidatePath("/form");
+  redirect("/form");
 }
 
 export async function updateSong(song: Song, id: string) {
@@ -46,6 +48,8 @@ export async function updateSong(song: Song, id: string) {
       message: "Database Error: Failed to Create Song.",
     };
   }
+  revalidatePath("/form");
+  redirect("/form");
 }
 
 export async function deleteSong(id: string) {
@@ -54,4 +58,6 @@ export async function deleteSong(id: string) {
   } catch (error) {
     return { message: "Database Error: Failed to Delete Song." };
   }
+  revalidatePath("/form");
+  redirect("/form");
 }

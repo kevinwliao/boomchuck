@@ -7,9 +7,10 @@ export async function fetchSongs() {
   try {
     console.log("Fetching revenue data...");
     const data = await sql<Song>`SELECT * FROM songs`;
-    return data.rows;
+    const songs = data.rows;
+    return songs;
   } catch (error) {
-    console.error("Database Error:", error);
+    console.error(error);
     throw new Error("Failed to fetch revenue data.");
   }
 }
