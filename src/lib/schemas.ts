@@ -11,11 +11,23 @@ export const rootOptions = [
   "D",
   "D#",
   "E",
-  "E#",
   "F",
   "F#",
   "G",
+  "G#",
 ] as const;
+export const diatonicRootOptions = [
+  "G",
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F#",
+] as const;
+export const nonDiatonicRootOptionsA = ["G#", "A#"] as const;
+export const nonDiatonicRootOptionsB = ["C#", "D#", "F"] as const;
+
 export const qualityOptions = ["M", "m", "7"] as const;
 
 // schemas
