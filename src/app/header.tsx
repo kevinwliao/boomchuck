@@ -29,18 +29,21 @@ import {
 import SongSelection from "@/components/songSelection";
 import Socials from "@/components/socials";
 import AboutDialog from "@/components/aboutDialog";
+import Logo from "@/components/ui/logo";
 
 export default function Header() {
   return (
-    <header className="overflow-hidden border-b bg-background p-1">
+    <header className="shrink-0 overflow-hidden border-b bg-background p-1">
       <div className="hidden sm:block">
         <NavigationMenu className="m-auto justify-between sm:justify-center">
           <NavigationMenuList className="">
             <NavigationMenuItem className="">
               <Link href="/" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  <MusicalNoteIcon className="mr-1 size-4"></MusicalNoteIcon>
-                  <span>BoomChuck</span>
+                <NavigationMenuLink
+                  className={`${navigationMenuTriggerStyle()} text-amber-800`}
+                >
+                  <Logo className="mr-1"></Logo>
+                  <span className="text-xl">boomchuck</span>
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>

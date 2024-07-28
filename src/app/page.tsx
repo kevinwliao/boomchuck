@@ -20,7 +20,6 @@ export default async function Page({
       <h2 className="scroll-m-20 pb-2 text-center text-2xl font-semibold tracking-tight text-muted-foreground first:mt-0">
         {validatedSearchParams?.data?.song || "New BoomChuck"}
       </h2>
-
       <BoomChuck></BoomChuck>
     </main>
   );

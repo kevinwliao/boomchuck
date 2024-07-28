@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Bricolage_Grotesque } from "next/font/google";
+import { Lexend_Deca } from "next/font/google";
 import { ThemeProvider } from "@/components/themeProvider";
 
 import Header from "./header";
@@ -8,7 +8,7 @@ import Footer from "./footer";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
-const dmsans = Bricolage_Grotesque({ subsets: ["latin"] });
+const dmsans = Lexend_Deca({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "BoomChuck - Bluegrass Backup",
@@ -32,7 +32,6 @@ export default function RootLayout({
           <div className="flex h-screen flex-col">
             <Header></Header>
             {children}
-            <Footer></Footer>
           </div>
         </ThemeProvider>
       </body>
