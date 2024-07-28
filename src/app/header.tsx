@@ -33,58 +33,15 @@ import Logo from "@/components/ui/logo";
 
 export default function Header() {
   return (
-    <header className="shrink-0 overflow-hidden border-b bg-background p-1">
-      <div className="hidden sm:block">
-        <NavigationMenu className="m-auto justify-between sm:justify-center">
-          <NavigationMenuList className="">
-            <NavigationMenuItem className="">
-              <Link href="/" legacyBehavior passHref>
-                <NavigationMenuLink
-                  className={`${navigationMenuTriggerStyle()} text-amber-800`}
-                >
-                  <Logo className="mr-1"></Logo>
-                  <span className="text-xl">boomchuck</span>
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <AboutDialog></AboutDialog>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <React.Suspense>
-                <SongSelection mobile={false}></SongSelection>
-              </React.Suspense>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <ModeToggle mobile={false}></ModeToggle>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+    <header className="grid h-14 shrink-0 grid-cols-3 items-center justify-between overflow-hidden border-b bg-background px-4 py-2">
+      <Link href="/" className="flex items-center text-amber-900">
+        <Logo className="mr-1"></Logo>
+        <span className="text-2xl font-semibold">boomchuck</span>
+      </Link>
+      <div className="place-self-center rounded-lg border-2 px-2 py-1 ">
+        Long Journey Home
       </div>
-      <div className="flex justify-end sm:hidden">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <MenuIcon className="h-[1.2rem] w-[1.2rem] "></MenuIcon>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="block sm:hidden">
-            <DropdownMenuItem asChild>
-              <AboutDialog></AboutDialog>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator></DropdownMenuSeparator>
-            <DropdownMenuItem asChild>
-              <React.Suspense>
-                <SongSelection mobile={true}></SongSelection>
-              </React.Suspense>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator></DropdownMenuSeparator>
-            <DropdownMenuItem asChild>
-              <ModeToggle mobile={true}></ModeToggle>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+      <div className="self-center justify-self-end">Sign in</div>
     </header>
   );
 }
@@ -114,3 +71,30 @@ const ListItem = React.forwardRef<
   );
 });
 ListItem.displayName = "ListItem";
+
+const MobileHeader = () => (
+  <div className="flex justify-end sm:hidden">
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon">
+          <MenuIcon className="h-[1.2rem] w-[1.2rem] "></MenuIcon>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="block sm:hidden">
+        <DropdownMenuItem asChild>
+          <AboutDialog></AboutDialog>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator></DropdownMenuSeparator>
+        <DropdownMenuItem asChild>
+          <React.Suspense>
+            <SongSelection mobile={true}></SongSelection>
+          </React.Suspense>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator></DropdownMenuSeparator>
+        <DropdownMenuItem asChild>
+          <ModeToggle mobile={true}></ModeToggle>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  </div>
+);
