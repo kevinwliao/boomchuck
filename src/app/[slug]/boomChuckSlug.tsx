@@ -1,5 +1,6 @@
 "use client";
 import { createSong } from "@/lib/actions";
+import Volume from "@/components/volume";
 import { Measure, Quality, Song, measureSchema } from "@/lib/schemas";
 import {
   diatonicRootOptions,
@@ -7,6 +8,7 @@ import {
   nonDiatonicRootOptionsB,
   qualityOptions,
 } from "@/lib/schemas";
+import { Play, SkipBack, SkipForward, GripVertical } from "lucide-react";
 import {
   IconPlayerStopFilled,
   IconPlayerPlayFilled,
@@ -30,6 +32,7 @@ const placeAccidentals = (str: string) => <>{str.replace("#", sharp)}</>;
 
 export default function BoomChuck({ song }: { song: Song }) {
   const [measures, setMeasures] = useState(song.measures);
+  const [volume, setVolume] = useState(0.75);
   const [qualitySelection, setQualitySelection] = useState<Quality>("M");
 
   const handleSubmit = async () => {
@@ -72,7 +75,7 @@ export default function BoomChuck({ song }: { song: Song }) {
                         <IconX className="size-4" />
                       </button> */}
                     </div>
-                    <div className="text-lg group-last:text-amber-950 sm:text-2xl  lg:text-3xl">
+                    <div className="text-lg group-last:text-amber-950 sm:text-xl  lg:text-3xl">
                       {placeAccidentals(measure.chord.root)}
                       {measure.chord.quality}
                     </div>
@@ -100,12 +103,11 @@ export default function BoomChuck({ song }: { song: Song }) {
               className="w-10 rounded-sm border p-1"
             ></input>
           </div>
-          <IconMetronome></IconMetronome>
           <button
-            className="text-stone-700 hover:text-stone-500 active:text-stone-950"
+            className=" text-stone-700 hover:text-stone-500 active:text-stone-950"
             type="button"
             aria-label="back"
-            title="back [,]"
+            title="Back (,)"
           >
             <IconPlayerSkipBackFilled />
           </button>
@@ -113,7 +115,7 @@ export default function BoomChuck({ song }: { song: Song }) {
             className="text-stone-700 hover:text-stone-500 active:text-stone-950"
             type="button"
             aria-label="play"
-            title="play [_]"
+            title="Play (_)"
           >
             <IconPlayerPlayFilled />
           </button>
@@ -121,11 +123,17 @@ export default function BoomChuck({ song }: { song: Song }) {
             className="text-stone-700 hover:text-stone-500 active:text-stone-950"
             type="button"
             aria-label=""
-            title="forward [.]"
+            title="Forward (.)"
           >
             <IconPlayerSkipForwardFilled />
           </button>
-          <IconVolume></IconVolume>
+          <Volume
+            volume={volume}
+            onValueChange={([value]) => {
+              setVolume(value);
+            }}
+          ></Volume>
+          <div>{volume}</div>
         </div>
       </div>
 
