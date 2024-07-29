@@ -1,75 +1,32 @@
 "use client";
 
 import * as React from "react";
+import * as RadioGroup from "@radix-ui/react-radio-group";
+import { Quality, qualityOptions } from "@/lib/schemas";
 
-import { Button } from "@/components/ui/button";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
-const qualityOptions = ["M", "m", "7"] as const;
-
-export function QualitySelection() {
-  const [open, setOpen] = React.useState(false);
-  const [selectedStatus, setSelectedStatus] = React.useState<
-    (typeof qualityOptions)[number] | null
-  >(null);
-
+export function QualitySelection({
+  qualitySelection,
+  onValueChange,
+}: {
+  qualitySelection: Quality;
+  onValueChange: (value: Quality) => void;
+}) {
   return (
-    <div className="flex items-center space-x-4">
-      <p className="text-sm text-muted-foreground">Quality:</p>
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild className="hidden">
-          <Button variant="outline" className="w-[150px] justify-start">
-            {selectedStatus ? <>{selectedStatus}</> : <>+ Select quality</>}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="p-0" side="right" align="start">
-          <Command>
-            <CommandInput placeholder="Change quality..." />
-            <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup>
-                {qualityOptions.map((quality) => (
-                  <CommandItem
-                    key={quality}
-                    value={quality}
-                    onSelect={(value) => {
-                      setSelectedStatus(
-                        qualityOptions.find((priority) => priority === value) ||
-                          null,
-                      );
-                      setOpen(false);
-                    }}
-                  >
-                    {quality}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </CommandList>
-          </Command>
-        </PopoverContent>
-      </Popover>
-      <RadioGroup className="flex" defaultValue={qualityOptions[0]}>
-        {qualityOptions.map((quality, i) => (
-          <div key={i} className="flex items-center space-x-2">
-            <RadioGroupItem value={quality} id={quality} />
-            <Label htmlFor={quality}>{quality}</Label>
-          </div>
-        ))}
-      </RadioGroup>
-    </div>
+    <RadioGroup.Root
+      className="flex gap-1 lg:gap-2"
+      value={qualitySelection}
+      onValueChange={onValueChange}
+    >
+      {qualityOptions.map((quality, i) => (
+        <RadioGroup.Item
+          key={i}
+          value={quality}
+          className={`${qualitySelection === quality ? " bg-stone-300 " : "bg-white"} size-10 border  transition-colors first:rounded-l-md last:rounded-r-md lg:size-12`}
+        >
+          <RadioGroup.Indicator> </RadioGroup.Indicator>
+          {quality}
+        </RadioGroup.Item>
+      ))}
+    </RadioGroup.Root>
   );
 }

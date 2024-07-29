@@ -25,6 +25,7 @@ import {
 import { FolderOpen, Save } from "lucide-react";
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
+import { QualitySelection } from "@/components/qualitySelection";
 
 const sharp = "\u266f";
 const flat = "\u266d";
@@ -147,7 +148,7 @@ export default function BoomChuck({ song }: { song: Song }) {
               {diatonicRootOptions.map((root) => {
                 return (
                   <button
-                    className="size-10 rounded-md  bg-stone-400 text-white lg:size-12"
+                    className="size-10 rounded-md border bg-stone-300 lg:size-12"
                     onClick={() =>
                       setMeasures((prev) => [
                         ...prev,
@@ -168,7 +169,7 @@ export default function BoomChuck({ song }: { song: Song }) {
               {nonDiatonicRootOptionsA.map((root) => {
                 return (
                   <button
-                    className="size-10 rounded-md  bg-stone-400 text-white lg:size-12"
+                    className="size-10 rounded-md border bg-stone-300 lg:size-12"
                     onClick={() =>
                       setMeasures((prev) => [
                         ...prev,
@@ -187,7 +188,7 @@ export default function BoomChuck({ song }: { song: Song }) {
               {nonDiatonicRootOptionsB.map((root) => {
                 return (
                   <button
-                    className="size-10 rounded-md   bg-stone-400 text-white lg:size-12"
+                    className="size-10 rounded-md  border bg-stone-300 lg:size-12"
                     onClick={() =>
                       setMeasures((prev) => [
                         ...prev,
@@ -204,19 +205,13 @@ export default function BoomChuck({ song }: { song: Song }) {
               })}
             </div>
           </div>
-          <div
-            id="qualityOptionsContainer"
-            className="flex justify-center gap-1 lg:gap-2"
-          >
-            {qualityOptions.map((quality) => (
-              <button
-                className={`${qualitySelection === quality ? " bg-stone-400 text-white " : "bg-white"} size-10    transition-colors first:rounded-l-md last:rounded-r-md lg:size-12`}
-                onClick={() => setQualitySelection(quality)}
-              >
-                {quality}
-              </button>
-            ))}
-          </div>
+          <QualitySelection
+            qualitySelection={qualitySelection}
+            onValueChange={(value) => {
+              console.log("hi");
+              setQualitySelection(value);
+            }}
+          ></QualitySelection>
         </div>
         <FileOperations></FileOperations>
       </div>
