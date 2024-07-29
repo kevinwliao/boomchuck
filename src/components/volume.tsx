@@ -26,7 +26,7 @@ export default function Volume({
   }
 
   return (
-    <div className="flex w-32 items-center gap-2">
+    <div className="flex w-32 items-center gap-2 text-stone-700">
       <div>{currentVolumeIcon}</div>
       <Slider.Root
         value={[volume]}
@@ -37,9 +37,9 @@ export default function Volume({
         className="relative flex w-full touch-none select-none items-center"
       >
         <Slider.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-secondary">
-          <Slider.Range className="absolute h-full bg-primary" />
+          <Slider.Range className="absolute h-full bg-current" />
         </Slider.Track>
-        <Slider.Thumb className="block h-5 w-5 rounded-full border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" />
+        <Slider.Thumb className="block h-5 w-5 rounded-full border-2 border-current bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" />
       </Slider.Root>
     </div>
   );

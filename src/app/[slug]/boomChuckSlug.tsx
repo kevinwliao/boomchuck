@@ -8,19 +8,14 @@ import {
   nonDiatonicRootOptionsB,
   qualityOptions,
 } from "@/lib/schemas";
-import { Play, SkipBack, SkipForward, GripVertical } from "lucide-react";
 import {
   IconPlayerStopFilled,
   IconPlayerPlayFilled,
   IconRepeat,
-  IconSquareXFilled,
   IconGripVertical,
-  IconVolume,
-  IconMetronome,
   IconPlayerSkipBackFilled,
   IconPlayerSkipForwardFilled,
   IconX,
-  IconGripHorizontal,
 } from "@tabler/icons-react";
 import { FolderOpen, Save } from "lucide-react";
 import { useState } from "react";
@@ -30,6 +25,7 @@ import { QualitySelection } from "@/components/qualitySelection";
 const sharp = "\u266f";
 const flat = "\u266d";
 const placeAccidentals = (str: string) => <>{str.replace("#", sharp)}</>;
+const userId = "TEMP_USER_ID";
 
 export default function BoomChuck({ song }: { song: Song }) {
   const [measures, setMeasures] = useState(song.measures);
@@ -38,8 +34,8 @@ export default function BoomChuck({ song }: { song: Song }) {
 
   const handleSubmit = async () => {
     const submission: Song = {
-      userId: "new_user_id",
-      name: "Lots of measures",
+      userId: userId,
+      name: song.name,
       measures: measures,
     };
     await createSong(submission);
@@ -62,21 +58,18 @@ export default function BoomChuck({ song }: { song: Song }) {
                     key={measure.id}
                     className="group relative flex h-14 w-16 flex-col items-center justify-end overflow-clip rounded-lg border bg-white p-2 shadow-md last:border-amber-600 last:bg-amber-200 sm:h-16 sm:w-20 lg:h-24 lg:w-28 lg:justify-between"
                   >
-                    <div className="hidden  w-full justify-between lg:flex">
-                      {/* <div className="invisible text-sm text-stone-400 group-last:text-amber-600 group-odd:visible">
-                        {index + 1}
-                      </div> */}
+                    <div className="hidden w-full justify-between lg:flex">
                       <button
-                        className="invisible text-stone-500 hover:text-red-500  active:text-red-700 group-hover:visible"
+                        className="text-stone-500 hover:text-red-500 active:text-red-700 group-last:text-amber-600"
                         onClick={handleDelete}
                       >
                         <IconX className="size-4" />
                       </button>
-                      <button className="cursor-grab text-stone-400  active:cursor-grabbing group-last:text-amber-600 ">
+                      <button className="cursor-grab text-stone-400 active:cursor-grabbing group-last:text-amber-600">
                         <IconGripVertical className="size-4 lg:size-6" />
                       </button>
                     </div>
-                    <div className="text-lg group-last:text-amber-950 sm:text-xl  lg:text-3xl">
+                    <div className="text-lg group-last:text-amber-950 sm:text-xl lg:text-3xl">
                       {placeAccidentals(measure.chord.root)}
                       {measure.chord.quality}
                     </div>
@@ -87,7 +80,10 @@ export default function BoomChuck({ song }: { song: Song }) {
           </div>
         </div>
 
-        <div className="flex h-min items-center justify-center gap-4 border-b border-t p-2 lg:order-first lg:justify-start lg:gap-6 lg:border-t-0 lg:px-6">
+        <div
+          id="audioBar"
+          className="flex h-min items-center justify-center gap-4 border-b border-t p-2 lg:order-first lg:justify-start lg:gap-6 lg:border-t-0 lg:px-6"
+        >
           <div className="hidden md:block">
             BPM:{" "}
             <input
@@ -105,7 +101,15 @@ export default function BoomChuck({ song }: { song: Song }) {
             ></input>
           </div>
           <button
-            className=" text-stone-700 hover:text-stone-500 active:text-stone-950"
+            className="text-stone-700 hover:text-stone-500 active:text-stone-950"
+            type="button"
+            aria-label="back"
+            title="Back (,)"
+          >
+            <IconPlayerStopFilled />
+          </button>
+          <button
+            className="text-stone-700 hover:text-stone-500 active:text-stone-950"
             type="button"
             aria-label="back"
             title="Back (,)"
@@ -128,17 +132,27 @@ export default function BoomChuck({ song }: { song: Song }) {
           >
             <IconPlayerSkipForwardFilled />
           </button>
+          <button
+            className="text-green-600 hover:text-stone-500 active:text-stone-950"
+            type="button"
+            aria-label="back"
+            title="Back (,)"
+          >
+            <IconRepeat />
+          </button>
           <Volume
             volume={volume}
             onValueChange={([value]) => {
               setVolume(value);
             }}
           ></Volume>
-          <div>{volume}</div>
         </div>
       </div>
 
-      <div className="flex w-full shrink-0 flex-col items-center justify-between gap-4 px-1 py-2 md:py-4 lg:order-first lg:w-64 lg:border-r lg:px-10 lg:py-12 xl:w-80">
+      <div
+        id="chordSelectionAndFileContainer"
+        className="flex w-full shrink-0 flex-col items-center justify-between gap-4 px-1 py-2 md:py-4 lg:order-first lg:w-64 lg:border-r lg:px-10 lg:py-12 xl:w-80"
+      >
         <div className="chordSelectionContainer base flex grow flex-col items-center justify-center gap-4 lg:gap-8 lg:text-lg xl:gap-16">
           <div
             id="rootOptionsContainer"
@@ -188,7 +202,7 @@ export default function BoomChuck({ song }: { song: Song }) {
               {nonDiatonicRootOptionsB.map((root) => {
                 return (
                   <button
-                    className="size-10 rounded-md  border bg-stone-300 lg:size-12"
+                    className="size-10 rounded-md border bg-stone-300 lg:size-12"
                     onClick={() =>
                       setMeasures((prev) => [
                         ...prev,
@@ -208,8 +222,9 @@ export default function BoomChuck({ song }: { song: Song }) {
           <QualitySelection
             qualitySelection={qualitySelection}
             onValueChange={(value) => {
-              console.log("hi");
-              setQualitySelection(value);
+              if (value) {
+                setQualitySelection(value);
+              }
             }}
           ></QualitySelection>
         </div>

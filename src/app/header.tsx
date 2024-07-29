@@ -31,6 +31,7 @@ import SongSelection from "@/components/songSelection";
 import Socials from "@/components/socials";
 import AboutDialog from "@/components/aboutDialog";
 import Logo from "@/components/ui/logo";
+import Avatar from "@/components/ui/avatar";
 
 export default function Header() {
   return (
@@ -43,7 +44,12 @@ export default function Header() {
         <div className="place-self-center rounded-lg border px-2 py-1 ">
           Long Journey Home
         </div>
-        <div className="self-center justify-self-end">Sign in</div>
+        <div className="flex gap-2 self-center justify-self-end">
+          <button className="w-max rounded-md bg-amber-300 px-4 py-2">
+            Sign in
+          </button>
+          <Avatar></Avatar>
+        </div>
       </header>
       <header className="flex h-14 shrink-0 items-center justify-between border-b px-4 py-2 md:hidden">
         <Link href="/" className="flex items-center text-amber-900">
