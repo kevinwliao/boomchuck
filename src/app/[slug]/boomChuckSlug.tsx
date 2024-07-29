@@ -45,7 +45,7 @@ export default function BoomChuck({ song }: { song: Song }) {
   };
 
   return (
-    <main className="flex grow flex-col bg-stone-100 lg:flex-row">
+    <main className="flex grow flex-col bg-stone-200 lg:flex-row">
       <div className="flex grow flex-col">
         <div className="flex grow basis-0 justify-center overflow-scroll border-none lg:justify-normal">
           <div id="chords">
@@ -62,18 +62,18 @@ export default function BoomChuck({ song }: { song: Song }) {
                     className="group relative flex h-14 w-16 flex-col items-center justify-end overflow-clip rounded-lg border bg-white p-2 shadow-md last:border-amber-600 last:bg-amber-200 sm:h-16 sm:w-20 lg:h-24 lg:w-28 lg:justify-between"
                   >
                     <div className="hidden  w-full justify-between lg:flex">
-                      <div className="invisible text-sm text-stone-400 group-last:text-amber-600 group-odd:visible">
+                      {/* <div className="invisible text-sm text-stone-400 group-last:text-amber-600 group-odd:visible">
                         {index + 1}
-                      </div>
-                      <button className="cursor-grab text-stone-400  active:cursor-grabbing group-last:text-amber-600 ">
-                        <IconGripVertical className="size-4 lg:size-6" />
-                      </button>
-                      {/* <button
-                        className=" invisible left-2 top-2 text-stone-500 hover:text-red-500  active:text-red-700 group-hover:visible"
+                      </div> */}
+                      <button
+                        className="invisible text-stone-500 hover:text-red-500  active:text-red-700 group-hover:visible"
                         onClick={handleDelete}
                       >
                         <IconX className="size-4" />
-                      </button> */}
+                      </button>
+                      <button className="cursor-grab text-stone-400  active:cursor-grabbing group-last:text-amber-600 ">
+                        <IconGripVertical className="size-4 lg:size-6" />
+                      </button>
                     </div>
                     <div className="text-lg group-last:text-amber-950 sm:text-xl  lg:text-3xl">
                       {placeAccidentals(measure.chord.root)}
@@ -147,7 +147,7 @@ export default function BoomChuck({ song }: { song: Song }) {
               {diatonicRootOptions.map((root) => {
                 return (
                   <button
-                    className="size-10 rounded-md border bg-stone-300 lg:size-12"
+                    className="size-10 rounded-md  bg-stone-400 text-white lg:size-12"
                     onClick={() =>
                       setMeasures((prev) => [
                         ...prev,
@@ -168,7 +168,7 @@ export default function BoomChuck({ song }: { song: Song }) {
               {nonDiatonicRootOptionsA.map((root) => {
                 return (
                   <button
-                    className="size-10 rounded-md border bg-stone-300 lg:size-12"
+                    className="size-10 rounded-md  bg-stone-400 text-white lg:size-12"
                     onClick={() =>
                       setMeasures((prev) => [
                         ...prev,
@@ -187,7 +187,7 @@ export default function BoomChuck({ song }: { song: Song }) {
               {nonDiatonicRootOptionsB.map((root) => {
                 return (
                   <button
-                    className="size-10 rounded-md border  bg-stone-300 lg:size-12"
+                    className="size-10 rounded-md   bg-stone-400 text-white lg:size-12"
                     onClick={() =>
                       setMeasures((prev) => [
                         ...prev,
@@ -210,7 +210,7 @@ export default function BoomChuck({ song }: { song: Song }) {
           >
             {qualityOptions.map((quality) => (
               <button
-                className={`${qualitySelection === quality ? "bg-stone-300" : "bg-white"} size-10  border  transition-colors first:rounded-l-md last:rounded-r-md lg:size-12`}
+                className={`${qualitySelection === quality ? " bg-stone-400 text-white " : "bg-white"} size-10    transition-colors first:rounded-l-md last:rounded-r-md lg:size-12`}
                 onClick={() => setQualitySelection(quality)}
               >
                 {quality}
