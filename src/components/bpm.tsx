@@ -1,5 +1,5 @@
 import React from "react";
-import { Input } from "@/components/ui/input";
+// import { Input } from "@/components/ui/input";
 
 export default function Bpm({
   onChange,
@@ -12,11 +12,14 @@ export default function Bpm({
 }) {
   return (
     <div className="flex w-full max-w-full items-center justify-center gap-0 sm:gap-2">
-      <span className=" hidden text-xs text-muted-foreground sm:text-sm md:inline">
+      <label
+        htmlFor="bpm"
+        className="hidden text-xs text-muted-foreground sm:text-sm md:inline"
+      >
         BPM
-      </span>
-      <Input
-        className="h-max w-max max-w-full shrink text-2xl"
+      </label>
+      <input
+        className="h-max w-max max-w-full shrink rounded-md border px-2 py-1"
         type="number"
         id="bpm"
         name="bpm"
@@ -25,7 +28,7 @@ export default function Bpm({
         value={bpm}
         onChange={onChange}
         disabled={disabled}
-      ></Input>
+      ></input>
     </div>
   );
 }

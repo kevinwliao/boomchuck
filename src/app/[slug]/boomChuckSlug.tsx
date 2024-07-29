@@ -21,6 +21,7 @@ import { FolderOpen, Save } from "lucide-react";
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { QualitySelection } from "@/components/qualitySelection";
+import Bpm from "@/components/bpm";
 
 const sharp = "\u266f";
 const flat = "\u266d";
@@ -30,6 +31,7 @@ const userId = "TEMP_USER_ID";
 export default function BoomChuck({ song }: { song: Song }) {
   const [measures, setMeasures] = useState(song.measures);
   const [volume, setVolume] = useState(0.75);
+  const [bpm, setBpm] = useState(120);
   const [qualitySelection, setQualitySelection] = useState<Quality>("M");
 
   const handleSubmit = async () => {
@@ -42,7 +44,7 @@ export default function BoomChuck({ song }: { song: Song }) {
   };
 
   return (
-    <main className="flex grow flex-col bg-stone-200 lg:flex-row">
+    <main className="flex grow flex-col bg-stone-100 lg:flex-row">
       <div className="flex grow flex-col">
         <div className="flex grow basis-0 justify-center overflow-scroll border-none lg:justify-normal">
           <div id="chords">
@@ -85,12 +87,11 @@ export default function BoomChuck({ song }: { song: Song }) {
           className="flex h-min items-center justify-center gap-4 border-b border-t p-2 lg:order-first lg:justify-start lg:gap-6 lg:border-t-0 lg:px-6"
         >
           <div className="hidden md:block">
-            BPM:{" "}
-            <input
-              type="number"
-              value="100"
-              className="w-16 rounded-sm border p-1"
-            ></input>
+            <Bpm
+              disabled={false}
+              bpm={bpm}
+              onChange={(e) => setBpm(parseInt(e.target.value))}
+            ></Bpm>
           </div>
           <div className="hidden md:block">
             Key:{" "}
