@@ -22,7 +22,10 @@ const SaveSongDialog = React.forwardRef<HTMLElement>((props, ref) => {
         <DialogHeader>
           <DialogTitle className="text-2xl">Save Song</DialogTitle>
         </DialogHeader>
-        <SongForm openHandler={setOpen}></SongForm>
+        <SongForm
+          measures={[{ id: "dummy", chord: { root: "A", quality: "7" } }]}
+          openHandler={setOpen}
+        ></SongForm>
       </DialogContent>
     </Dialog>
   );

@@ -36,16 +36,16 @@ import Avatar from "@/components/ui/avatar";
 export default function Header() {
   return (
     <>
-      <header className="hidden h-14 shrink-0 grid-cols-3 items-center justify-between border-b bg-background px-4 md:grid ">
+      <header className="hidden h-14 shrink-0 grid-cols-3 items-center justify-between border-b bg-background px-4 md:grid">
         <Link href="/" className="flex items-center text-amber-900">
           <Logo className="mr-1"></Logo>
           <span className="text-2xl font-semibold">boomchuck</span>
         </Link>
-        <div className="place-self-center rounded-lg border px-2 py-1 ">
+        <div className="place-self-center rounded-lg border px-2 py-1">
           Long Journey Home
         </div>
         <div className="flex gap-2 self-center justify-self-end">
-          <button className="w-max rounded-md bg-amber-300 px-4 py-2">
+          <button className="w-max rounded-md bg-amber-200 px-4 py-2">
             Sign in
           </button>
           <Avatar></Avatar>
@@ -93,7 +93,7 @@ const MobileHeader = () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
-          <MenuIcon className="h-[1.2rem] w-[1.2rem] "></MenuIcon>
+          <MenuIcon className="h-[1.2rem] w-[1.2rem]"></MenuIcon>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="block sm:hidden">

@@ -5,7 +5,7 @@ export default async function Page() {
   const data = await fetchSongs();
   return (
     <div>
-      <div>{JSON.stringify(data)}</div>
+      <pre>{JSON.stringify(data, null, "\t")}</pre>
       <SaveSongDialog></SaveSongDialog>
     </div>
   );

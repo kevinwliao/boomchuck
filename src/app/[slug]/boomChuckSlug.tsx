@@ -22,11 +22,12 @@ import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { QualitySelection } from "@/components/qualitySelection";
 import Bpm from "@/components/bpm";
+import SaveSongDialog from "@/app/form/saveSongDialog";
+import SongForm from "@/app/form/songForm";
 
 const sharp = "\u266f";
 const flat = "\u266d";
 const placeAccidentals = (str: string) => <>{str.replace("#", sharp)}</>;
-const userId = "TEMP_USER_ID";
 
 export default function BoomChuck({ song }: { song: Song }) {
   const [measures, setMeasures] = useState(song.measures);
@@ -34,17 +35,8 @@ export default function BoomChuck({ song }: { song: Song }) {
   const [bpm, setBpm] = useState(120);
   const [qualitySelection, setQualitySelection] = useState<Quality>("M");
 
-  const handleSubmit = async () => {
-    const submission: Song = {
-      userId: userId,
-      name: song.name,
-      measures: measures,
-    };
-    await createSong(submission);
-  };
-
   return (
-    <main className="flex grow flex-col bg-stone-100 lg:flex-row">
+    <main className="flex grow flex-col bg-stone-200 lg:flex-row">
       <div className="flex grow flex-col">
         <div className="flex grow basis-0 justify-center overflow-scroll border-none lg:justify-normal">
           <div id="chords">
@@ -93,14 +85,14 @@ export default function BoomChuck({ song }: { song: Song }) {
               onChange={(e) => setBpm(parseInt(e.target.value))}
             ></Bpm>
           </div>
-          <div className="hidden md:block">
+          {/* <div className="hidden md:block">
             Key:{" "}
             <input
               type="text"
               value="G"
               className="w-10 rounded-sm border p-1"
             ></input>
-          </div>
+          </div> */}
           <button
             className="text-stone-700 hover:text-stone-500 active:text-stone-950"
             type="button"
@@ -109,14 +101,14 @@ export default function BoomChuck({ song }: { song: Song }) {
           >
             <IconPlayerStopFilled />
           </button>
-          <button
+          {/* <button
             className="text-stone-700 hover:text-stone-500 active:text-stone-950"
             type="button"
             aria-label="back"
             title="Back (,)"
           >
             <IconPlayerSkipBackFilled />
-          </button>
+          </button> */}
           <button
             className="text-stone-700 hover:text-stone-500 active:text-stone-950"
             type="button"
@@ -125,14 +117,14 @@ export default function BoomChuck({ song }: { song: Song }) {
           >
             <IconPlayerPlayFilled />
           </button>
-          <button
+          {/* <button
             className="text-stone-700 hover:text-stone-500 active:text-stone-950"
             type="button"
             aria-label=""
             title="Forward (.)"
           >
             <IconPlayerSkipForwardFilled />
-          </button>
+          </button> */}
           <button
             className="text-green-600 hover:text-stone-500 active:text-stone-950"
             type="button"
@@ -149,7 +141,6 @@ export default function BoomChuck({ song }: { song: Song }) {
           ></Volume>
         </div>
       </div>
-
       <div
         id="chordSelectionAndFileContainer"
         className="flex w-full shrink-0 flex-col items-center justify-between gap-4 px-1 py-2 md:py-4 lg:order-first lg:w-64 lg:border-r lg:px-10 lg:py-12 xl:w-80"
@@ -163,7 +154,7 @@ export default function BoomChuck({ song }: { song: Song }) {
               {diatonicRootOptions.map((root) => {
                 return (
                   <button
-                    className="size-10 rounded-md border bg-stone-300 lg:size-12"
+                    className="size-10 rounded-md border bg-stone-300 transition-colors hover:bg-stone-200 active:bg-stone-400 lg:size-12"
                     onClick={() =>
                       setMeasures((prev) => [
                         ...prev,
@@ -184,7 +175,7 @@ export default function BoomChuck({ song }: { song: Song }) {
               {nonDiatonicRootOptionsA.map((root) => {
                 return (
                   <button
-                    className="size-10 rounded-md border bg-stone-300 lg:size-12"
+                    className="size-10 rounded-md border bg-stone-300 transition-colors hover:bg-stone-200 active:bg-stone-400 lg:size-12"
                     onClick={() =>
                       setMeasures((prev) => [
                         ...prev,
@@ -203,7 +194,7 @@ export default function BoomChuck({ song }: { song: Song }) {
               {nonDiatonicRootOptionsB.map((root) => {
                 return (
                   <button
-                    className="size-10 rounded-md border bg-stone-300 lg:size-12"
+                    className="size-10 rounded-md border bg-stone-300 transition-colors hover:bg-stone-200 active:bg-stone-400 lg:size-12"
                     onClick={() =>
                       setMeasures((prev) => [
                         ...prev,
@@ -230,6 +221,7 @@ export default function BoomChuck({ song }: { song: Song }) {
           ></QualitySelection>
         </div>
         <FileOperations></FileOperations>
+        <SongForm openHandler={() => {}} measures={measures}></SongForm>
       </div>
     </main>
   );

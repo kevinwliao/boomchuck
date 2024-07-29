@@ -16,7 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { songSchema } from "@/lib/schemas";
+import { Measure, songSchema } from "@/lib/schemas";
 import { Song } from "@/lib/schemas";
 
 const formSchema = songSchema.omit({
@@ -25,12 +25,15 @@ const formSchema = songSchema.omit({
   tempo: true,
 });
 
+// We will probably put this into context
 const testUserId = "test_user_id";
 
 export default function SongForm({
   openHandler,
+  measures,
 }: {
   openHandler: React.Dispatch<React.SetStateAction<boolean>>;
+  measures: Measure[];
 }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,12 +52,7 @@ export default function SongForm({
     const newSong: Song = {
       userId: testUserId,
       name: values.name,
-      measures: [
-        { chord: { root: "G", quality: "M" } },
-        { chord: { root: "G", quality: "M" } },
-        { chord: { root: "D", quality: "7" } },
-        { chord: { root: "G", quality: "M" } },
-      ],
+      measures: measures,
     };
     await createSong(newSong);
     openHandler(false);

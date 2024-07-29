@@ -1,6 +1,4 @@
-import React from "react";
-
-export default function Bpm({
+export default function Key({
   onChange,
   bpm,
   disabled,
