@@ -4,6 +4,7 @@ import * as React from "react";
 import { useState } from "react";
 import { MusicalNoteIcon } from "@heroicons/react/16/solid";
 import { Menu, MenuIcon } from "lucide-react";
+import { IconMenu2 } from "@tabler/icons-react";
 import Link from "next/link";
 import ModeToggle from "@/components/toggle";
 import { cn } from "@/lib/utils";
@@ -33,16 +34,25 @@ import Logo from "@/components/ui/logo";
 
 export default function Header() {
   return (
-    <header className="grid h-14 shrink-0 grid-cols-3 items-center justify-between overflow-hidden border-b bg-background px-4 py-2">
-      <Link href="/" className="flex items-center text-amber-900">
-        <Logo className="mr-1"></Logo>
-        <span className="text-2xl font-semibold">boomchuck</span>
-      </Link>
-      <div className="place-self-center rounded-lg border-2 px-2 py-1 ">
-        Long Journey Home
-      </div>
-      <div className="self-center justify-self-end">Sign in</div>
-    </header>
+    <>
+      <header className="hidden h-14 shrink-0 grid-cols-3 items-center justify-between border-b bg-background px-4 md:grid ">
+        <Link href="/" className="flex items-center text-amber-900">
+          <Logo className="mr-1"></Logo>
+          <span className="text-2xl font-semibold">boomchuck</span>
+        </Link>
+        <div className="place-self-center rounded-lg border px-2 py-1 ">
+          Long Journey Home
+        </div>
+        <div className="self-center justify-self-end">Sign in</div>
+      </header>
+      <header className="flex h-14 shrink-0 items-center justify-between border-b px-4 py-2 md:hidden">
+        <Link href="/" className="flex items-center text-amber-900">
+          <Logo className="mr-1"></Logo>
+          <span className="text-2xl font-semibold">boomchuck</span>
+        </Link>
+        <IconMenu2></IconMenu2>
+      </header>
+    </>
   );
 }
 

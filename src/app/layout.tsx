@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Lexend_Deca } from "next/font/google";
+import { Lexend } from "next/font/google";
 import { ThemeProvider } from "@/components/themeProvider";
 
 import Header from "./header";
-import Footer from "./footer";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
-const dmsans = Lexend_Deca({ subsets: ["latin"] });
+const dmsans = Lexend({
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "BoomChuck - Bluegrass Backup",

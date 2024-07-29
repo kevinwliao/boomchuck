@@ -11,10 +11,14 @@ import {
   IconPlayerStopFilled,
   IconPlayerPlayFilled,
   IconRepeat,
+  IconSquareXFilled,
+  IconGripVertical,
   IconVolume,
   IconMetronome,
   IconPlayerSkipBackFilled,
   IconPlayerSkipForwardFilled,
+  IconX,
+  IconGripHorizontal,
 } from "@tabler/icons-react";
 import { FolderOpen, Save } from "lucide-react";
 import { useState } from "react";
@@ -24,12 +28,8 @@ const sharp = "\u266f";
 const flat = "\u266d";
 const placeAccidentals = (str: string) => <>{str.replace("#", sharp)}</>;
 
-export default function BoomChuck({
-  initMeasures,
-}: {
-  initMeasures: Measure[];
-}) {
-  const [measures, setMeasures] = useState(initMeasures);
+export default function BoomChuck({ song }: { song: Song }) {
+  const [measures, setMeasures] = useState(song.measures);
   const [qualitySelection, setQualitySelection] = useState<Quality>("M");
 
   const handleSubmit = async () => {
@@ -42,12 +42,12 @@ export default function BoomChuck({
   };
 
   return (
-    <main className="flex grow flex-col bg-neutral-100 lg:flex-row">
+    <main className="flex grow flex-col bg-stone-100 lg:flex-row">
       <div className="flex grow flex-col">
-        <div className="flex grow basis-0 justify-center overflow-scroll border lg:justify-normal">
+        <div className="flex grow basis-0 justify-center overflow-scroll border-none lg:justify-normal">
           <div id="chords">
             <div className="grid grid-cols-4 flex-wrap gap-x-2 gap-y-4 p-4 md:grid-cols-8 lg:flex lg:gap-x-4 lg:gap-y-6 lg:px-6">
-              {measures.map((measure) => {
+              {measures.map((measure, index) => {
                 const handleDelete = () => {
                   setMeasures((prev) =>
                     prev.filter((m) => m.id !== measure.id),
@@ -56,15 +56,23 @@ export default function BoomChuck({
                 return (
                   <div
                     key={measure.id}
-                    className="flex h-14 w-16 flex-col items-center justify-between rounded-lg border-2  bg-white p-4 shadow-md sm:h-16 sm:w-20 lg:h-24 lg:w-28"
+                    className="group relative flex h-14 w-16 flex-col items-center justify-end overflow-clip rounded-lg border bg-white p-2 shadow-md last:border-amber-600 last:bg-amber-200 sm:h-16 sm:w-20 lg:h-24 lg:w-28 lg:justify-between"
                   >
-                    <button
-                      className="hidden self-start lg:block"
-                      onClick={handleDelete}
-                    >
-                      x
-                    </button>
-                    <div className="text-lg sm:text-xl lg:text-2xl">
+                    <div className="hidden  w-full justify-between lg:flex">
+                      <div className="invisible text-sm text-stone-400 group-last:text-amber-600 group-odd:visible">
+                        {index + 1}
+                      </div>
+                      <button className="cursor-grab text-stone-400  active:cursor-grabbing group-last:text-amber-600 ">
+                        <IconGripVertical className="size-4 lg:size-6" />
+                      </button>
+                      {/* <button
+                        className=" invisible left-2 top-2 text-stone-500 hover:text-red-500  active:text-red-700 group-hover:visible"
+                        onClick={handleDelete}
+                      >
+                        <IconX className="size-4" />
+                      </button> */}
+                    </div>
+                    <div className="text-lg group-last:text-amber-950 sm:text-2xl  lg:text-3xl">
                       {placeAccidentals(measure.chord.root)}
                       {measure.chord.quality}
                     </div>
@@ -75,106 +83,132 @@ export default function BoomChuck({
           </div>
         </div>
 
-        <div className="flex h-min items-center justify-center gap-4 border p-2 text-neutral-800 lg:order-first lg:justify-start lg:gap-8 lg:px-6">
-          <div>
+        <div className="flex h-min items-center justify-center gap-4 border-b border-t p-2 lg:order-first lg:justify-start lg:gap-6 lg:border-t-0 lg:px-6">
+          <div className="hidden md:block">
             BPM:{" "}
             <input
               type="number"
               value="100"
-              className="w-16 rounded-sm border-2 p-1"
+              className="w-16 rounded-sm border p-1"
             ></input>
           </div>
-          <div>
+          <div className="hidden md:block">
             Key:{" "}
             <input
               type="text"
               value="G"
-              className="w-10 rounded-sm border-2 p-1"
+              className="w-10 rounded-sm border p-1"
             ></input>
           </div>
           <IconMetronome></IconMetronome>
-          <IconPlayerSkipBackFilled></IconPlayerSkipBackFilled>
-          <IconPlayerPlayFilled></IconPlayerPlayFilled>
-          <IconPlayerSkipForwardFilled></IconPlayerSkipForwardFilled>
+          <button
+            className="text-stone-700 hover:text-stone-500 active:text-stone-950"
+            type="button"
+            aria-label="back"
+            title="back [,]"
+          >
+            <IconPlayerSkipBackFilled />
+          </button>
+          <button
+            className="text-stone-700 hover:text-stone-500 active:text-stone-950"
+            type="button"
+            aria-label="play"
+            title="play [_]"
+          >
+            <IconPlayerPlayFilled />
+          </button>
+          <button
+            className="text-stone-700 hover:text-stone-500 active:text-stone-950"
+            type="button"
+            aria-label=""
+            title="forward [.]"
+          >
+            <IconPlayerSkipForwardFilled />
+          </button>
           <IconVolume></IconVolume>
         </div>
       </div>
 
-      <div className="flex w-full shrink-0 flex-col items-center justify-between gap-4 border px-1 py-2 lg:order-first lg:w-64 lg:p-8 xl:w-80">
-        <div
-          id="rootOptionsContainer"
-          className="flex flex-col gap-1 lg:flex-row lg:gap-2"
-        >
-          <div className="flex gap-1 lg:flex-col lg:gap-2">
-            {diatonicRootOptions.map((root) => {
-              return (
-                <button
-                  className="size-10 rounded-sm border-2 bg-neutral-300 shadow-md lg:size-12"
-                  onClick={() =>
-                    setMeasures((prev) => [
-                      ...prev,
-                      {
-                        id: uuid(),
-                        chord: { root: root, quality: qualitySelection },
-                      },
-                    ])
-                  }
-                >
-                  {placeAccidentals(root)}
-                </button>
-              );
-            })}
+      <div className="flex w-full shrink-0 flex-col items-center justify-between gap-4 px-1 py-2 md:py-4 lg:order-first lg:w-64 lg:border-r lg:px-10 lg:py-12 xl:w-80">
+        <div className="chordSelectionContainer base flex grow flex-col items-center justify-center gap-4 lg:gap-8 lg:text-lg xl:gap-16">
+          <div
+            id="rootOptionsContainer"
+            className="flex flex-col justify-center gap-1 lg:flex-row lg:gap-2"
+          >
+            <div className="flex gap-1 lg:flex-col lg:gap-2">
+              {diatonicRootOptions.map((root) => {
+                return (
+                  <button
+                    className="size-10 rounded-md border bg-stone-300 lg:size-12"
+                    onClick={() =>
+                      setMeasures((prev) => [
+                        ...prev,
+                        {
+                          id: uuid(),
+                          chord: { root: root, quality: qualitySelection },
+                        },
+                      ])
+                    }
+                  >
+                    {placeAccidentals(root)}
+                  </button>
+                );
+              })}
+            </div>
+            {/* calculate offset with formula: (sizeOfBox + gap)/2 */}
+            <div className="ml-[1.375rem] flex gap-1 lg:order-first lg:ml-0 lg:mt-7 lg:flex-col lg:gap-2">
+              {nonDiatonicRootOptionsA.map((root) => {
+                return (
+                  <button
+                    className="size-10 rounded-md border bg-stone-300 lg:size-12"
+                    onClick={() =>
+                      setMeasures((prev) => [
+                        ...prev,
+                        {
+                          id: uuid(),
+                          chord: { root: root, quality: qualitySelection },
+                        },
+                      ])
+                    }
+                  >
+                    {placeAccidentals(root)}
+                  </button>
+                );
+              })}
+              <div className="size-10 lg:size-12"></div>
+              {nonDiatonicRootOptionsB.map((root) => {
+                return (
+                  <button
+                    className="size-10 rounded-md border  bg-stone-300 lg:size-12"
+                    onClick={() =>
+                      setMeasures((prev) => [
+                        ...prev,
+                        {
+                          id: uuid(),
+                          chord: { root: root, quality: qualitySelection },
+                        },
+                      ])
+                    }
+                  >
+                    {placeAccidentals(root)}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-          {/* calculate offset with formula: (sizeOfButton + gap)/2 */}
-          <div className="ml-[1.375rem] flex gap-1 lg:order-first lg:ml-0 lg:mt-7 lg:flex-col lg:gap-2">
-            {nonDiatonicRootOptionsA.map((root) => {
-              return (
-                <button
-                  className="size-10 rounded-sm border-2 bg-neutral-300 shadow-md lg:size-12"
-                  onClick={() =>
-                    setMeasures((prev) => [
-                      ...prev,
-                      {
-                        id: uuid(),
-                        chord: { root: root, quality: qualitySelection },
-                      },
-                    ])
-                  }
-                >
-                  {placeAccidentals(root)}
-                </button>
-              );
-            })}
-            <div className="size-10 lg:size-12"></div>
-            {nonDiatonicRootOptionsB.map((root) => {
-              return (
-                <button
-                  className="size-10 rounded-sm border-2 bg-neutral-300 shadow-md lg:size-12"
-                  onClick={() =>
-                    setMeasures((prev) => [
-                      ...prev,
-                      {
-                        id: uuid(),
-                        chord: { root: root, quality: qualitySelection },
-                      },
-                    ])
-                  }
-                >
-                  {placeAccidentals(root)}
-                </button>
-              );
-            })}
+          <div
+            id="qualityOptionsContainer"
+            className="flex justify-center gap-1 lg:gap-2"
+          >
+            {qualityOptions.map((quality) => (
+              <button
+                className={`${qualitySelection === quality ? "bg-stone-300" : "bg-white"} size-10  border  transition-colors first:rounded-l-md last:rounded-r-md lg:size-12`}
+                onClick={() => setQualitySelection(quality)}
+              >
+                {quality}
+              </button>
+            ))}
           </div>
-        </div>
-        <div id="qualityOptionsContainer" className="flex gap-1 lg:gap-2">
-          {qualityOptions.map((quality) => (
-            <button
-              className={`${qualitySelection === quality ? "bg-neutral-300" : "bg-white"} size-10 rounded-sm border-2 shadow-md lg:size-12`}
-              onClick={() => setQualitySelection(quality)}
-            >
-              {quality}
-            </button>
-          ))}
         </div>
         <FileOperations></FileOperations>
       </div>
@@ -183,12 +217,12 @@ export default function BoomChuck({
 }
 
 const FileOperations = () => (
-  <div className="hidden w-full flex-col gap-4 text-sm text-neutral-500 lg:flex">
-    <button className="flex w-max gap-2">
+  <div className="hidden w-full flex-col gap-4 text-sm text-stone-500 lg:flex">
+    <button className="flex w-max items-center gap-2 uppercase">
       <Save />
       <div>Save song</div>
     </button>
-    <button className="flex w-max gap-2">
+    <button className="flex w-max items-center gap-2 uppercase">
       <FolderOpen></FolderOpen>
       <div>Open song</div>
     </button>

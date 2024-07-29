@@ -7,5 +7,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
   if (!song) {
     return <NoSongFound></NoSongFound>;
   }
-  return <BoomChuck initMeasures={song.measures}></BoomChuck>;
+
+  return <BoomChuck song={song}></BoomChuck>;
 }
