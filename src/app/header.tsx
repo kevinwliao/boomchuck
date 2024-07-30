@@ -36,28 +36,28 @@ import Avatar from "@/components/ui/avatar";
 export default function Header() {
   return (
     <>
-      <header className="hidden h-14 shrink-0 grid-cols-3 items-center justify-between border-b bg-background px-4 md:grid">
-        <Link href="/" className="flex items-center text-amber-900">
+      <header className="grid h-14 shrink-0 grid-cols-3 items-center justify-between border-b bg-background px-4 md:px-12">
+        <Link href="/" className="flex items-center text-amber-800">
           <Logo className="mr-1"></Logo>
           <span className="text-2xl font-semibold">boomchuck</span>
         </Link>
-        <div className="place-self-center rounded-lg border px-2 py-1">
-          Long Journey Home
+        <div className="place-self-center rounded-lg px-2 py-1">
+          Untitled Song
         </div>
         <div className="flex gap-2 self-center justify-self-end">
-          <button className="w-max rounded-md bg-amber-200 px-4 py-2">
+          <button className="w-max rounded-md bg-amber-300 px-4 py-2 transition-colors hover:bg-amber-200 active:bg-amber-400">
             Sign in
           </button>
           <Avatar></Avatar>
         </div>
       </header>
-      <header className="flex h-14 shrink-0 items-center justify-between border-b px-4 py-2 md:hidden">
-        <Link href="/" className="flex items-center text-amber-900">
+      {/* <header className="flex h-14 shrink-0 items-center justify-between border-b px-4 py-2 md:hidden">
+        <Link href="/" className="flex items-center text-amber-800">
           <Logo className="mr-1"></Logo>
           <span className="text-2xl font-semibold">boomchuck</span>
         </Link>
         <IconMenu2></IconMenu2>
-      </header>
+      </header> */}
     </>
   );
 }

@@ -18,6 +18,9 @@ const config = {
     //   },
     // },
     extend: {
+      dropShadow: {
+        "solid-transparent": "3px 3px 0px rgba(0, 0, 0, 0.5)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

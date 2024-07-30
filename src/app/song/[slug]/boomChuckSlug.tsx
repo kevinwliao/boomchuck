@@ -29,10 +29,11 @@ const sharp = "\u266f";
 const flat = "\u266d";
 const placeAccidentals = (str: string) => <>{str.replace("#", sharp)}</>;
 
-export default function BoomChuck({ song }: { song: Song }) {
-  const [measures, setMeasures] = useState(song.measures);
+export default function BoomChuck({ song }: { song?: Song }) {
+  const [measures, setMeasures] = useState(() => (song ? song.measures : []));
   const [volume, setVolume] = useState(0.75);
   const [bpm, setBpm] = useState(120);
+  const [loopOn, setLoopOn] = useState(false);
   const [qualitySelection, setQualitySelection] = useState<Quality>("M");
 
   return (
@@ -50,7 +51,7 @@ export default function BoomChuck({ song }: { song: Song }) {
                 return (
                   <div
                     key={measure.id}
-                    className="group relative flex h-14 w-16 flex-col items-center justify-end overflow-clip rounded-lg border bg-white p-2 shadow-md last:border-amber-600 last:bg-amber-200 sm:h-16 sm:w-20 lg:h-24 lg:w-28 lg:justify-between"
+                    className="group relative flex h-14 w-16 flex-col items-center justify-end overflow-clip rounded-md border bg-white p-2 shadow-md last:border-amber-600 last:bg-amber-200 sm:h-16 sm:w-20 lg:h-24 lg:w-28 lg:justify-between"
                   >
                     <div className="hidden w-full justify-between lg:flex">
                       <button
@@ -221,7 +222,7 @@ export default function BoomChuck({ song }: { song: Song }) {
           ></QualitySelection>
         </div>
         <FileOperations></FileOperations>
-        <SongForm openHandler={() => {}} measures={measures}></SongForm>
+        <SaveSongDialog measures={measures}></SaveSongDialog>
       </div>
     </main>
   );
