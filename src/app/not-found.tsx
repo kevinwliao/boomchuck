@@ -9,7 +9,7 @@ export default function NotFound() {
         </span>
         <span className="px-4">This page could not be found.</span>
         <Link href="/">
-          <Button variant="outline" className="">
+          <Button variant="secondary" className="">
             Take me home!
           </Button>
         </Link>

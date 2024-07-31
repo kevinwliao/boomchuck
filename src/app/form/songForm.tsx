@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Measure, songSchema } from "@/lib/schemas";
 import { Song } from "@/lib/schemas";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 const formSchema = songSchema.omit({
   measures: true,
@@ -66,18 +67,29 @@ export default function SongForm({
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Song Name</FormLabel>
+              <FormLabel className="font-normal">Name</FormLabel>
               <FormControl>
                 <Input placeholder="Big Spike Hammer" {...field} />
               </FormControl>
-              <FormDescription>This is the name of your song</FormDescription>
+              <VisuallyHidden>
+                <FormDescription>This is the name of your song</FormDescription>
+              </VisuallyHidden>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button disabled={isSubmitting} type="submit">
-          Save Song
-        </Button>
+        <div className="flex justify-end gap-2">
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => openHandler(false)}
+          >
+            Close
+          </Button>
+          <Button disabled={isSubmitting} type="submit">
+            Save
+          </Button>
+        </div>
       </form>
     </Form>
   );

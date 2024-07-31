@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme";
 
 const config = {
   darkMode: ["class"],
@@ -18,6 +19,10 @@ const config = {
     //   },
     // },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-lexend)", ...defaultTheme.fontFamily.sans],
+        serif: ["var(--font-lora)"],
+      },
       dropShadow: {
         "solid-transparent": "3px 3px 0px rgba(0, 0, 0, 0.5)",
       },
@@ -41,7 +46,7 @@ const config = {
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          foreground: "hsl(var(--mut  ed-foreground))",
         },
         accent: {
           DEFAULT: "hsl(var(--accent))",

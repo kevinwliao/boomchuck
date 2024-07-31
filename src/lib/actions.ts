@@ -6,17 +6,14 @@ import { songSchema } from "@/lib/schemas";
 import { Song } from "@/lib/schemas";
 
 export async function createSong(song: Song) {
-  // const validatedFields = songSchema.safeParse(song);
-
-  // if (!validatedFields.success) {
-  //   return {
-  //     errors: validatedFields.error.flatten().fieldErrors,
-  //     message: "Missing Fields",
-  //   };
-  // }
-
-  // const { userId, name, measures } = validatedFields.data;
-  const { userId, name, measures } = song;
+  const validatedFields = songSchema.safeParse(song);
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields",
+    };
+  }
+  const { userId, name, measures } = validatedFields.data;
 
   try {
     await sql`

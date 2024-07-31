@@ -4,7 +4,7 @@ import * as React from "react";
 import { useState } from "react";
 import { MusicalNoteIcon } from "@heroicons/react/16/solid";
 import { Menu, MenuIcon } from "lucide-react";
-import { IconMenu2 } from "@tabler/icons-react";
+import { IconMenu2, IconExternalLink } from "@tabler/icons-react";
 import Link from "next/link";
 import ModeToggle from "@/components/toggle";
 import { cn } from "@/lib/utils";
@@ -32,23 +32,54 @@ import Socials from "@/components/socials";
 import AboutDialog from "@/components/aboutDialog";
 import Logo from "@/components/ui/logo";
 import Avatar from "@/components/ui/avatar";
+import { useSelectedLayoutSegment, usePathname } from "next/navigation";
 
 export default function Header() {
+  const pathname = usePathname();
+  const segment = useSelectedLayoutSegment();
+
   return (
     <>
-      <header className="grid h-14 shrink-0 grid-cols-3 items-center justify-between border-b bg-background px-4 md:px-12">
-        <Link href="/" className="flex items-center text-amber-800">
-          <Logo className="mr-1"></Logo>
-          <span className="text-2xl font-semibold">boomchuck</span>
-        </Link>
-        <div className="place-self-center rounded-lg px-2 py-1">
-          Untitled Song
+      <header
+        className={`sticky top-0 z-50 flex h-14 shrink-0 items-center justify-between border-b bg-background px-4 md:px-16`}
+      >
+        <div className="flex items-center justify-start gap-16">
+          <Link href="/" className="flex items-center text-amber-800">
+            <Logo className="mr-1 shrink-0"></Logo>
+            <span className="text-2xl font-semibold">boomchuck</span>
+          </Link>
         </div>
-        <div className="flex gap-2 self-center justify-self-end">
-          <button className="w-max rounded-md bg-amber-300 px-4 py-2 transition-colors hover:bg-amber-200 active:bg-amber-400">
-            Sign in
-          </button>
-          <Avatar></Avatar>
+        <div className="flex items-center gap-16">
+          <div
+            id="nav items"
+            className="hidden items-center justify-start gap-12 font-normal md:flex"
+          >
+            <Link
+              href="/app/new-song"
+              className={`${segment === "app" ? "text-sky-700 underline" : ""} font-medium underline-offset-1 hover:underline`}
+            >
+              App
+            </Link>
+            <Link
+              href="/tuner"
+              className={`${segment === "tuner" ? "text-sky-700 underline" : ""} font-medium underline-offset-1 hover:underline`}
+            >
+              Tuner
+            </Link>
+            <Link
+              href="/guide"
+              className={`${segment === "guide" ? "text-sky-700 underline" : ""} font-medium underline-offset-1 hover:underline`}
+            >
+              Guide
+            </Link>
+          </div>
+          <div className="hidden gap-2 md:flex">
+            <Button size="sm">Log in</Button>
+            <Avatar></Avatar>
+          </div>
+          <div id="hamburger" className="md:hidden">
+            <IconMenu2></IconMenu2>
+          </div>
         </div>
       </header>
       {/* <header className="flex h-14 shrink-0 items-center justify-between border-b px-4 py-2 md:hidden">

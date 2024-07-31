@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Lexend } from "next/font/google";
+import { Lora } from "next/font/google";
 import { ThemeProvider } from "@/components/themeProvider";
 
 import Header from "./header";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
-const dmsans = Lexend({
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const lexend = Lexend({
   subsets: ["latin"],
+  variable: "--font-lexend",
+});
+const lora = Lora({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-lora",
 });
 
 export const metadata: Metadata = {
@@ -23,14 +30,14 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning lang="en">
-      <body className={`${dmsans.className} min-w-fit`}>
+      <body className={`${lexend.variable} ${lora.variable} min-w-fit`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex h-screen flex-col">
+          <div className="flex min-h-screen flex-col">
             <Header></Header>
             {children}
           </div>

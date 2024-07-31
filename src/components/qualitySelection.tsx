@@ -22,7 +22,7 @@ export function QualitySelection({
         <ToggleGroup.Item
           key={i}
           value={quality}
-          className={`${qualitySelection === quality ? " bg-stone-300 " : "bg-white"} size-10 border  transition-colors first:rounded-l-md last:rounded-r-md lg:size-12`}
+          className={`${qualitySelection === quality ? "bg-stone-300" : "bg-white hover:bg-white/80"} size-10 border-none transition-colors first:rounded-l-md last:rounded-r-md lg:size-12`}
         >
           {quality}
         </ToggleGroup.Item>
