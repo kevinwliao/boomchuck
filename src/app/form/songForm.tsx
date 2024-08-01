@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Measure, songSchema } from "@/lib/schemas";
 import { Song } from "@/lib/schemas";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { makeSlug } from "@/lib/utils";
 
 const formSchema = songSchema.omit({
   measures: true,
@@ -48,6 +49,7 @@ export default function SongForm({
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log("submitting");
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     const newSong: Song = {

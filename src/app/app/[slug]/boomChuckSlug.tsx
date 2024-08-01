@@ -24,12 +24,20 @@ import { QualitySelection } from "@/components/qualitySelection";
 import Bpm from "@/components/bpm";
 import SaveSongDialog from "@/app/form/saveSongDialog";
 import SongForm from "@/app/form/songForm";
+import OpenSongDialog from "@/app/form/openSongDialog";
+import SongSelection from "@/components/songSelection";
 
 const sharp = "\u266f";
 const flat = "\u266d";
 const placeAccidentals = (str: string) => <>{str.replace("#", sharp)}</>;
 
-export default function BoomChuck({ song }: { song?: Song }) {
+export default function BoomChuck({
+  song,
+  songs,
+}: {
+  song?: Song;
+  songs: Song[];
+}) {
   const [measures, setMeasures] = useState(() => (song ? song.measures : []));
   const [volume, setVolume] = useState(0.75);
   const [bpm, setBpm] = useState(120);
@@ -63,9 +71,9 @@ export default function BoomChuck({ song }: { song?: Song }) {
                       >
                         <IconX className="size-4" />
                       </button>
-                      {/* <button className="cursor-grab text-stone-400 active:cursor-grabbing group-last:text-amber-600">
+                      <button className="cursor-grab text-stone-400 active:cursor-grabbing group-last:text-amber-600">
                         <IconGripVertical className="size-4 lg:size-6" />
-                      </button> */}
+                      </button>
                     </div>
                     <div className="text-lg group-last:text-amber-950 sm:text-xl lg:text-3xl">
                       {placeAccidentals(measure.chord.root)}
@@ -149,7 +157,7 @@ export default function BoomChuck({ song }: { song?: Song }) {
         id="chordSelectionAndFileContainer"
         className="flex w-full shrink-0 flex-col items-center justify-between gap-4 px-1 py-2 md:py-4 lg:order-first lg:w-64 lg:border-r lg:px-10 lg:py-12 xl:w-80"
       >
-        <div className="chordSelectionContainer base flex grow flex-col items-center justify-center gap-4 lg:gap-8 lg:text-lg xl:gap-16">
+        <div className="chordSelectionContainer base flex grow flex-col items-center justify-center gap-4 lg:gap-16 lg:text-lg xl:gap-16">
           <div
             id="rootOptionsContainer"
             className="flex flex-col justify-center gap-1 lg:flex-row lg:gap-2"
@@ -224,6 +232,7 @@ export default function BoomChuck({ song }: { song?: Song }) {
             }}
           ></QualitySelection>
         </div>
+        <OpenSongDialog songs={songs}></OpenSongDialog>
         <SaveSongDialog measures={measures}></SaveSongDialog>
       </div>
     </main>

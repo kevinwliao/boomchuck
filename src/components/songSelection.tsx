@@ -3,6 +3,9 @@ import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
   Command,
   CommandEmpty,
@@ -16,53 +19,31 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import { songsNames as songOptions } from "@/lib/songs";
+import { useState } from "react";
+import { Song } from "@/lib/schemas";
 
-type SongSelectionProps = { mobile: boolean };
+type SongSelectionProps = { songs: Song[] };
 
 const SongSelection = React.forwardRef<HTMLElement, SongSelectionProps>(
-  ({ mobile, ...props }, ref) => {
-    const [open, setOpen] = React.useState(false);
+  ({ songs, ...props }, ref) => {
+    const [open, setOpen] = useState(false);
+    const [selectedSong, setSelectedSong] = useState<Song | null>(null);
 
-    // managing "state" in URL instead of useState
-    // const [selectedStatus, setSelectedStatus] = React.useState<
-    //   (typeof songOptions)[number] | null
-    // >(null);
-
-    const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const { push } = useRouter();
-
-    const selectedStatus =
-      songOptions.find(
-        (songName) => songName === searchParams.get("song")?.toString(),
-      ) || null;
-
-    function handleSearch(term: (typeof songOptions)[number]) {
-      const params = new URLSearchParams(searchParams);
-      if (term) {
-        params.set("song", term);
-      } else {
-        params.delete("song");
-      }
-      push(`${pathname}?${params.toString()}`);
-    }
+    function handleSearch() {}
 
     return (
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover open={open} onOpenChange={setOpen} modal>
         <PopoverTrigger asChild>
-          <Button
-            variant={mobile ? "ghost" : "outline"}
+          <button
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="flex w-[200px] items-center justify-between"
           >
             <span className="truncate">
-              {selectedStatus ? selectedStatus : "Load song..."}
+              {selectedSong ? selectedSong.name : "Load song..."}
             </span>
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          </Button>
+          </button>
         </PopoverTrigger>
         <PopoverContent className="relative w-[200px] p-0">
           <Command>
@@ -70,28 +51,25 @@ const SongSelection = React.forwardRef<HTMLElement, SongSelectionProps>(
             <CommandEmpty>No song found.</CommandEmpty>
             <CommandList>
               <CommandGroup>
-                {songOptions.sort().map((song) => (
+                {songs.map((song) => (
                   <CommandItem
-                    key={song}
-                    // getting around types
-                    defaultValue={selectedStatus ? selectedStatus : undefined}
-                    // no longer need value attribute since we are not using state
-                    // value={song}
+                    key={song.name}
+                    value={song.name}
                     onSelect={(value) => {
-                      // setSelectedStatus(
-                      //   songOptions.find((song) => song === value) || null,
-                      // );
-                      handleSearch(value);
+                      setSelectedSong(
+                        songs.find((song) => song.name === value) || null,
+                      );
+                      handleSearch();
                       setOpen(false);
                     }}
                   >
                     <Check
                       className={cn(
                         "mr-2 h-4 w-4 shrink-0 grow-0",
-                        selectedStatus === song ? "opacity-100" : "opacity-0",
+                        selectedSong === song ? "opacity-100" : "opacity-0",
                       )}
                     />
-                    <div>{song}</div>
+                    <div>{song.name}</div>
                   </CommandItem>
                 ))}
               </CommandGroup>
