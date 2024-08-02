@@ -22,6 +22,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { makeSlug } from "@/lib/utils";
 
 const formSchema = songSchema.omit({
+  slug: true,
   measures: true,
   userId: true,
   tempo: true,
@@ -53,6 +54,7 @@ export default function SongForm({
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     const newSong: Song = {
+      slug: makeSlug(values.name),
       userId: testUserId,
       name: values.name,
       measures: measures,

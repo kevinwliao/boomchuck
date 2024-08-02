@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Beat, Chord } from "@/lib/types";
@@ -32,7 +32,7 @@ export function BeatRect(props: beatRectProps) {
 
   return (
     <div
-      className={`group relative box-border select-none rounded-lg  border bg-boomchuck py-4 font-sans text-lg font-semibold md:py-6 md:text-3xl ${props.active ? "ring-4 ring-amber-800/80 dark:ring-amber-200/80" : ""}`}
+      className={`group relative box-border select-none rounded-lg border bg-boomchuck py-4 font-sans text-lg font-semibold md:py-6 md:text-3xl ${props.active ? "ring-4 ring-amber-800/80 dark:ring-amber-200/80" : ""}`}
       ref={setNodeRef}
       style={style}
     >
@@ -53,7 +53,7 @@ export function BeatRect(props: beatRectProps) {
           <GripVerticalIcon className="size-3 md:size-4"></GripVerticalIcon>
         </button>
       </div>
-      <div className="static flex justify-center ">
+      <div className="static flex justify-center">
         <span>{props.beat.chord.root}</span>
         <span>{props.beat.chord.quality}</span>
       </div>

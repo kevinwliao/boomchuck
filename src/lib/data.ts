@@ -17,7 +17,7 @@ export async function fetchSongs() {
 export async function fetchSongBySlug(slug: string) {
   noStore();
   try {
-    const data = await sql<Song>`SELECT * FROM songs WHERE user_id = ${slug}`;
+    const data = await sql<Song>`SELECT * FROM songs WHERE slug = ${slug}`;
     const song = data.rows[0];
     return song;
   } catch (error) {

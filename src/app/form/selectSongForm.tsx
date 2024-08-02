@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { cn } from "@/lib/utils";
+import { cn, makeSlug } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -32,7 +32,7 @@ import { useRouter } from "next/navigation";
 import { Song } from "@/lib/schemas";
 
 const FormSchema = z.object({
-  songSlug: z.string({
+  song: z.string({
     required_error: "Please select a song.",
   }),
 });
@@ -44,7 +44,7 @@ export function SelectSongForm({ songs }: { songs: Song[] }) {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    router.push(data.songSlug);
+    router.push(makeSlug(data.song));
   }
 
   return (
@@ -52,7 +52,7 @@ export function SelectSongForm({ songs }: { songs: Song[] }) {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
-          name="songSlug"
+          name="song"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Song</FormLabel>
@@ -68,7 +68,7 @@ export function SelectSongForm({ songs }: { songs: Song[] }) {
                       )}
                     >
                       {field.value
-                        ? songs.find((song) => song.slug === field.value)?.name
+                        ? songs.find((song) => song.name === field.value)?.name
                         : "Select song"}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
@@ -82,10 +82,10 @@ export function SelectSongForm({ songs }: { songs: Song[] }) {
                       <CommandGroup>
                         {songs.map((song) => (
                           <CommandItem
-                            value={song.slug}
+                            value={song.name}
                             key={song.name}
                             onSelect={() => {
-                              form.setValue("songSlug", song.slug);
+                              form.setValue("song", song.name);
                             }}
                           >
                             <Check

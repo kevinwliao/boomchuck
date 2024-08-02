@@ -55,7 +55,7 @@ export default function Editor({
       modifiers={[restrictToParentElement]}
     >
       <div className="m-auto grid w-full grid-cols-4 gap-2 py-2 sm:w-10/12 sm:p-4 lg:w-8/12 lg:grid-cols-8">
-        <SortableContext items={beatsArr}>
+        <SortableContext items={beatsArr.map((b) => b.id)}>
           {beatsArr.map((beat, index) => (
             <BeatRect
               started={started}

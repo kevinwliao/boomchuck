@@ -6,7 +6,6 @@ export default async function Page() {
   return (
     <div>
       <pre>{JSON.stringify(data, null, "\t")}</pre>
-      <SaveSongDialog></SaveSongDialog>
     </div>
   );
 }

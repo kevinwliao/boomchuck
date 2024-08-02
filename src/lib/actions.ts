@@ -13,12 +13,12 @@ export async function createSong(song: Song) {
       message: "Missing Fields",
     };
   }
-  const { userId, name, measures } = validatedFields.data;
+  const { userId, name, measures, slug } = validatedFields.data;
 
   try {
     await sql`
-      INSERT INTO songs (user_id, name, measures)
-      VALUES (${userId}, ${name}, ${JSON.stringify(measures)}::JSONB)
+      INSERT INTO songs (user_id, name, measures, slug)
+      VALUES (${userId}, ${name}, ${JSON.stringify(measures)}::JSONB, ${slug})
     `;
   } catch (error) {
     console.error(error);
