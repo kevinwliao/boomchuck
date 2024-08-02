@@ -14,6 +14,5 @@ export function makeSlug(text: string) {
 
 export const sharpUnicode = "\u266f";
 export const flatUnicode = "\u266d";
-export const placeAccidentals = (str: string) => (
-  <>{str.replace("#", sharpUnicode)}</>
-);
+export const placeAccidentals = (str: string | undefined) =>
+  str ? <>{str.replace("#", sharpUnicode)}</> : <></>;

@@ -11,7 +11,7 @@ import {
   IconPlayerPlayFilled,
   IconRepeat,
 } from "@tabler/icons-react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { QualitySelection } from "@/components/qualitySelection";
 import Bpm from "@/components/bpm";
@@ -28,6 +28,7 @@ import {
   UniqueIdentifier,
   DragStartEvent,
   Active,
+  DragOverlay,
 } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -44,6 +45,7 @@ import {
   restrictToParentElement,
 } from "@dnd-kit/modifiers";
 
+import { Square } from "@/app/app/[slug]/square";
 export default function BoomChuck({
   song,
   songs,
@@ -54,11 +56,13 @@ export default function BoomChuck({
   const [measures, setMeasures] = useState<Measure[]>(() =>
     song ? song.measures : [],
   );
-  const [active, setActiveId] = useState<UniqueIdentifier | null>(null);
+  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [volume, setVolume] = useState(0.75);
   const [bpm, setBpm] = useState(120);
   const [loopOn, setLoopOn] = useState(false);
   const [qualitySelection, setQualitySelection] = useState<Quality>("M");
+
+  const activeMeasure = measures.find((m) => m.id === activeId);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -76,6 +80,7 @@ export default function BoomChuck({
             sensors={sensors}
             collisionDetection={closestCenter}
             onDragEnd={handleDragEnd}
+            onDragStart={handleDragStart}
             modifiers={[restrictToFirstScrollableAncestor]}
           >
             <SortableContext items={measures.map((m) => m.id)}>
@@ -84,6 +89,22 @@ export default function BoomChuck({
                 setMeasures={setMeasures}
               ></Measures>
             </SortableContext>
+            <DragOverlay>
+              {activeId ? (
+                <Square
+                  id={activeId}
+                  handleDelete={() => {}}
+                  // style={{
+                  //   transform: "scale(1.05)",
+                  //   boxShadow:
+                  //     "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                  // }}
+                >
+                  {placeAccidentals(activeMeasure?.chord.root)}
+                  {activeMeasure?.chord.quality}
+                </Square>
+              ) : null}
+            </DragOverlay>
           </DndContext>
         </div>
         <div
@@ -224,6 +245,10 @@ export default function BoomChuck({
     setActiveId(active.id);
   }
 
+  const handleDragCancel = useCallback(() => {
+    setActiveId(null);
+  }, []);
+
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
 
@@ -235,5 +260,7 @@ export default function BoomChuck({
         return arrayMove(prev, oldIndex, newIndex);
       });
     }
+
+    setActiveId(null);
   }
 }

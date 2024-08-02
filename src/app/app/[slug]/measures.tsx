@@ -1,6 +1,6 @@
 import { Measure } from "@/lib/schemas";
 import React from "react";
-import Square from "@/app/app/[slug]/square";
+import { SortableItem } from "@/app/app/[slug]/sortableSquare";
 
 type Props = {
   measures: Measure[];
@@ -17,11 +17,12 @@ export default function Measures({ measures, setMeasures }: Props) {
             setMeasures((prev) => prev.filter((m) => m.id !== measure.id));
           };
           return (
-            <Square
+            <SortableItem
               measure={measure}
               handleDelete={handleDelete}
               id={measure.id}
-            ></Square>
+              key={measure.id}
+            ></SortableItem>
           );
         })}
       </div>
