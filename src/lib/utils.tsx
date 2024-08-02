@@ -11,3 +11,9 @@ export function makeSlug(text: string) {
     .replace(/ /g, "-")
     .replace(/[^\w-]+/g, "");
 }
+
+export const sharpUnicode = "\u266f";
+export const flatUnicode = "\u266d";
+export const placeAccidentals = (str: string) => (
+  <>{str.replace("#", sharpUnicode)}</>
+);

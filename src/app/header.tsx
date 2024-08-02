@@ -28,7 +28,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import SongSelection from "@/components/songSelection";
-import Socials from "@/components/socials";
 import AboutDialog from "@/components/aboutDialog";
 import Logo from "@/components/ui/logo";
 import Avatar from "@/components/ui/avatar";
