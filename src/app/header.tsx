@@ -59,18 +59,6 @@ export default function Header() {
             >
               App
             </Link>
-            <Link
-              href="/tuner"
-              className={`${segment === "tuner" ? "text-sky-700 underline" : ""} font-medium underline-offset-1 hover:underline`}
-            >
-              Tuner
-            </Link>
-            <Link
-              href="/guide"
-              className={`${segment === "guide" ? "text-sky-700 underline" : ""} font-medium underline-offset-1 hover:underline`}
-            >
-              Guide
-            </Link>
           </div>
           <div className="hidden gap-2 md:flex">
             <Button size="sm">Log in</Button>

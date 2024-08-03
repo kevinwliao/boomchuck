@@ -46,6 +46,7 @@ import {
 } from "@dnd-kit/modifiers";
 
 import { Square } from "@/app/app/[slug]/square";
+import ClearSongDialog from "@/app/form/clearSongDialog";
 export default function BoomChuck({
   song,
   songs,
@@ -152,9 +153,9 @@ export default function BoomChuck({
       </div>
       <div
         id="chordSelectionAndFileContainer"
-        className="flex w-full shrink-0 flex-col items-center justify-between gap-4 px-1 py-2 md:py-4 lg:order-first lg:w-64 lg:border-r lg:px-10 lg:py-12 xl:w-80"
+        className="flex w-full shrink-0 flex-col items-center justify-between gap-8 px-1 py-2 md:py-4 lg:order-first lg:w-64 lg:border-r lg:px-10 lg:py-12 xl:w-80"
       >
-        <div className="chordSelectionContainer base flex grow flex-col items-center justify-center gap-4 lg:gap-16 lg:text-lg xl:gap-16">
+        <div className="chordSelectionContainer base flex shrink-0 grow flex-col items-center justify-center gap-4 lg:gap-10 lg:text-lg xl:gap-10">
           <div
             id="rootOptionsContainer"
             className="flex flex-col justify-center gap-1 lg:flex-row lg:gap-2"
@@ -229,8 +230,17 @@ export default function BoomChuck({
             }}
           ></QualitySelection>
         </div>
-        <OpenSongDialog songs={songs}></OpenSongDialog>
-        <SaveSongDialog measures={measures}></SaveSongDialog>
+        <hr className="hidden w-full border-border lg:block" />
+        <div
+          id="file-management"
+          className="items-between hidden grow flex-col gap-2 lg:flex"
+        >
+          <OpenSongDialog songs={songs}></OpenSongDialog>
+          <SaveSongDialog measures={measures}></SaveSongDialog>
+          <ClearSongDialog
+            clearMeasures={() => setMeasures([])}
+          ></ClearSongDialog>
+        </div>
       </div>
     </main>
   );

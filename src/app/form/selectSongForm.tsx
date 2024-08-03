@@ -111,7 +111,12 @@ export function SelectSongForm({ songs }: { songs: Song[] }) {
             </FormItem>
           )}
         />
-        <Button type="submit">Open Song</Button>
+        <div className="flex justify-end gap-2">
+          <Button variant="secondary" type="button">
+            Close
+          </Button>
+          <Button type="submit">Open Song</Button>
+        </div>
       </form>
     </Form>
   );

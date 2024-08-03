@@ -20,7 +20,7 @@ const SaveSongDialog = React.forwardRef<HTMLElement, SaveSongDialogProps>(
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <button className="flex w-max items-center gap-2 text-sm uppercase text-stone-500">
+          <button className="flex w-max items-center gap-2 text-sm uppercase text-stone-500 hover:text-stone-600">
             <IconDeviceFloppy />
             <div>Save song</div>
           </button>
