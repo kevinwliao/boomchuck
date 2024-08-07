@@ -3,6 +3,7 @@ import { IconX, IconGripVertical } from "@tabler/icons-react";
 
 type SquareProps = {
   handleDelete: () => void;
+  overlay: boolean;
   id: UniqueIdentifier;
   children: ReactNode;
   style?: {
@@ -19,14 +20,23 @@ import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 
 export const Square = forwardRef<HTMLDivElement, SquareProps>(
   (
-    { id, handleDelete, children, style, listeners, attributes, ...props },
+    {
+      id,
+      handleDelete,
+      children,
+      style,
+      listeners,
+      overlay,
+      attributes,
+      ...props
+    },
     ref,
   ) => {
     return (
       <div
         ref={ref}
         style={style}
-        className="group relative flex h-14 w-16 flex-col items-center justify-end overflow-clip rounded-md border bg-white p-2 shadow-md sm:h-16 sm:w-20 lg:h-24 lg:w-28 lg:justify-between"
+        className={`${overlay && "scale-105"} group relative flex h-14 w-16 flex-col items-center justify-end overflow-clip rounded-md border bg-white p-2 sm:h-16 sm:w-20 lg:h-24 lg:w-28 lg:justify-between`}
       >
         <div className="hidden w-full justify-between lg:flex">
           <button
@@ -36,9 +46,10 @@ export const Square = forwardRef<HTMLDivElement, SquareProps>(
             <IconX className="size-4" />
           </button>
           <button
+            id="drag-handle"
             {...listeners}
             // {...attributes}
-            className="cursor-grab text-stone-400 active:cursor-grabbing"
+            className={`cursor-grab rounded-md text-stone-400 active:cursor-grabbing ${overlay && "bg-stone-200"}`}
           >
             <IconGripVertical className="size-4 lg:size-6" />
           </button>

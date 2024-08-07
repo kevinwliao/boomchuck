@@ -36,16 +36,15 @@ export function SortableItem({
     isDragging,
   } = useSortable({ animateLayoutChanges, id: id });
 
-  console.log(animateLayoutChanges);
-
   const style = {
-    opacity: isDragging ? "0.5" : "1",
+    opacity: isDragging ? "0.5" : "1.2",
     transform: CSS.Transform.toString(transform),
     transition,
   };
 
   return (
     <Square
+      overlay={false}
       id={id}
       handleDelete={handleDelete}
       ref={setNodeRef}

@@ -31,6 +31,9 @@ import {
   Active,
   DragOverlay,
   MeasuringStrategy,
+  DragCancelEvent,
+  defaultDropAnimationSideEffects,
+  defaultDropAnimation,
 } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -91,6 +94,7 @@ export default function BoomChuck({
             collisionDetection={closestCenter}
             onDragEnd={handleDragEnd}
             onDragStart={handleDragStart}
+            onDragCancel={handleDragCancel}
             modifiers={[restrictToFirstScrollableAncestor]}
           >
             <SortableContext items={measures.map((m) => m.id)}>
@@ -99,17 +103,22 @@ export default function BoomChuck({
                 setMeasures={setMeasures}
               ></Measures>
             </SortableContext>
-            <DragOverlay>
+            <DragOverlay
+              className="drop-shadow-xl"
+              dropAnimation={{
+                ...defaultDropAnimation,
+                sideEffects: defaultDropAnimationSideEffects({
+                  styles: {
+                    active: {
+                      opacity: "0.5",
+                    },
+                  },
+                }),
+              }}
+              adjustScale={true}
+            >
               {activeId ? (
-                <Square
-                  id={activeId}
-                  handleDelete={() => {}}
-                  // style={{
-                  //   transform: "scale(1.05)",
-                  //   boxShadow:
-                  //     "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
-                  // }}
-                >
+                <Square id={activeId} handleDelete={() => {}} overlay>
                   {placeAccidentals(activeMeasure?.chord.root)}
                   {activeMeasure?.chord.quality}
                 </Square>
@@ -268,9 +277,9 @@ export default function BoomChuck({
     setActiveId(active.id);
   }
 
-  const handleDragCancel = useCallback(() => {
+  function handleDragCancel(event: DragCancelEvent) {
     setActiveId(null);
-  }, []);
+  }
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
