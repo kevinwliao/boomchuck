@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import { Lexend } from "next/font/google";
 import { Lora } from "next/font/google";
 import { ThemeProvider } from "@/components/themeProvider";
-
+import UserAvatar from "@/components/ui/avatar";
 import Header from "./header";
 import "./globals.css";
 

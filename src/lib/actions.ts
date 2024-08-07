@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { songSchema } from "@/lib/schemas";
 import { Song } from "@/lib/schemas";
+import { signIn, signOut } from "@/auth";
 
 export async function createSong(song: Song) {
   const validatedFields = songSchema.safeParse(song);
@@ -57,4 +58,12 @@ export async function deleteSong(id: string) {
   }
   revalidatePath("/form");
   redirect("/form");
+}
+
+export async function signInAction() {
+  await signIn();
+}
+
+export async function signOutAction() {
+  await signOut();
 }

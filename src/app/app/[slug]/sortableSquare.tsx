@@ -1,11 +1,22 @@
 import React from "react";
-import { useSortable } from "@dnd-kit/sortable";
+import {
+  useSortable,
+  defaultAnimateLayoutChanges,
+  UseSortableArguments,
+  AnimateLayoutChanges,
+} from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-
 import { Square } from "@/app/app/[slug]/square";
 import { Measure } from "@/lib/schemas";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { placeAccidentals } from "@/lib/utils";
+import { SortableTransition } from "@dnd-kit/sortable/dist/hooks/types";
+
+const animateLayoutChanges: AnimateLayoutChanges = (args) =>
+  defaultAnimateLayoutChanges({
+    ...args,
+    wasDragging: true,
+  });
 
 export function SortableItem({
   id,
@@ -23,7 +34,9 @@ export function SortableItem({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: id });
+  } = useSortable({ animateLayoutChanges, id: id });
+
+  console.log(animateLayoutChanges);
 
   const style = {
     opacity: isDragging ? "0.5" : "1",

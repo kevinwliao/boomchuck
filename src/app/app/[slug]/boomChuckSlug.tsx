@@ -29,6 +29,7 @@ import {
   DragStartEvent,
   Active,
   DragOverlay,
+  MeasuringStrategy,
 } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -44,9 +45,16 @@ import {
   restrictToFirstScrollableAncestor,
   restrictToParentElement,
 } from "@dnd-kit/modifiers";
-
 import { Square } from "@/app/app/[slug]/square";
 import ClearSongDialog from "@/app/form/clearSongDialog";
+import { MeasuringConfiguration } from "@dnd-kit/core";
+
+const measuringConfig: MeasuringConfiguration = {
+  droppable: {
+    strategy: MeasuringStrategy.Always,
+  },
+};
+
 export default function BoomChuck({
   song,
   songs,
@@ -77,6 +85,7 @@ export default function BoomChuck({
       <div className="flex grow flex-col">
         <div className="flex grow basis-0 justify-center overflow-scroll border-none lg:justify-normal">
           <DndContext
+            measuring={measuringConfig}
             id={"id"}
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -164,6 +173,7 @@ export default function BoomChuck({
               {diatonicRootOptions.map((root) => {
                 return (
                   <button
+                    key={root}
                     className="size-10 rounded-md border-none bg-stone-300 transition-colors hover:bg-stone-300/80 active:bg-stone-300 lg:size-12"
                     onClick={() =>
                       setMeasures((prev) => [
@@ -185,6 +195,7 @@ export default function BoomChuck({
               {nonDiatonicRootOptionsA.map((root) => {
                 return (
                   <button
+                    key={root}
                     className="size-10 rounded-md border-none bg-stone-300 transition-colors hover:bg-stone-300/80 active:bg-stone-300 lg:size-12"
                     onClick={() =>
                       setMeasures((prev) => [
@@ -204,6 +215,7 @@ export default function BoomChuck({
               {nonDiatonicRootOptionsB.map((root) => {
                 return (
                   <button
+                    key={root}
                     className="size-10 rounded-md border-none bg-stone-300 transition-colors hover:bg-stone-300/80 active:bg-stone-300 lg:size-12"
                     onClick={() =>
                       setMeasures((prev) => [
