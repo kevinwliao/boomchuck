@@ -11,7 +11,7 @@ import {
   IconPlayerPlayFilled,
   IconRepeat,
 } from "@tabler/icons-react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { QualitySelection } from "@/components/qualitySelection";
 import Bpm from "@/components/bpm";
@@ -20,6 +20,7 @@ import OpenSongDialog from "@/app/form/openSongDialog";
 import {
   DndContext,
   closestCenter,
+  useDndContext,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -86,7 +87,6 @@ export default function BoomChuck({
         <div className="flex grow basis-0 justify-center overflow-scroll border-none lg:justify-normal">
           <DndContext
             measuring={measuringConfig}
-            id={"id"}
             sensors={sensors}
             collisionDetection={closestCenter}
             onDragEnd={handleDragEnd}
@@ -115,6 +115,7 @@ export default function BoomChuck({
                 </Square>
               ) : null}
             </DragOverlay>
+            <LayoutComponent></LayoutComponent>
           </DndContext>
         </div>
         <div
@@ -286,3 +287,17 @@ export default function BoomChuck({
     setActiveId(null);
   }
 }
+
+// empty component to consume context for layout resizing
+const LayoutComponent = () => {
+  const { measureDroppableContainers } = useDndContext();
+  useEffect(() => {
+    function handleResize() {
+      //@ts-expect-error Bad Function Declaration
+      measureDroppableContainers();
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [measureDroppableContainers]);
+  return <></>;
+};
