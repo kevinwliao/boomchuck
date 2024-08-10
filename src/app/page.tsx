@@ -21,7 +21,7 @@ export default async function Page({
   return (
     <>
       <main className="z-0 flex grow flex-col">
-        <div className="flex flex-col items-center justify-center gap-12 bg-amber-700 px-5 py-16 text-white sm:flex-row sm:gap-20 sm:px-32 sm:py-28">
+        {/* <div className="flex flex-col items-center justify-center gap-12 bg-amber-700 px-5 py-16 text-white sm:flex-row sm:gap-20 sm:px-32 sm:py-28">
           <div
             id="hero-left"
             className="relative z-50 flex flex-col items-start gap-6 sm:flex-1"
@@ -53,15 +53,8 @@ export default async function Page({
           <div
             id="hero-right"
             className="relative h-[20rem] w-full rounded-3xl bg-stone-950/20 sm:flex-1"
-          >
-            {/* <Image
-            src="/mockup.png"
-            fill
-            alt="mockup"
-            className="object-cover"
-          ></Image> */}
-          </div>
-        </div>
+          ></div>
+        </div> */}
         <div className="flex flex-col items-center justify-center gap-12 bg-white px-5 py-16 sm:flex-row sm:gap-20 sm:px-32 sm:py-28">
           <div
             id="hero-left"

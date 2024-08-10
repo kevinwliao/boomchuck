@@ -4,7 +4,7 @@ import { AuthError } from "next-auth";
 import { Button } from "@/components/ui/button";
 import { IconBrandGoogle, IconBrandGithub } from "@tabler/icons-react";
 import Logo from "@/components/ui/logo";
-import bg from "/public/bauhaus.svg";
+import Music from "/public/music.svg";
 
 const AuthIcon = ({ brand }: { brand: string }) => {
   switch (brand) {
@@ -19,15 +19,12 @@ const AuthIcon = ({ brand }: { brand: string }) => {
 
 export default async function Page() {
   return (
-    <main
-      className="flex w-full grow flex-col items-center justify-center transition-colors"
-      style={{
-        backgroundImage: `url(${bg.src})`,
-      }}
-    >
+    <main className="relative flex w-full grow flex-col items-center justify-center overflow-hidden bg-stone-200 p-2 transition-colors">
+      <Music className="absolute z-0 min-h-[80rem] shrink-0 scale-125 fill-stone-500 stroke-stone-500 opacity-0 transition-opacity md:opacity-40"></Music>
+
       <section
         id="login-card"
-        className="flex w-full flex-col items-center justify-center gap-12 bg-white px-2 py-20 md:w-auto md:grow-0 md:rounded-xl md:border md:px-40"
+        className="z-10 flex w-full flex-col items-center justify-center gap-12 rounded-xl border bg-white px-2 py-20 sm:w-[39.5rem] sm:grow-0 sm:px-48"
       >
         {/* <Logo className="size-28 text-amber-900"></Logo> */}
         <div className="flex flex-col items-center gap-2">

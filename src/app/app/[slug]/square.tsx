@@ -36,9 +36,9 @@ export const Square = forwardRef<HTMLDivElement, SquareProps>(
       <div
         ref={ref}
         style={style}
-        className={`${overlay && "scale-105"} group relative flex h-14 w-16 flex-col items-center justify-end overflow-clip rounded-md border bg-white p-2 sm:h-16 sm:w-20 lg:h-24 lg:w-28 lg:justify-between`}
+        className={`${overlay && ""} _sm:w-20 group relative flex h-16 w-full flex-col items-center justify-end overflow-clip rounded-md border bg-white p-2 sm:h-16 lg:h-24 lg:w-28 lg:justify-between`}
       >
-        <div className="hidden w-full justify-between lg:flex">
+        <div className="w-full justify-between lg:flex">
           <button
             className="text-stone-500 hover:text-red-500 active:text-red-700"
             onClick={handleDelete}

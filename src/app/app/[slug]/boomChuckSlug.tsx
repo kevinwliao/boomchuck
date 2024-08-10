@@ -10,6 +10,7 @@ import {
   IconPlayerStopFilled,
   IconPlayerPlayFilled,
   IconRepeat,
+  IconPlayerPauseFilled,
 } from "@tabler/icons-react";
 import { useCallback, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
@@ -34,6 +35,7 @@ import {
   DragCancelEvent,
   defaultDropAnimationSideEffects,
   defaultDropAnimation,
+  closestCorners,
 } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -52,6 +54,7 @@ import {
 import { Square } from "@/app/app/[slug]/square";
 import ClearSongDialog from "@/app/form/clearSongDialog";
 import { MeasuringConfiguration } from "@dnd-kit/core";
+import TrashDroppable from "@/components/trashDroppable";
 
 const measuringConfig: MeasuringConfiguration = {
   droppable: {
@@ -71,6 +74,7 @@ export default function BoomChuck({
   );
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [volume, setVolume] = useState(0.75);
+  const [playing, setPlaying] = useState(false);
   const [bpm, setBpm] = useState(120);
   const [loopOn, setLoopOn] = useState(false);
   const [qualitySelection, setQualitySelection] = useState<Quality>("M");
@@ -87,7 +91,7 @@ export default function BoomChuck({
   return (
     <main className="flex grow flex-col bg-stone-200 lg:flex-row">
       <div className="flex grow flex-col">
-        <div className="flex grow basis-0 justify-center overflow-scroll border-none lg:justify-normal">
+        <div className="relative flex grow basis-0 justify-center overflow-scroll border-none lg:justify-normal">
           <DndContext
             measuring={measuringConfig}
             sensors={sensors}
@@ -102,6 +106,7 @@ export default function BoomChuck({
                 measures={measures}
                 setMeasures={setMeasures}
               ></Measures>
+              {/* <TrashDroppable id="trash"></TrashDroppable> */}
             </SortableContext>
             <DragOverlay
               className="drop-shadow-xl"
@@ -115,7 +120,6 @@ export default function BoomChuck({
                   },
                 }),
               }}
-              adjustScale={true}
             >
               {activeId ? (
                 <Square id={activeId} handleDelete={() => {}} overlay>
@@ -139,7 +143,7 @@ export default function BoomChuck({
             ></Bpm>
           </div>
           <button
-            className="text-stone-700 hover:text-stone-500 active:text-stone-950"
+            className="text-stone-700 hover:text-stone-800"
             type="button"
             aria-label="back"
             title="Back (,)"
@@ -147,15 +151,17 @@ export default function BoomChuck({
             <IconPlayerStopFilled />
           </button>
           <button
-            className="text-stone-700 hover:text-stone-500 active:text-stone-950"
+            className="text-stone-700 hover:text-stone-800"
             type="button"
             aria-label="play"
             title="Play (_)"
+            onClick={() => setPlaying((prev) => !prev)}
           >
-            <IconPlayerPlayFilled />
+            {!playing ? <IconPlayerPlayFilled /> : <IconPlayerPauseFilled />}
           </button>
           <button
-            className="text-green-600 hover:text-stone-500 active:text-stone-950"
+            className={`${loopOn ? "text-green-500 hover:text-green-600" : "text-stone-700 hover:text-stone-800"} `}
+            onClick={() => setLoopOn((prev) => !prev)}
             type="button"
             aria-label="back"
             title="Back (,)"
@@ -278,6 +284,8 @@ export default function BoomChuck({
   }
 
   function handleDragCancel(event: DragCancelEvent) {
+    const { active, over } = event;
+
     setActiveId(null);
   }
 
@@ -292,7 +300,9 @@ export default function BoomChuck({
         return arrayMove(prev, oldIndex, newIndex);
       });
     }
-
+    if (over?.id === "trash") {
+      setMeasures((prev) => prev.filter((m) => m.id !== active.id));
+    }
     setActiveId(null);
   }
 }
