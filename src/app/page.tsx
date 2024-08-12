@@ -73,7 +73,7 @@ export default async function Page({
                 className="bg-amber-600 text-white"
                 asChild
               >
-                <Link href="/app/new-song">Get Started</Link>
+                <Link href="/app">Get Started</Link>
               </Button>
               <Button size="default" variant="secondary" asChild>
                 <Link href="/app/long-journey-home">See an Example</Link>

@@ -34,14 +34,16 @@ const testUserId = "test_user_id";
 export default function SongForm({
   openHandler,
   measures,
+  currentName,
 }: {
   openHandler: React.Dispatch<React.SetStateAction<boolean>>;
   measures: Measure[];
+  currentName?: string;
 }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      name: currentName,
     },
   });
   const {
@@ -73,7 +75,7 @@ export default function SongForm({
             <FormItem>
               <FormLabel className="font-normal">Name</FormLabel>
               <FormControl>
-                <Input placeholder="Big Spike Hammer" {...field} />
+                <Input placeholder={currentName} {...field} />
               </FormControl>
               <VisuallyHidden>
                 <FormDescription>This is the name of your song</FormDescription>

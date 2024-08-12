@@ -12,10 +12,10 @@ import SongForm from "@/app/form/songForm";
 import { Measure } from "@/lib/schemas";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 
-type SaveSongDialogProps = { measures: Measure[] };
+type SaveSongDialogProps = { measures: Measure[]; name?: string };
 
 const SaveSongDialog = React.forwardRef<HTMLElement, SaveSongDialogProps>(
-  ({ measures, ...props }, ref) => {
+  ({ measures, name, ...props }, ref) => {
     const [open, setOpen] = React.useState(false);
     return (
       <Dialog open={open} onOpenChange={setOpen}>
@@ -31,7 +31,11 @@ const SaveSongDialog = React.forwardRef<HTMLElement, SaveSongDialogProps>(
               Save Song
             </DialogTitle>
           </DialogHeader>
-          <SongForm measures={measures} openHandler={setOpen}></SongForm>
+          <SongForm
+            measures={measures}
+            openHandler={setOpen}
+            currentName={name}
+          ></SongForm>
         </DialogContent>
       </Dialog>
     );

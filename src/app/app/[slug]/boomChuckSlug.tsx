@@ -269,7 +269,10 @@ export default function BoomChuck({
           className="items-between hidden grow flex-col gap-2 lg:flex"
         >
           <OpenSongDialog songs={songs}></OpenSongDialog>
-          <SaveSongDialog measures={measures}></SaveSongDialog>
+          <SaveSongDialog
+            measures={measures}
+            name={song?.name}
+          ></SaveSongDialog>
           <ClearSongDialog
             clearMeasures={() => setMeasures([])}
           ></ClearSongDialog>
