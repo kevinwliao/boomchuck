@@ -6,10 +6,12 @@ import type { Provider } from "next-auth/providers";
 const providers: Provider[] = [GitHub, Google];
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  debug: true,
+
   providers,
-  pages: {
-    signIn: "/signin",
-  },
+  // pages: {
+  //   signIn: "/signin",
+  // },
 });
 
 export const providerMap = providers.map((provider) => {

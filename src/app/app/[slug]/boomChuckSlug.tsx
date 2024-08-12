@@ -55,6 +55,8 @@ import { Square } from "@/app/app/[slug]/square";
 import ClearSongDialog from "@/app/form/clearSongDialog";
 import { MeasuringConfiguration } from "@dnd-kit/core";
 import TrashDroppable from "@/components/trashDroppable";
+import { SignInButton } from "@/components/signInButton";
+import { useLocalStorage } from "usehooks-ts";
 
 const measuringConfig: MeasuringConfiguration = {
   droppable: {
@@ -72,6 +74,11 @@ export default function BoomChuck({
   const [measures, setMeasures] = useState<Measure[]>(() =>
     song ? song.measures : [],
   );
+  // const [isClient, setIsClient] = useState(false);
+  // const [measures, setMeasures] = useLocalStorage(
+  //   "measures",
+  //   song ? song.measures : [],
+  // );
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [volume, setVolume] = useState(0.75);
   const [playing, setPlaying] = useState(false);
@@ -135,13 +142,11 @@ export default function BoomChuck({
           id="audioBar"
           className="flex h-min items-center justify-center gap-4 border-b border-t p-2 lg:order-first lg:justify-start lg:gap-6 lg:border-t-0 lg:px-6"
         >
-          <div className="hidden md:block">
-            <Bpm
-              disabled={false}
-              bpm={bpm}
-              onChange={(e) => setBpm(parseInt(e.target.value))}
-            ></Bpm>
-          </div>
+          <Bpm
+            disabled={false}
+            bpm={bpm}
+            onChange={(e) => setBpm(parseInt(e.target.value))}
+          ></Bpm>
           <button
             className="text-stone-700 hover:text-stone-800"
             type="button"

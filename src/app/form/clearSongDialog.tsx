@@ -31,10 +31,9 @@ const ClearSongDialog = React.forwardRef<HTMLElement, ClearSongDialogProps>(
               Delete Measures
             </DialogTitle>
           </DialogHeader>
-          <div className="flex flex-col gap-2">
-            <div className="">
-              Are you sure you want to delete all measures? This action cannot
-              be undone.
+          <div className="flex flex-col gap-6">
+            <div className="text-sm">
+              Are you sure you want to delete all measures?
             </div>
             <div className="flex justify-end gap-2">
               <DialogClose>

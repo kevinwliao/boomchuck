@@ -26,7 +26,7 @@ export default function Volume({
   }
 
   return (
-    <div className="hidden w-32 items-center gap-2 text-stone-700 md:flex">
+    <div className="hidden w-28 items-center gap-2 text-stone-700 sm:flex">
       <div>{currentVolumeIcon}</div>
       <Slider.Root
         value={[volume]}

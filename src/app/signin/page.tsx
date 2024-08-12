@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { IconBrandGoogle, IconBrandGithub } from "@tabler/icons-react";
 import Logo from "@/components/ui/logo";
 import Music from "/public/music.svg";
+import { revalidatePath } from "next/cache";
+import Refresh from "@/app/signin/refresh";
+import { cookies } from "next/headers";
 
 const AuthIcon = ({ brand }: { brand: string }) => {
   switch (brand) {
@@ -18,6 +21,8 @@ const AuthIcon = ({ brand }: { brand: string }) => {
 };
 
 export default async function Page() {
+  const csrfToken = cookies().get("authjs.csrf-token")?.value ?? "";
+
   return (
     <main className="relative flex w-full grow flex-col items-center justify-center overflow-hidden bg-stone-200 p-2 transition-colors">
       <Music className="absolute z-0 min-h-[80rem] shrink-0 scale-125 fill-stone-500 stroke-stone-500 opacity-0 transition-opacity md:opacity-40"></Music>
@@ -31,6 +36,7 @@ export default async function Page() {
           <h2 className="text-3xl font-semibold">Log In</h2>
           <h3 className="text-lg text-stone-500">Please sign in to continue</h3>
         </div>
+
         <div className="flex flex-col gap-2">
           {Object.values(providerMap).map((provider) => (
             <form
@@ -40,7 +46,7 @@ export default async function Page() {
                   await signIn(provider.id, { callbackUrl: "/" });
                 } catch (error) {
                   if (error instanceof AuthError) {
-                    // return redirect(`${SIGNIN_ERROR_URL}?error=${error.type}`);
+                    return redirect(`/`);
                   }
                   // Otherwise if a redirects happens NextJS can handle it
                   // so you can just re-thrown the error and let NextJS handle it.
@@ -50,6 +56,8 @@ export default async function Page() {
                 }
               }}
             >
+              <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+
               <Button
                 variant="secondary"
                 type="submit"

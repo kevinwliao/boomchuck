@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/themeProvider";
 import UserAvatar from "@/components/ui/avatar";
 import Header from "./header";
 import "./globals.css";
+import { SignInButton } from "@/components/signInButton";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const lexend = Lexend({
@@ -31,17 +32,10 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <body className={`${lexend.variable} ${lora.variable} min-w-fit`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="flex min-h-screen flex-col">
-            <Header></Header>
-            {children}
-          </div>
-        </ThemeProvider>
+        <div className="flex min-h-screen flex-col">
+          <Header></Header>
+          {children}
+        </div>
       </body>
     </html>
   );

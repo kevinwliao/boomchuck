@@ -1,14 +1,16 @@
-"use client";
-
+import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function NoSongFound() {
   return (
-    <div>
-      <div>No song found.</div>
-      <button>
-        <Link href="/">Let's make one!</Link>
-      </button>
-    </div>
+    <main className="flex grow flex-col items-center justify-center text-center">
+      <div className="flex items-center pb-20">
+        <span className="px-4">No song found.</span>
+        <Button variant="secondary" asChild>
+          <Link href="/">Let's make one!</Link>
+        </Button>
+      </div>
+    </main>
   );
 }

@@ -1,6 +1,7 @@
 import { Measure } from "@/lib/schemas";
 import React from "react";
 import { SortableItem } from "@/app/app/[slug]/sortableSquare";
+import Music from "/public/music.svg";
 
 type Props = {
   measures: Measure[];

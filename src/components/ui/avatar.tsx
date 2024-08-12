@@ -4,6 +4,8 @@ import * as AvatarPrimitive from "@radix-ui/react-avatar";
 export default async function Avatar() {
   const session = await auth();
 
+  if (!session) return <></>;
+
   return (
     <AvatarPrimitive.Root className="flex size-11 items-center justify-center overflow-hidden rounded-full">
       <AvatarPrimitive.Image src={session?.user?.image || undefined} />

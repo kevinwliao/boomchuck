@@ -10,11 +10,8 @@ export default function Bpm({
   disabled?: boolean;
 }) {
   return (
-    <div className="flex items-center justify-center gap-2">
-      <label
-        htmlFor="bpm"
-        className="hidden text-xs text-muted-foreground sm:text-sm md:inline"
-      >
+    <div className="hidden w-28 items-center justify-end gap-2 sm:flex">
+      <label htmlFor="bpm" className="text-xs text-muted-foreground sm:text-sm">
         BPM
       </label>
       <input

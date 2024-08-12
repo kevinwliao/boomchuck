@@ -68,11 +68,15 @@ export default async function Page({
               on jamming.
             </h2>
             <div className="flex gap-4">
-              <Button size="default" className="bg-amber-600 text-white">
+              <Button
+                size="default"
+                className="bg-amber-600 text-white"
+                asChild
+              >
                 <Link href="/app/new-song">Get Started</Link>
               </Button>
-              <Button size="default" variant="secondary">
-                <Link href="/app/test_user_id">See an Example</Link>
+              <Button size="default" variant="secondary" asChild>
+                <Link href="/app/long-journey-home">See an Example</Link>
               </Button>
             </div>
           </div>

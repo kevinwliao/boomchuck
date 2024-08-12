@@ -45,8 +45,8 @@ export const measureSchema = z.object({
 
 export const songSchema = z.object({
   userId: z.string().default("no_user"),
-  slug: z.string().max(50),
-  name: z.string().max(35),
+  slug: z.string().max(35),
+  name: z.string().max(30),
   measures: z.array(measureSchema),
   tempo: z.number().optional(),
 });

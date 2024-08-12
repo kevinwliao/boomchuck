@@ -37,14 +37,20 @@ const FormSchema = z.object({
   }),
 });
 
-export function SelectSongForm({ songs }: { songs: Song[] }) {
+export function SelectSongForm({
+  songs,
+  openHandler,
+}: {
+  songs: Song[];
+  openHandler: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    router.push(makeSlug(data.song));
+    router.push("/app/" + makeSlug(data.song));
   }
 
   return (
@@ -112,7 +118,11 @@ export function SelectSongForm({ songs }: { songs: Song[] }) {
           )}
         />
         <div className="flex justify-end gap-2">
-          <Button variant="secondary" type="button">
+          <Button
+            variant="secondary"
+            type="button"
+            onClick={() => openHandler(false)}
+          >
             Close
           </Button>
           <Button type="submit">Open Song</Button>
