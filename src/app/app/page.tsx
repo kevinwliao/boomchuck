@@ -7,5 +7,5 @@ type Props = {};
 export default async function Page({}: Props) {
   const songs = await fetchSongs();
 
-  return <BoomChuck songs={songs}></BoomChuck>;
+  return <BoomChuck songs={songs} session={null}></BoomChuck>;
 }

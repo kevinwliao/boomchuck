@@ -11,11 +11,17 @@ import * as React from "react";
 import SongForm from "@/app/form/songForm";
 import { Measure } from "@/lib/schemas";
 import { IconDeviceFloppy } from "@tabler/icons-react";
+import { Session } from "next-auth";
+import { signInAction } from "@/lib/actions";
 
-type SaveSongDialogProps = { measures: Measure[]; name?: string };
+type SaveSongDialogProps = {
+  measures: Measure[];
+  name?: string;
+  session: Session | null;
+};
 
 const SaveSongDialog = React.forwardRef<HTMLElement, SaveSongDialogProps>(
-  ({ measures, name, ...props }, ref) => {
+  ({ measures, name, session, ...props }, ref) => {
     const [open, setOpen] = React.useState(false);
     return (
       <Dialog open={open} onOpenChange={setOpen}>
@@ -31,11 +37,23 @@ const SaveSongDialog = React.forwardRef<HTMLElement, SaveSongDialogProps>(
               Save Song
             </DialogTitle>
           </DialogHeader>
-          <SongForm
-            measures={measures}
-            openHandler={setOpen}
-            currentName={name}
-          ></SongForm>
+          {session ? (
+            <SongForm
+              measures={measures}
+              openHandler={setOpen}
+              currentName={name}
+            ></SongForm>
+          ) : (
+            <div className="space-y-6">
+              <div>Log in to save your song.</div>
+              <div className="flex justify-end gap-2">
+                <Button variant="secondary">Close</Button>
+                <form action={signInAction}>
+                  <Button>Log In</Button>
+                </form>
+              </div>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
     );

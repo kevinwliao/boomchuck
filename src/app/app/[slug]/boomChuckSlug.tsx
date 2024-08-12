@@ -56,7 +56,10 @@ import ClearSongDialog from "@/app/form/clearSongDialog";
 import { MeasuringConfiguration } from "@dnd-kit/core";
 import TrashDroppable from "@/components/trashDroppable";
 import { SignInButton } from "@/components/signInButton";
-import { useLocalStorage } from "usehooks-ts";
+import { useIsClient, useLocalStorage } from "usehooks-ts";
+import { useParams } from "next/navigation";
+import RevertChangesDialog from "@/app/form/revertChangesDialog";
+import { Session } from "next-auth";
 
 const measuringConfig: MeasuringConfiguration = {
   droppable: {
@@ -67,18 +70,22 @@ const measuringConfig: MeasuringConfiguration = {
 export default function BoomChuck({
   song,
   songs,
+  session,
 }: {
   song?: Song;
   songs: Song[];
+  session: Session | null;
 }) {
-  const [measures, setMeasures] = useState<Measure[]>(() =>
-    song ? song.measures : [],
-  );
-  // const [isClient, setIsClient] = useState(false);
-  // const [measures, setMeasures] = useLocalStorage(
-  //   "measures",
+  // const [measures, setMeasures] = useState<Measure[]>(() =>
   //   song ? song.measures : [],
   // );
+  const params = useParams();
+  const isClient = useIsClient();
+  const [measures, setMeasures] = useLocalStorage(
+    params.slug ? params.slug[0] : "new-song",
+    song ? song.measures : [],
+  );
+
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [volume, setVolume] = useState(0.75);
   const [playing, setPlaying] = useState(false);
@@ -109,10 +116,12 @@ export default function BoomChuck({
             modifiers={[restrictToFirstScrollableAncestor]}
           >
             <SortableContext items={measures.map((m) => m.id)}>
-              <Measures
-                measures={measures}
-                setMeasures={setMeasures}
-              ></Measures>
+              {isClient && (
+                <Measures
+                  measures={measures}
+                  setMeasures={setMeasures}
+                ></Measures>
+              )}
               {/* <TrashDroppable id="trash"></TrashDroppable> */}
             </SortableContext>
             <DragOverlay
@@ -270,12 +279,18 @@ export default function BoomChuck({
         >
           <OpenSongDialog songs={songs}></OpenSongDialog>
           <SaveSongDialog
+            session={session}
             measures={measures}
             name={song?.name}
           ></SaveSongDialog>
           <ClearSongDialog
             clearMeasures={() => setMeasures([])}
           ></ClearSongDialog>
+          {song && (
+            <RevertChangesDialog
+              revertChanges={() => setMeasures(song.measures)}
+            ></RevertChangesDialog>
+          )}
         </div>
       </div>
     </main>

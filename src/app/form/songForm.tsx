@@ -75,7 +75,7 @@ export default function SongForm({
             <FormItem>
               <FormLabel className="font-normal">Name</FormLabel>
               <FormControl>
-                <Input placeholder={currentName} {...field} />
+                <Input placeholder={"Song Name"} {...field} />
               </FormControl>
               <VisuallyHidden>
                 <FormDescription>This is the name of your song</FormDescription>
