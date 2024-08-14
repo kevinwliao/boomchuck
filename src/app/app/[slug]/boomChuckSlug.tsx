@@ -11,6 +11,7 @@ import {
   IconPlayerPlayFilled,
   IconRepeat,
   IconPlayerPauseFilled,
+  IconLoader2,
 } from "@tabler/icons-react";
 import { useCallback, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
@@ -60,6 +61,7 @@ import { useIsClient, useLocalStorage } from "usehooks-ts";
 import { useParams } from "next/navigation";
 import RevertChangesDialog from "@/app/form/revertChangesDialog";
 import { Session } from "next-auth";
+import SkeletonMeasures from "@/app/app/[slug]/skeletonMeasures";
 
 const measuringConfig: MeasuringConfiguration = {
   droppable: {
@@ -116,11 +118,13 @@ export default function BoomChuck({
             modifiers={[restrictToFirstScrollableAncestor]}
           >
             <SortableContext items={measures.map((m) => m.id)}>
-              {isClient && (
+              {isClient ? (
                 <Measures
                   measures={measures}
                   setMeasures={setMeasures}
                 ></Measures>
+              ) : (
+                <SkeletonMeasures></SkeletonMeasures>
               )}
               {/* <TrashDroppable id="trash"></TrashDroppable> */}
             </SortableContext>
@@ -286,11 +290,11 @@ export default function BoomChuck({
           <ClearSongDialog
             clearMeasures={() => setMeasures([])}
           ></ClearSongDialog>
-          {song && (
+          {/* {song && (
             <RevertChangesDialog
               revertChanges={() => setMeasures(song.measures)}
             ></RevertChangesDialog>
-          )}
+          )} */}
         </div>
       </div>
     </main>

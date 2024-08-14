@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import { IconX, IconGripVertical } from "@tabler/icons-react";
 
 type SquareProps = {
@@ -49,7 +49,8 @@ export const Square = forwardRef<HTMLDivElement, SquareProps>(
             id="drag-handle"
             {...listeners}
             // {...attributes}
-            className={`cursor-grab rounded-md text-stone-400 active:cursor-grabbing ${overlay && "bg-stone-200"}`}
+            // this approximates active cursor grabbing styling but is not exact
+            className={`cursor-move rounded-md text-stone-400 ${overlay && "bg-stone-200 hover:cursor-move"}`}
           >
             <IconGripVertical className="size-4 lg:size-6" />
           </button>

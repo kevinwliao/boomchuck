@@ -37,7 +37,7 @@ const SaveSongDialog = React.forwardRef<HTMLElement, SaveSongDialogProps>(
               Save Song
             </DialogTitle>
           </DialogHeader>
-          {session ? (
+          {/* {session ? (
             <SongForm
               measures={measures}
               openHandler={setOpen}
@@ -53,7 +53,12 @@ const SaveSongDialog = React.forwardRef<HTMLElement, SaveSongDialogProps>(
                 </form>
               </div>
             </div>
-          )}
+          )} */}
+          <SongForm
+            measures={measures}
+            openHandler={setOpen}
+            currentName={name}
+          ></SongForm>
         </DialogContent>
       </Dialog>
     );
