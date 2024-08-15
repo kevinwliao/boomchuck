@@ -103,7 +103,7 @@ export default function BoomChuck({
     }),
   );
 
-  const { volumeRef } = useAudio(
+  const { bassLoaded, guitarLoaded, volumeRef } = useAudio(
     bpm,
     volume,
     measures,
@@ -200,6 +200,7 @@ export default function BoomChuck({
             type="button"
             aria-label="back"
             title="Back (,)"
+            disabled={!(bassLoaded && guitarLoaded)}
             onClick={() => {
               Tone.getTransport().pause();
               Tone.getTransport().position = "0:0:0";

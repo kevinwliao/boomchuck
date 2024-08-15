@@ -1,7 +1,7 @@
 import { chordToNotesArr, strumChord } from "@/lib/guitarChordBuilder";
 import { guitarMapping } from "@/lib/musicutils";
 import { Measure } from "@/lib/schemas";
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import * as Tone from "tone";
 
 const url = (note: string) => {
@@ -17,6 +17,8 @@ export default function useAudio(
   setActiveIndex: Dispatch<SetStateAction<number>>,
 ) {
   const volumeRef = useRef<Tone.Volume | null>(null);
+  const [bassLoaded, setBassLoaded] = useState(false);
+  const [guitarLoaded, setGuitarLoaded] = useState(false);
 
   useEffect(() => {
     // for performance
@@ -28,23 +30,33 @@ export default function useAudio(
     const compressor = new Tone.Compressor(-30, 5).connect(volumeRef.current);
     const synth = new Tone.PolySynth({ volume: volume }).connect(compressor);
 
-    const bassSampler = new Tone.Sampler({
-      G1: url("G1"),
-      A1: url("A1"),
-      B1: url("B1"),
-      C2: url("C2"),
-      D2: url("D2"),
-      E2: url("E2"),
-      F2: url("F2"),
-      G2: url("G2"),
-      A2: url("A2"),
-      B2: url("B2"),
-      C3: url("C3"),
-    }).connect(compressor);
+    const bassSampler = new Tone.Sampler(
+      {
+        G1: url("G1"),
+        A1: url("A1"),
+        B1: url("B1"),
+        C2: url("C2"),
+        D2: url("D2"),
+        E2: url("E2"),
+        F2: url("F2"),
+        G2: url("G2"),
+        A2: url("A2"),
+        B2: url("B2"),
+        C3: url("C3"),
+      },
+      {
+        onload: () => {
+          setBassLoaded(true);
+        },
+      },
+    ).connect(compressor);
 
     const guitarSampler = new Tone.Sampler({
       urls: guitarMapping,
       release: 0.7,
+      onload: () => {
+        setGuitarLoaded(true);
+      },
     }).connect(compressor);
 
     const countInSynth = new Tone.NoiseSynth().connect(compressor);
@@ -123,5 +135,5 @@ export default function useAudio(
       Tone.getContext().dispose();
     };
   }, [measures]);
-  return { volumeRef };
+  return { volumeRef, bassLoaded, guitarLoaded };
 }
