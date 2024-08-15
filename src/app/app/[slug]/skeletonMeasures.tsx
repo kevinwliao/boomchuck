@@ -10,6 +10,7 @@ export default function SkeletonMeasures() {
         {[...Array(16)].map((e, i) => {
           return (
             <div
+              key={i}
               className={`_sm:w-20 group relative flex h-16 w-full animate-pulse flex-col items-center justify-between overflow-clip rounded-md bg-stone-300 p-1 sm:h-20 sm:p-2 lg:h-24 lg:w-28`}
             ></div>
           );

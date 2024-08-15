@@ -62,7 +62,8 @@ import { useParams } from "next/navigation";
 import RevertChangesDialog from "@/app/form/revertChangesDialog";
 import { Session } from "next-auth";
 import SkeletonMeasures from "@/app/app/[slug]/skeletonMeasures";
-
+import useAudio from "@/app/app/[slug]/useAudio";
+import * as Tone from "tone";
 const measuringConfig: MeasuringConfiguration = {
   droppable: {
     strategy: MeasuringStrategy.Always,
@@ -78,9 +79,6 @@ export default function BoomChuck({
   songs: Song[];
   session: Session | null;
 }) {
-  // const [measures, setMeasures] = useState<Measure[]>(() =>
-  //   song ? song.measures : [],
-  // );
   const params = useParams();
   const isClient = useIsClient();
   const [measures, setMeasures] = useLocalStorage(
@@ -91,6 +89,7 @@ export default function BoomChuck({
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [volume, setVolume] = useState(0.75);
   const [playing, setPlaying] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(-1);
   const [bpm, setBpm] = useState(120);
   const [loopOn, setLoopOn] = useState(false);
   const [qualitySelection, setQualitySelection] = useState<Quality>("M");
@@ -103,6 +102,33 @@ export default function BoomChuck({
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
+
+  const { volumeRef } = useAudio(
+    bpm,
+    volume,
+    measures,
+    loopOn,
+    setPlaying,
+    setCurrentIndex,
+  );
+  useEffect(() => {
+    Tone.getTransport().bpm.rampTo(bpm * 2, 0.01);
+  }, [bpm]);
+  useEffect(() => {
+    if (volumeRef.current)
+      volumeRef.current.volume.linearRampTo(
+        // formula for mapping linear scale to decibels
+        Math.log10(volume) * 20,
+        0.01,
+      );
+  });
+  useEffect(() => {
+    if (playing) {
+      Tone.getTransport().start("+0.1");
+    } else {
+      Tone.getTransport().pause();
+    }
+  }, [playing]);
 
   return (
     <main className="flex grow flex-col bg-stone-200 lg:flex-row">
@@ -120,6 +146,8 @@ export default function BoomChuck({
             <SortableContext items={measures.map((m) => m.id)}>
               {isClient ? (
                 <Measures
+                  currentIndex={currentIndex}
+                  playing={playing}
                   measures={measures}
                   setMeasures={setMeasures}
                 ></Measures>
@@ -142,7 +170,14 @@ export default function BoomChuck({
               }}
             >
               {activeId ? (
-                <Square id={activeId} handleDelete={() => {}} overlay>
+                <Square
+                  isDragging={false}
+                  id={activeId}
+                  handleDelete={() => {}}
+                  overlay
+                  playing={false}
+                  isCurrentMeasure={false}
+                >
                   {placeAccidentals(activeMeasure?.chord.root)}
                   {activeMeasure?.chord.quality}
                 </Square>
@@ -165,6 +200,12 @@ export default function BoomChuck({
             type="button"
             aria-label="back"
             title="Back (,)"
+            onClick={() => {
+              Tone.getTransport().pause();
+              Tone.getTransport().position = "0:0:0";
+              setPlaying(false);
+              setCurrentIndex(-1);
+            }}
           >
             <IconPlayerStopFilled />
           </button>
@@ -290,11 +331,6 @@ export default function BoomChuck({
           <ClearSongDialog
             clearMeasures={() => setMeasures([])}
           ></ClearSongDialog>
-          {/* {song && (
-            <RevertChangesDialog
-              revertChanges={() => setMeasures(song.measures)}
-            ></RevertChangesDialog>
-          )} */}
         </div>
       </div>
     </main>

@@ -22,10 +22,16 @@ export function SortableItem({
   id,
   measure,
   handleDelete,
+  isCurrentMeasure,
+  playing,
+  index,
 }: {
   id: string;
   measure: Measure;
   handleDelete: () => void;
+  isCurrentMeasure: boolean;
+  playing: boolean;
+  index: number;
 }) {
   const {
     attributes,
@@ -44,6 +50,9 @@ export function SortableItem({
 
   return (
     <Square
+      index={index}
+      isCurrentMeasure={isCurrentMeasure}
+      playing={playing}
       overlay={false}
       id={id}
       handleDelete={handleDelete}
@@ -51,6 +60,7 @@ export function SortableItem({
       style={style}
       attributes={attributes}
       listeners={listeners}
+      isDragging={isDragging}
     >
       {placeAccidentals(measure.chord.root)}
       {measure.chord.quality}

@@ -24,7 +24,7 @@ export default function Header() {
             className="hidden items-center justify-start gap-12 font-normal md:flex"
           >
             <Link
-              href="/app/new-song"
+              href="/app"
               className={`font-medium underline-offset-1 hover:underline`}
             >
               App

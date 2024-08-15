@@ -1,4 +1,4 @@
-import { Chord } from "./types";
+import { Chord } from "@/lib/schemas";
 import * as Tone from "tone";
 const standardTuning = [40, 45, 50, 55, 59, 64];
 
