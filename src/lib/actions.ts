@@ -31,8 +31,8 @@ export async function createSong(song: Song) {
       message: "Database Error: Failed to Create Song.",
     };
   }
-  revalidatePath("/form");
-  redirect("/form");
+  revalidatePath("/app");
+  redirect(`/app/${slug}`);
 }
 
 export async function updateSong(song: Song, id: string) {

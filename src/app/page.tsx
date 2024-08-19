@@ -55,19 +55,19 @@ export default async function Page({
             className="relative h-[20rem] w-full rounded-3xl bg-stone-950/20 sm:flex-1"
           ></div>
         </div> */}
-        <div className="flex flex-col items-center justify-center gap-12 bg-white px-5 py-16 sm:flex-row sm:gap-20 sm:px-32 sm:py-28">
+        <div className="flex flex-col items-center justify-center gap-12 bg-white px-5 py-16 sm:flex-row sm:gap-20 sm:px-16 sm:py-24">
           <div
             id="hero-left"
             className="relative z-50 flex flex-col items-start gap-6 sm:flex-1"
           >
-            <h1 className="text-[40px] font-bold leading-tight sm:text-[56px]">
+            <h1 className="text-[40px] font-bold leading-tight tracking-tight md:text-[48px] lg:text-[56px]">
               Build Bluegrass Backing Tracks in Seconds
             </h1>
-            <h2 className="text-pretty text-base sm:text-xl">
-              Boomchuck helps you build custom instrumentals, so you can focus
+            <h2 className="text-balance text-base sm:text-lg">
+              Boomchuck helps you create custom instrumentals, so you can focus
               on jamming.
             </h2>
-            <div className="flex gap-4">
+            <div className="flex gap-4 sm:flex-col md:flex-row">
               <Button
                 size="default"
                 className="bg-amber-600 text-white"
@@ -83,14 +83,14 @@ export default async function Page({
 
           <div
             id="hero-right"
-            className="relative h-[20rem] w-full rounded-3xl bg-stone-950/20 sm:flex-1"
+            className="relative h-[22rem] w-full sm:h-[36rem] sm:flex-1"
           >
-            {/* <Image
-            src="/mockup.png"
-            fill
-            alt="mockup"
-            className="object-cover"
-          ></Image> */}
+            <Image
+              src="/heroart.jpg"
+              fill
+              alt="mockup"
+              className="rounded-xl object-cover"
+            ></Image>
           </div>
         </div>
       </main>

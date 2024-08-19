@@ -21,7 +21,7 @@ const OpenSongDialog = React.forwardRef<HTMLElement, OpenSongDialogProps>(
         <DialogTrigger asChild>
           <button className="flex w-max items-center gap-2 text-sm uppercase text-stone-500 hover:text-stone-600">
             <IconFolderOpen />
-            <div>Open Songs</div>
+            <div>Open Song</div>
           </button>
         </DialogTrigger>
         <DialogContent className="shadow-none sm:max-w-[425px]">

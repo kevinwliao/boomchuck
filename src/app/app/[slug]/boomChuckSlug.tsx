@@ -64,10 +64,16 @@ import { Session } from "next-auth";
 import SkeletonMeasures from "@/app/app/[slug]/skeletonMeasures";
 import useAudio from "@/app/app/[slug]/useAudio";
 import * as Tone from "tone";
+import { Metadata } from "next";
+
 const measuringConfig: MeasuringConfiguration = {
   droppable: {
     strategy: MeasuringStrategy.Always,
   },
+};
+
+export const metadata: Metadata = {
+  title: "Invoices",
 };
 
 export default function BoomChuck({
@@ -238,7 +244,7 @@ export default function BoomChuck({
       </div>
       <div
         id="chordSelectionAndFileContainer"
-        className="flex w-full shrink-0 flex-col items-center justify-between gap-8 px-1 py-2 md:py-4 lg:order-first lg:w-64 lg:border-r lg:px-10 lg:py-12 xl:w-80"
+        className="flex w-full shrink-0 flex-col items-center justify-between gap-8 px-1 py-2 md:py-4 lg:order-first lg:w-64 lg:border-r lg:px-10 lg:py-8 xl:w-80"
       >
         <div className="chordSelectionContainer base flex shrink-0 grow flex-col items-center justify-center gap-4 lg:gap-10 lg:text-lg xl:gap-10">
           <div
@@ -332,6 +338,9 @@ export default function BoomChuck({
           <ClearSongDialog
             clearMeasures={() => setMeasures([])}
           ></ClearSongDialog>
+          <RevertChangesDialog
+            revertChanges={() => setMeasures(song ? song.measures : [])}
+          ></RevertChangesDialog>
         </div>
       </div>
     </main>

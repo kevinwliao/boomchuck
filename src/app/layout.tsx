@@ -20,7 +20,10 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
-  title: "BoomChuck - Bluegrass Backup",
+  title: {
+    default: "Boomchuck",
+    template: "%s | Boomchuck",
+  },
   description: "Interactive website to create bluegrass backing tracks",
 };
 
