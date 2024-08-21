@@ -22,7 +22,7 @@ export async function createSong(song: Song) {
 
   try {
     await sql`
-      INSERT INTO songs (user_id, name, measures, slug)
+      INSERT INTO oldsongs (user_id, name, measures, slug)
       VALUES (${userId}, ${name}, ${JSON.stringify(measures)}::JSONB, ${slug})
     `;
   } catch (error) {
@@ -43,7 +43,7 @@ export async function updateSong(song: Song, id: string) {
   const { measures } = song;
   try {
     await sql`
-      INSERT INTO songs (measures)
+      INSERT INTO oldsongs (measures)
       VALUES (${JSON.stringify(measures)}::JSONB)
       WHERE id = ${id}
     `;
@@ -63,7 +63,7 @@ export async function deleteSong(id: string) {
     throw new Error("You must be signed in to perform this action");
   }
   try {
-    await sql`DELETE FROM songs WHERE id = ${id}`;
+    await sql`DELETE FROM oldsongs WHERE id = ${id}`;
   } catch (error) {
     return { message: "Database Error: Failed to Delete Song." };
   }

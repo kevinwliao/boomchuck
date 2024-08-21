@@ -6,7 +6,7 @@ import { auth } from "@/auth";
 export async function fetchSongs() {
   noStore();
   try {
-    const data = await sql<Song>`SELECT * FROM songs`;
+    const data = await sql<Song>`SELECT * FROM oldsongs`;
     const songs = data.rows;
     return songs;
   } catch (error) {
@@ -24,7 +24,7 @@ export async function fetchSongsByUser() {
   noStore();
   try {
     const data =
-      await sql<Song>`SELECT * FROM songs WHERE user_id = ${session?.user?.id}`;
+      await sql<Song>`SELECT * FROM oldsongs WHERE user_id = ${session?.user?.id}`;
     const songs = data.rows;
     return songs;
   } catch (error) {
@@ -36,7 +36,7 @@ export async function fetchSongsByUser() {
 export async function fetchSongBySlug(slug: string) {
   noStore();
   try {
-    const data = await sql<Song>`SELECT * FROM songs WHERE slug = ${slug}`;
+    const data = await sql<Song>`SELECT * FROM oldsongs WHERE slug = ${slug}`;
     const song = data.rows[0];
     return song;
   } catch (error) {

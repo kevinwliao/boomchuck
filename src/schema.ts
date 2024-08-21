@@ -5,6 +5,7 @@ import {
   text,
   primaryKey,
   integer,
+  serial,
 } from "drizzle-orm/pg-core";
 // using vercel sql
 import { sql } from "@vercel/postgres";
@@ -12,11 +13,14 @@ import postgres from "postgres";
 //using vercel postgres
 import { drizzle } from "drizzle-orm/vercel-postgres";
 import type { AdapterAccountType } from "next-auth/adapters";
+import { qualityOptions, rootOptions } from "@/lib/schemas";
 
 const connectionString = "postgres://postgres:postgres@localhost:3000/drizzle";
 const pool = postgres(connectionString, { max: 1 });
 
 export const db = drizzle(sql);
+
+/*AUTHENTICATION*/
 
 export const users = pgTable("user", {
   id: text("id")
@@ -94,3 +98,29 @@ export const authenticators = pgTable(
     }),
   }),
 );
+
+/*SONGS DATA*/
+export const songs = pgTable("songs", {
+  id: serial("id").primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  name: text("name"),
+});
+
+export const measures = pgTable("measures", {
+  id: serial("id").primaryKey(),
+  songId: integer("songId")
+    .notNull()
+    .references(() => songs.id, { onDelete: "cascade" }),
+  measureNumber: integer("measureNumber").notNull(),
+});
+
+export const chords = pgTable("chords", {
+  id: serial("id").primaryKey(),
+  measureId: integer("measureId")
+    .notNull()
+    .references(() => measures.id, { onDelete: "cascade" }),
+  root: text("root").notNull(),
+  quality: text("quality").notNull(),
+});

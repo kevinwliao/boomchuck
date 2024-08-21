@@ -3,7 +3,6 @@ import * as AvatarPrimitive from "@radix-ui/react-avatar";
 
 export default async function Avatar() {
   const session = await auth();
-  console.log(JSON.stringify(session) + "hey");
 
   if (!session) return <></>;
 
