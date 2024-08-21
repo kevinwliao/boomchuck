@@ -1,6 +1,6 @@
 import React from "react";
 import BoomChuck from "@/app/app/[slug]/boomChuckSlug";
-import { fetchSongs } from "@/lib/data";
+import { fetchSongs, fetchUserSongs } from "@/lib/data";
 import { auth } from "@/auth";
 
 type Props = {};

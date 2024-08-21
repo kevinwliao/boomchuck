@@ -14,6 +14,7 @@ import postgres from "postgres";
 import { drizzle } from "drizzle-orm/vercel-postgres";
 import type { AdapterAccountType } from "next-auth/adapters";
 import { qualityOptions, rootOptions } from "@/lib/schemas";
+import { relations } from "drizzle-orm";
 
 const connectionString = "postgres://postgres:postgres@localhost:3000/drizzle";
 const pool = postgres(connectionString, { max: 1 });
@@ -31,6 +32,10 @@ export const users = pgTable("user", {
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
 });
+
+export const usersRelations = relations(users, ({ many }) => ({
+  accounts: many(accounts),
+}));
 
 export const accounts = pgTable(
   "account",
@@ -55,6 +60,10 @@ export const accounts = pgTable(
     }),
   }),
 );
+
+export const accountsRelations = relations(accounts, ({ one }) => ({
+  user: one(users),
+}));
 
 export const sessions = pgTable("session", {
   sessionToken: text("sessionToken").primaryKey(),

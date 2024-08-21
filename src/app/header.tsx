@@ -29,6 +29,12 @@ export default function Header() {
             >
               App
             </Link>
+            <Link
+              href="/form"
+              className={`font-medium underline-offset-1 hover:underline`}
+            >
+              Form
+            </Link>
           </div>
         </div>
 

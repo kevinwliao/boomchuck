@@ -34,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning lang="en">
-      <body className={`${lexend.variable} ${lora.variable} min-w-fit`}>
+      <body className={`${lexend.variable} ${lora.variable} w-screen`}>
         <div className="flex min-h-screen flex-col">
           <Header></Header>
           {children}

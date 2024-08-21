@@ -5,6 +5,27 @@ import { redirect } from "next/navigation";
 import { songSchema } from "@/lib/schemas";
 import { Song } from "@/lib/schemas";
 import { signIn, signOut, auth } from "@/auth";
+import { db, songs } from "@/schema";
+
+export async function createUserSong(song: Song) {
+  const session = await auth();
+  if (!session) {
+    throw new Error("You must be signed in to perform this action");
+  }
+  const validatedFields = songSchema.safeParse(song);
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields",
+    };
+  }
+
+  const { name, measures } = validatedFields.data;
+
+  try {
+    // await db.insert(songs).values({ userId: session.user.id, name: name });
+  } catch (error) {}
+}
 
 export async function createSong(song: Song) {
   const session = await auth();

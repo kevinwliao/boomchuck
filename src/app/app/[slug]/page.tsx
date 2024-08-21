@@ -25,5 +25,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
     redirect("/app");
   }
 
-  return <BoomChuck song={song} songs={songs} session={session}></BoomChuck>;
+  return (
+    <>
+      <BoomChuck song={song} songs={songs} session={session}></BoomChuck>
+    </>
+  );
 }

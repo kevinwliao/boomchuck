@@ -2,6 +2,23 @@ import { sql } from "@vercel/postgres";
 import { unstable_noStore as noStore } from "next/cache";
 import { Song } from "@/lib/schemas";
 import { auth } from "@/auth";
+import { db, users } from "@/schema";
+import { eq } from "drizzle-orm";
+
+export async function fetchUserSongs() {
+  const session = await auth();
+  // making sure id is defined
+  if (!session || !session.user || !session.user.id) {
+    return [];
+  }
+  const currentId = session.user.id;
+  try {
+    const data = await db.select().from(users).where(eq(users.id, currentId));
+    return data;
+  } catch (error) {
+    return [];
+  }
+}
 
 export async function fetchSongs() {
   noStore();
