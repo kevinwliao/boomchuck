@@ -2,14 +2,14 @@
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { songSchema } from "@/lib/schemas";
+import { measureSchema, songSchema } from "@/lib/schemas";
 import { Song } from "@/lib/schemas";
 import { signIn, signOut, auth } from "@/auth";
-import { db, songs } from "@/schema";
+import { db, songs, measures, chords } from "@/schema";
 
 export async function createUserSong(song: Song) {
   const session = await auth();
-  if (!session) {
+  if (!session || !session.user || !session.user.id) {
     throw new Error("You must be signed in to perform this action");
   }
   const validatedFields = songSchema.safeParse(song);
@@ -20,10 +20,30 @@ export async function createUserSong(song: Song) {
     };
   }
 
-  const { name, measures } = validatedFields.data;
+  const fields = validatedFields.data;
 
   try {
-    // await db.insert(songs).values({ userId: session.user.id, name: name });
+    const [songRow] = await db
+      .insert(songs)
+      .values({ userId: session.user.id, name: fields.name })
+      .returning({ songId: measures.id });
+    const measureRows = await db
+      .insert(measures)
+      .values(
+        fields.measures.map((m, i) => {
+          return { songId: songRow.songId, measureNumber: i };
+        }),
+      )
+      .returning({ measureId: measures.id });
+    await db.insert(chords).values(
+      fields.measures.map((m, i) => {
+        return {
+          measureId: measureRows[i].measureId,
+          root: m.chord.root,
+          quality: m.chord.quality,
+        };
+      }),
+    );
   } catch (error) {}
 }
 

@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { createSong } from "@/lib/actions";
+import { createUserSong } from "@/lib/actions";
 import React from "react";
 import {
   Form,
@@ -20,6 +20,7 @@ import { Measure, songSchema } from "@/lib/schemas";
 import { Song } from "@/lib/schemas";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { makeSlug } from "@/lib/utils";
+import { IconAlertCircle } from "@tabler/icons-react";
 
 const formSchema = songSchema.omit({
   slug: true,
@@ -61,7 +62,7 @@ export default function SongForm({
       name: values.name,
       measures: measures,
     };
-    await createSong(newSong);
+    await createUserSong(newSong);
     openHandler(false);
   }
 

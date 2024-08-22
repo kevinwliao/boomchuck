@@ -7,4 +7,5 @@ export default {
     Google({ allowDangerousEmailAccountLinking: true }),
     Github({ allowDangerousEmailAccountLinking: true }),
   ],
+  session: { strategy: "database" },
 } satisfies NextAuthConfig;

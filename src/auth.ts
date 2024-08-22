@@ -8,32 +8,30 @@ import authConfig from "@/auth.config";
 const providers: Provider[] = [Google];
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  debug: true,
   adapter: DrizzleAdapter(db),
-
   // providers,
-  // callbacks: {
-  //   jwt({ token, user, account }) {
-  //     if (user) {
-  //       // User is available during sign-in
-  //       token.id = account?.providerAccountId;
-  //     }
-  //     return token;
-  //   },
-  //   session({ session, token }) {
-  //     session.user.id = token.id as string;
-  //     return session;
-  //   },
-  // },
-  // callbacks: {
-  //   async session({ session, user }) {
-  //     session.user.id = user.id;
-  //     return session;
-  //   },
-  // },
-  // pages: {
-  //   signIn: "/signin",
-  // },
+  // // callbacks: {
+  // //   jwt({ token, user, account }) {
+  // //     if (user) {
+  // //       // User is available during sign-in
+  // //       token.id = account?.providerAccountId;
+  // //     }
+  // //     return token;
+  // //   },
+  // //   session({ session, token }) {
+  // //     session.user.id = token.id as string;
+  // //     return session;
+  // //   },
+  // // },
+  // // callbacks: {
+  // //   async session({ session, user }) {
+  // //     session.user.id = user.id;
+  // //     return session;
+  // //   },
+  // // },
+  // // pages: {
+  // //   signIn: "/signin",
+  // // },
   ...authConfig,
 });
 
