@@ -7,6 +7,7 @@ import UserAvatar from "@/components/ui/avatar";
 import Header from "./header";
 import "./globals.css";
 import { SignInButton } from "@/components/signInButton";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const lexend = Lexend({
@@ -39,6 +40,7 @@ export default function RootLayout({
           <Header></Header>
           {children}
         </div>
+        <Toaster></Toaster>
       </body>
     </html>
   );

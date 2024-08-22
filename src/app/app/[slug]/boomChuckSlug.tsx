@@ -65,6 +65,7 @@ import SkeletonMeasures from "@/app/app/[slug]/skeletonMeasures";
 import useAudio from "@/app/app/[slug]/useAudio";
 import * as Tone from "tone";
 import { Metadata } from "next";
+import { useToast } from "@/components/ui/use-toast";
 
 const measuringConfig: MeasuringConfiguration = {
   droppable: {
@@ -85,6 +86,7 @@ export default function BoomChuck({
   songs: Song[];
   session: Session | null;
 }) {
+  const { toast } = useToast();
   const params = useParams();
   const isClient = useIsClient();
   const [measures, setMeasures] = useLocalStorage(
@@ -257,15 +259,24 @@ export default function BoomChuck({
                   <button
                     key={root}
                     className="size-10 rounded-md border-none bg-stone-300 transition-colors hover:bg-stone-300/80 active:bg-stone-300 lg:size-12"
-                    onClick={() =>
-                      setMeasures((prev) => [
-                        ...prev,
-                        {
-                          id: uuid(),
-                          chord: { root: root, quality: qualitySelection },
-                        },
-                      ])
-                    }
+                    onClick={() => {
+                      if (measures.length < 64) {
+                        setMeasures((prev) => [
+                          ...prev,
+                          {
+                            id: uuid(),
+                            chord: { root: root, quality: qualitySelection },
+                          },
+                        ]);
+                      } else {
+                        toast({
+                          variant: "destructive",
+                          title: `Failed to add chord:`,
+                          description:
+                            "Maximum song size reached (64 measures)",
+                        });
+                      }
+                    }}
                   >
                     {placeAccidentals(root)}
                   </button>
@@ -299,15 +310,24 @@ export default function BoomChuck({
                   <button
                     key={root}
                     className="size-10 rounded-md border-none bg-stone-300 transition-colors hover:bg-stone-300/80 active:bg-stone-300 lg:size-12"
-                    onClick={() =>
-                      setMeasures((prev) => [
-                        ...prev,
-                        {
-                          id: uuid(),
-                          chord: { root: root, quality: qualitySelection },
-                        },
-                      ])
-                    }
+                    onClick={() => {
+                      if (measures.length < 64) {
+                        setMeasures((prev) => [
+                          ...prev,
+                          {
+                            id: uuid(),
+                            chord: { root: root, quality: qualitySelection },
+                          },
+                        ]);
+                      } else {
+                        toast({
+                          variant: "destructive",
+                          title: `Failed to add chord:`,
+                          description:
+                            "Maximum song size reached (64 measures)",
+                        });
+                      }
+                    }}
                   >
                     {placeAccidentals(root)}
                   </button>
