@@ -1,5 +1,6 @@
-import BoomChuck from "@/components/boomChuck";
+// import BoomChuck from "@/components/boomChuck";
 
 export default function Page() {
-  return <BoomChuck></BoomChuck>;
+  return <></>;
+  // return <BoomChuck></BoomChuck>;
 }

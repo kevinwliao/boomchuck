@@ -1,8 +1,9 @@
 import { sql } from "@vercel/postgres";
 import { unstable_noStore as noStore } from "next/cache";
-import { Song } from "@/lib/schemas";
+import { Song, songArrSchema } from "@/lib/schemas";
 import { auth } from "@/auth";
-import { db, users } from "@/schema";
+import { chords, db, measures, songs, users } from "@/schema";
+import { songSchema } from "@/lib/schemas";
 import { eq } from "drizzle-orm";
 
 export async function fetchUserSongs() {
@@ -12,10 +13,17 @@ export async function fetchUserSongs() {
     return [];
   }
   const currentId = session.user.id;
-  try {
-    const data = await db.select().from(users).where(eq(users.id, currentId));
-    return data;
-  } catch (error) {
+  const data = await db
+    .select()
+    .from(songs)
+    .leftJoin(measures, eq(songs.id, measures.songId))
+    .leftJoin(chords, eq(measures.id, chords.measureId))
+    .where(eq(songs.userId, currentId));
+
+  const validatedData = songArrSchema.safeParse(data);
+  if (validatedData.success) {
+    return validatedData.data;
+  } else {
     return [];
   }
 }

@@ -20,7 +20,7 @@ export default function Page({}: Props) {
           <Button variant="secondary">
             <Link href="/">Home</Link>
           </Button>
-          {/* @ts-expect-error Async Server Component */}
+          {/* @ts-ignore */}
           <SignInButton></SignInButton>
         </div>
       </section>

@@ -6,6 +6,7 @@ import {
   primaryKey,
   integer,
   serial,
+  pgEnum,
 } from "drizzle-orm/pg-core";
 // using vercel sql
 import { sql } from "@vercel/postgres";
@@ -62,7 +63,10 @@ export const accounts = pgTable(
 );
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
-  user: one(users),
+  user: one(users, {
+    fields: [accounts.userId],
+    references: [users.id],
+  }),
 }));
 
 export const sessions = pgTable("session", {
@@ -125,11 +129,14 @@ export const measures = pgTable("measures", {
   measureNumber: integer("measureNumber").notNull(),
 });
 
+export const rootEnum = pgEnum("root", rootOptions);
+export const qualityEnum = pgEnum("quality", qualityOptions);
+
 export const chords = pgTable("chords", {
   id: serial("id").primaryKey(),
   measureId: integer("measureId")
     .notNull()
     .references(() => measures.id, { onDelete: "cascade" }),
-  root: text("root").notNull(),
-  quality: text("quality").notNull(),
+  root: rootEnum("root").notNull(),
+  quality: qualityEnum("quality").notNull(),
 });

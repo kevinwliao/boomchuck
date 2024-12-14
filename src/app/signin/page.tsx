@@ -20,7 +20,7 @@ const AuthIcon = ({ brand }: { brand: string }) => {
   return <></>;
 };
 
-export default async function Page() {
+async function Page() {
   const csrfToken = cookies().get("authjs.csrf-token")?.value ?? "";
 
   return (
@@ -38,8 +38,9 @@ export default async function Page() {
         </div>
 
         <div className="flex flex-col gap-2">
-          {Object.values(providerMap).map((provider) => (
+          {Object.values(providerMap).map((provider, i) => (
             <form
+              key={i}
               action={async () => {
                 "use server";
                 try {
@@ -73,3 +74,5 @@ export default async function Page() {
     </main>
   );
 }
+
+export default Page;

@@ -55,6 +55,7 @@ export function SelectSongForm({
 
   return (
     <Form {...form}>
+      <div>{JSON.stringify(songs)}</div>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
@@ -74,7 +75,7 @@ export function SelectSongForm({
                       )}
                     >
                       {field.value
-                        ? songs.find((song) => song.name === field.value)?.name
+                        ? songs.find((song) => song.slug === field.value)?.name
                         : "Select song"}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
@@ -89,15 +90,15 @@ export function SelectSongForm({
                         {songs.map((song) => (
                           <CommandItem
                             value={song.name}
-                            key={song.name}
+                            key={song.slug}
                             onSelect={() => {
-                              form.setValue("song", song.name);
+                              form.setValue("song", song.slug);
                             }}
                           >
                             <Check
                               className={cn(
                                 "mr-2 h-4 w-4",
-                                song.name === field.value
+                                song.slug === field.value
                                   ? "opacity-100"
                                   : "opacity-0",
                               )}

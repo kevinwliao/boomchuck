@@ -405,7 +405,7 @@ const LayoutComponent = () => {
   const { measureDroppableContainers } = useDndContext();
   useEffect(() => {
     function handleResize() {
-      //@ts-expect-error Bad Function Declaration
+      //@ts-ignore Bad Function Declaration
       measureDroppableContainers();
     }
     window.addEventListener("resize", handleResize);

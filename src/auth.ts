@@ -3,6 +3,7 @@ import Google from "next-auth/providers/google";
 import type { Provider } from "next-auth/providers";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/schema";
+export * from "@/auth.config";
 import authConfig from "@/auth.config";
 
 const providers: Provider[] = [Google];
@@ -23,15 +24,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   // //     return session;
   // //   },
   // // },
-  // // callbacks: {
-  // //   async session({ session, user }) {
-  // //     session.user.id = user.id;
-  // //     return session;
-  // //   },
-  // // },
-  // // pages: {
-  // //   signIn: "/signin",
-  // // },
+  // callbacks: {
+  //   async session({ session, user }) {
+  //     session.user.id = user.id;
+  //     return session;
+  //   },
+  // },
+  // pages: {
+  //   signIn: "/signin",
+  // },
   ...authConfig,
 });
 

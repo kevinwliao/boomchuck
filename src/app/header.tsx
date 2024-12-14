@@ -40,9 +40,9 @@ export default function Header() {
 
         <div className="flex items-center gap-16">
           <div className="hidden gap-2 md:flex">
-            {/* @ts-expect-error Async Server Component */}
+            {/* @ts-ignore */}
             <SignInButton></SignInButton>
-            {/* @ts-expect-error Async Server Component */}
+            {/* @ts-ignore */}
             <Avatar></Avatar>
           </div>
           <div id="hamburger" className="md:hidden">

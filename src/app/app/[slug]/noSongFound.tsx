@@ -8,7 +8,7 @@ export default function NoSongFound() {
       <div className="flex items-center pb-20">
         <span className="px-4">No song found.</span>
         <Button variant="secondary" asChild>
-          <Link href="/">Let's make one!</Link>
+          <Link href="/">Make one!</Link>
         </Button>
       </div>
     </main>

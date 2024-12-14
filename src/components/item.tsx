@@ -10,4 +10,6 @@ const Item = forwardRef<HTMLDivElement, { id: string }>(
   },
 );
 
+Item.displayName = "Item";
+
 export default Item;
