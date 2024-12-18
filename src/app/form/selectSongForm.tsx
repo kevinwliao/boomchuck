@@ -55,7 +55,7 @@ export function SelectSongForm({
 
   return (
     <Form {...form}>
-      <div>{JSON.stringify(songs)}</div>
+      {/* <div>{JSON.stringify(songs)}</div> */}
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}

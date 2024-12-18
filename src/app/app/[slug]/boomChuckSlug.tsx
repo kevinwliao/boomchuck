@@ -246,7 +246,7 @@ export default function BoomChuck({
       </div>
       <div
         id="chordSelectionAndFileContainer"
-        className="flex w-full shrink-0 flex-col items-center justify-between gap-8 px-1 py-2 md:py-4 lg:order-first lg:w-64 lg:border-r lg:px-10 lg:py-8 xl:w-80"
+        className="flex w-full shrink-0 flex-col items-center justify-between gap-8 px-1 py-2 md:py-4 lg:order-first lg:w-min lg:border-r lg:px-10 lg:py-8"
       >
         <div className="chordSelectionContainer base flex shrink-0 grow flex-col items-center justify-center gap-4 lg:gap-10 lg:text-lg xl:gap-10">
           <div

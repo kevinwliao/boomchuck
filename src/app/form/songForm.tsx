@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { createUserSong } from "@/lib/actions";
+import { createSong } from "@/lib/actions";
 import React from "react";
 import {
   Form,
@@ -62,7 +62,7 @@ export default function SongForm({
       name: values.name,
       measures: measures,
     };
-    await createUserSong(newSong);
+    await createSong(newSong);
     openHandler(false);
   }
 

@@ -121,22 +121,22 @@ export const songs = pgTable("songs", {
   name: text("name"),
 });
 
-export const measures = pgTable("measures", {
-  id: serial("id").primaryKey(),
-  songId: integer("songId")
-    .notNull()
-    .references(() => songs.id, { onDelete: "cascade" }),
-  measureNumber: integer("measureNumber").notNull(),
-});
+// export const measures = pgTable("measures", {
+//   id: serial("id").primaryKey(),
+//   songId: integer("songId")
+//     .notNull()
+//     .references(() => songs.id, { onDelete: "cascade" }),
+//   measureNumber: integer("measureNumber").notNull(),
+// });
 
-export const rootEnum = pgEnum("root", rootOptions);
-export const qualityEnum = pgEnum("quality", qualityOptions);
+// export const rootEnum = pgEnum("root", rootOptions);
+// export const qualityEnum = pgEnum("quality", qualityOptions);
 
-export const chords = pgTable("chords", {
-  id: serial("id").primaryKey(),
-  measureId: integer("measureId")
-    .notNull()
-    .references(() => measures.id, { onDelete: "cascade" }),
-  root: rootEnum("root").notNull(),
-  quality: qualityEnum("quality").notNull(),
-});
+// export const chords = pgTable("chords", {
+//   id: serial("id").primaryKey(),
+//   measureId: integer("measureId")
+//     .notNull()
+//     .references(() => measures.id, { onDelete: "cascade" }),
+//   root: rootEnum("root").notNull(),
+//   quality: qualityEnum("quality").notNull(),
+// });

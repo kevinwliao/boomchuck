@@ -2,31 +2,31 @@ import { sql } from "@vercel/postgres";
 import { unstable_noStore as noStore } from "next/cache";
 import { Song, songArrSchema } from "@/lib/schemas";
 import { auth } from "@/auth";
-import { chords, db, measures, songs, users } from "@/schema";
+// import { chords, db, measures, songs, users } from "@/schema";
 import { songSchema } from "@/lib/schemas";
 import { eq } from "drizzle-orm";
 
-export async function fetchUserSongs() {
-  const session = await auth();
-  // making sure id is defined
-  if (!session || !session.user || !session.user.id) {
-    return [];
-  }
-  const currentId = session.user.id;
-  const data = await db
-    .select()
-    .from(songs)
-    .leftJoin(measures, eq(songs.id, measures.songId))
-    .leftJoin(chords, eq(measures.id, chords.measureId))
-    .where(eq(songs.userId, currentId));
+// export async function fetchUserSongs() {
+//   const session = await auth();
+//   // making sure id is defined
+//   if (!session || !session.user || !session.user.id) {
+//     return [];
+//   }
+//   const currentId = session.user.id;
+//   const data = await db
+//     .select()
+//     .from(songs)
+//     .leftJoin(measures, eq(songs.id, measures.songId))
+//     .leftJoin(chords, eq(measures.id, chords.measureId))
+//     .where(eq(songs.userId, currentId));
 
-  const validatedData = songArrSchema.safeParse(data);
-  if (validatedData.success) {
-    return validatedData.data;
-  } else {
-    return [];
-  }
-}
+//   const validatedData = songArrSchema.safeParse(data);
+//   if (validatedData.success) {
+//     return validatedData.data;
+//   } else {
+//     return [];
+//   }
+// }
 
 export async function fetchSongs() {
   noStore();

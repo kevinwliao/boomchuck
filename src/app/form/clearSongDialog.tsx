@@ -22,18 +22,18 @@ const ClearSongDialog = React.forwardRef<HTMLElement, ClearSongDialogProps>(
         <DialogTrigger asChild>
           <button className="flex w-max items-center gap-2 text-sm uppercase text-stone-500 hover:text-stone-600">
             <IconTrashX />
-            <div>Delete Measures</div>
+            <div>Clear Measures</div>
           </button>
         </DialogTrigger>
         <DialogContent className="shadow-none sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="text-2xl font-medium">
-              Delete Measures
+              Clear Measures
             </DialogTitle>
           </DialogHeader>
           <div className="flex flex-col gap-6">
             <div className="text-sm">
-              Are you sure you want to delete all measures?
+              Are you sure you want to clear all measures?
             </div>
             <div className="flex justify-end gap-2">
               <DialogClose>
